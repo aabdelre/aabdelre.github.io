@@ -30,16 +30,32 @@ const projects = [
 
 const experience = [
   {
-    role: 'Your Role',
-    org: 'Company / Organization',
-    period: '2024 — Present',
-    summary: 'One line on what you do and your biggest impact.',
+    role: 'Software Engineer, ML Infrastructure',
+    org: 'Meta',
+    period: 'Feb 2025 — Present',
+    summary:
+      'Build ML workflow orchestration for Ads ranking — cut model-iteration latency ~88% and drove avg 2.45% accuracy gains across production models.',
   },
   {
-    role: 'Previous Role',
-    org: 'Previous Company',
-    period: '2022 — 2024',
-    summary: 'One line on a key accomplishment.',
+    role: 'Software Engineer Intern',
+    org: 'HPE — Juniper Networking',
+    period: 'May 2024 — Aug 2024',
+    summary:
+      'Rewrote a Python microservice (−72% code) and migrated Address Pool Manager monitoring to Prometheus/Grafana with custom gRPC metrics endpoints on Kubernetes.',
+  },
+  {
+    role: 'Software Developer',
+    org: 'Hamilton College R&ID Team',
+    period: 'Jun 2023 — Jan 2024',
+    summary:
+      'Built an inventory app on AWS (DynamoDB, S3, Lambda) behind a Django REST API, and revamped a 7-page digital archive in React.',
+  },
+  {
+    role: 'ML Research Assistant',
+    org: 'Hamilton College CS Department',
+    period: 'May 2022 — Aug 2022',
+    summary:
+      'Fine-tuned a Clojure genetic-programming model (−11% training cases) and automated HPC experiment runs with results visualization.',
   },
 ];
 // -----------------------------------------------------------------------------
@@ -50,11 +66,11 @@ const posts = (await getCollection('blog'))
   .slice(0, 3);
 ---
 
-<Base title="Ahmed Abdelreheem">
+<Base title="Ahmed Abdelrehim">
   <div class="container">
     <!-- Hero + About -->
     <section class="hero" id="about">
-      <h1>Ahmed Abdelreheem</h1>
+      <h1>Ahmed Abdelrehim</h1>
       <p class="tagline">
         Software engineer building thoughtful, useful tools.
       </p>
