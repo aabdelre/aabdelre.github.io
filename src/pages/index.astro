@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+// ---- Edit your content here -------------------------------------------------
+const projects = [
+  {
+    name: 'Probe Layer',
+    description:
+      'A bias-audit platform with a public audit page, per-submission audit log, JSON API, and a browser extension.',
+    tags: ['TypeScript', 'Web', 'Browser Extension'],
+    demo: '#',
+    repo: '#',
+  },
+  {
+    name: 'Project Two',
+    description: 'Short, punchy description of what it does and why it matters.',
+    tags: ['Python', 'API'],
+    demo: '#',
+    repo: '#',
+  },
+  {
+    name: 'Project Three',
+    description: 'Another highlight. Keep it to one or two sentences.',
+    tags: ['React'],
+    demo: '#',
+    repo: '#',
+  },
+];
+
+const experience = [
+  {
+    role: 'Your Role',
+    org: 'Company / Organization',
+    period: '2024 — Present',
+    summary: 'One line on what you do and your biggest impact.',
+  },
+  {
+    role: 'Previous Role',
+    org: 'Previous Company',
+    period: '2022 — 2024',
+    summary: 'One line on a key accomplishment.',
+  },
+];
+// -----------------------------------------------------------------------------
+
+// Latest 3 blog posts, newest first
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<Base title="Ahmed Abdelreheem">
+  <div class="container">
+    <!-- Hero + About -->
+    <section class="hero" id="about">
+      <h1>Ahmed Abdelreheem</h1>
+      <p class="tagline">
+        Software engineer building thoughtful, useful tools.
+      </p>
+      <p>
+        Short bio goes here — a few sentences about your background, what you're
+        focused on right now, and what you care about. Keep it human and
+        specific.
+      </p>
+      <div class="socials">
+        <a href="https://github.com/aabdelre">GitHub</a>
+        <a href="https://www.linkedin.com/">LinkedIn</a>
+        <a href="mailto:aabdelre.ahmed@gmail.com">Email</a>
+        <a href="/resume.pdf">Résumé (PDF)</a>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <p class="section-title">Projects</p>
+      <div class="cards">
+        {
+          projects.map((p) => (
+            <article class="card">
+              <h3>{p.name}</h3>
+              <div class="tags">
+                {p.tags.map((t) => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+              <p>{p.description}</p>
+              <div class="card-links">
+                {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
+                {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+      <p class="section-title">Experience</p>
+      <div class="timeline">
+        {
+          experience.map((e) => (
+            <div class="timeline-item">
+              <div class="role">
+                {e.role} · {e.org}
+              </div>
+              <div class="meta">{e.period}</div>
+              <p>{e.summary}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Latest writing -->
+    <section id="writing">
+      <p class="section-title">Latest writing</p>
+      <ul class="post-list">
+        {
+          posts.map((post) => (
+            <li>
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </time>
+              <a href={`/blog/${post.id}`}>{post.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <p style="margin-top:1rem"><a href="/blog">All posts →</a></p>
+    </section>
+  </div>
+</Base>
