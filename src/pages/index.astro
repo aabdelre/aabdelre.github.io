@@ -111,6 +111,8 @@ const research = [
     role: 'Irish Music Composer',
     summary:
       'Team research project for a biology professor and Irish music enthusiast: which of 36 unattributed reels did fiddler John McFadden compose? I collected 158 reels in ABC notation and built a CLI and a UI to add tunes, test unknown ones, and visualize clusters of 20 musical features. Our best model (K-means, an MLP, and fine-tuned BERT were compared) reached 68% validation accuracy, limited by the amount of data.',
+    presentation:
+      'https://drive.google.com/file/d/1yqd0Ps7oHD0w2pgkXvhwaG3kVZR3DQQT/view?usp=sharing',
   },
   {
     role: 'Emotion Detection',
@@ -404,13 +406,14 @@ const posts = (await getCollection('blog'))
                               <div class="nb-head">[1] the idea</div>
                               <p>{r.summary}</p>
                             </div>
-                            {(r.poster || r.paper || r.project) && (
+                            {(r.poster || r.paper || r.project || r.presentation) && (
                               <div class="nb-cell">
                                 <div class="nb-head">[2] artifacts</div>
                                 <ul class="nb-links">
                                   {r.poster && <li><a href={r.poster} target="_blank" rel="noopener">poster →</a></li>}
                                   {r.paper && <li><a href={r.paper} target="_blank" rel="noopener">paper →</a></li>}
                                   {r.project && <li><a href={r.project} target="_blank" rel="noopener">GECCO presentation →</a></li>}
+                                  {r.presentation && <li><a href={r.presentation} target="_blank" rel="noopener">presentation →</a></li>}
                                 </ul>
                               </div>
                             )}
