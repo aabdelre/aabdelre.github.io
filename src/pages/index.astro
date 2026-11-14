@@ -403,7 +403,8 @@ const posts = (await getCollection('blog'))
       overflow: hidden;
     }
     .landing {
-      height: calc(100dvh - 128px);
+      height: calc(100dvh - 152px);
+      margin-top: 1.5rem;
     }
   }
 
@@ -466,7 +467,7 @@ const posts = (await getCollection('blog'))
   .bio-col {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem; /* matches the column gap on .landing */
   }
   .bio-col .hero {
     flex: 1;
