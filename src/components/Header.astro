@@ -7,9 +7,11 @@ const isHome = pathname === '/' || pathname === '';
   <div class="container">
     <a class="brand" href="/">Ahmed Abdelrehim</a>
     <nav>
-      <a href={isHome ? '#projects' : '/#projects'}>Projects</a>
       <a href={isHome ? '#experience' : '/#experience'}>Experience</a>
-      <a href="/blog">Blog</a>
+      <a href={isHome ? '#research' : '/#research'}>Research</a>
+      <a href={isHome ? '#projects' : '/#projects'}>Projects</a>
+      <a href={isHome ? '#blog' : '/#blog'}>Blog</a>
+      <a href={isHome ? '#beyond' : '/#beyond'}>Beyond</a>
     </nav>
   </div>
 </header>

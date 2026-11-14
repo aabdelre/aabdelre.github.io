@@ -3,6 +3,15 @@ import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
 // ---- Edit your content here -------------------------------------------------
+// Map pins. x/y are percentages across the map. `id` must match a panel below.
+const pins = [
+  { id: 'experience', label: 'Experience', x: 24, y: 34 },
+  { id: 'research', label: 'Research', x: 50, y: 20 },
+  { id: 'projects', label: 'Projects', x: 76, y: 34 },
+  { id: 'blog', label: 'Blog', x: 32, y: 72 },
+  { id: 'beyond', label: 'Beyond', x: 70, y: 72 },
+];
+
 const projects = [
   {
     name: 'Probe Layer',
@@ -59,6 +68,20 @@ const experience = [
   },
 ];
 
+const education = [
+  {
+    role: 'B.A., Computer Science & Mathematics · Hamilton College',
+    meta: 'Clinton, NY · Dec 2024 · GPA 3.88',
+    summary:
+      "Magna Cum Laude · CS Honors · Phi Beta Kappa · Dean's List (every semester)",
+  },
+  {
+    role: 'Study Abroad · The University of Manchester',
+    meta: 'Manchester, UK · Jan 2023 — Jan 2024 · Merit-based',
+    summary: 'Year abroad awarded for merit.',
+  },
+];
+
 const research = [
   {
     role: 'ML Research Assistant',
@@ -68,6 +91,8 @@ const research = [
       'Fine-tuned a Clojure genetic-programming model (−11% training cases) and automated HPC experiment runs with results visualization.',
   },
 ];
+
+const beyond = ['Volleyball', 'Hiking', 'Hackathon participation, mentoring, and judging'];
 // -----------------------------------------------------------------------------
 
 // Latest 3 blog posts, newest first
@@ -97,9 +122,7 @@ const posts = (await getCollection('blog'))
             />
             <div>
               <h1>Ahmed Abdelrehim</h1>
-              <p class="out-accent">
-                AI/ML enthusiast. Aspiring disrupter.
-              </p>
+              <p class="out-accent">AI/ML enthusiast. Aspiring disrupter.</p>
             </div>
           </div>
           <p class="prompt">cat about.txt</p>
@@ -130,106 +153,496 @@ const posts = (await getCollection('blog'))
       </div>
     </section>
 
-    <!-- Education -->
-    <section id="education">
-      <p class="section-title">cat ./education</p>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="role">B.A., Computer Science &amp; Mathematics · Hamilton College</div>
-          <div class="meta">Clinton, NY · Dec 2024 · GPA 3.88</div>
-          <p>
-            Magna Cum Laude · CS Honors · Phi Beta Kappa · Dean's List (every
-            semester)
-          </p>
+    <!-- Interactive map -->
+    <section class="map-section" id="map" aria-labelledby="map-title">
+      <p class="section-title" id="map-title">cat ./map</p>
+      <div class="map-stage" data-map-stage>
+        <div class="map-canvas" data-map-canvas>
+          <svg
+            class="map-svg"
+            viewBox="0 0 1000 625"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <pattern id="map-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                <path d="M50 0H0V50" class="grid-line" fill="none" />
+              </pattern>
+            </defs>
+            <rect width="1000" height="625" fill="url(#map-grid)" />
+            <path class="land" d="M80 90 C200 40 340 70 380 150 C420 230 330 260 250 300 C170 340 60 300 40 220 Z" />
+            <path class="land" d="M600 380 C700 340 880 360 920 450 C960 540 860 580 760 570 C660 560 560 520 560 450 Z" />
+            <path class="land" d="M430 470 C520 440 600 500 580 560 C560 610 440 600 420 550 Z" />
+            <path class="land" d="M720 60 C820 40 940 90 950 180 C960 260 860 260 800 240 C740 220 680 120 720 60 Z" />
+            {
+              pins.map((p) => (
+                <line
+                  class="route"
+                  x1="500"
+                  y1="325"
+                  x2={p.x * 10}
+                  y2={p.y * 6.25}
+                />
+              ))
+            }
+          </svg>
+
+          <div class="home">~/ahmed</div>
+
+          {
+            pins.map((p) => (
+              <a
+                class="pin"
+                href={`#${p.id}`}
+                data-pin={p.id}
+                data-pos={`${p.x},${p.y}`}
+                style={`left:${p.x}%;top:${p.y}%`}
+                aria-label={`Open ${p.label}`}
+              >
+                <span class="pin-dot"></span>
+                <span class="pin-label">{p.label}</span>
+              </a>
+            ))
+          }
         </div>
-        <div class="timeline-item">
-          <div class="role">Study Abroad · The University of Manchester</div>
-          <div class="meta">Manchester, UK · Jan 2023 — Jan 2024 · Merit-based</div>
-          <p>Year abroad awarded for merit.</p>
+      </div>
+
+      <div class="viewer" data-viewer>
+        <p class="viewer-hint" data-hint>click a pin to explore ↑</p>
+
+        <!-- Experience (includes education) -->
+        <div class="panel" data-panel="experience" id="experience">
+          <div class="panel-head">
+            <p class="section-title">git log --oneline experience</p>
+            <button class="back" type="button" data-back>← back to map</button>
+          </div>
+          <div class="photo-slot">[ photo: experience ]</div>
+          <div class="timeline">
+            {
+              experience.map((e) => (
+                <div class="timeline-item">
+                  <div class="role">
+                    {e.role} · {e.org}
+                  </div>
+                  <div class="meta">{e.period}</div>
+                  <p>{e.summary}</p>
+                </div>
+              ))
+            }
+          </div>
+          <p class="section-title" style="margin-top: 2rem">cat ./education</p>
+          <div class="timeline">
+            {
+              education.map((ed) => (
+                <div class="timeline-item">
+                  <div class="role">{ed.role}</div>
+                  <div class="meta">{ed.meta}</div>
+                  <p>{ed.summary}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Research -->
+        <div class="panel" data-panel="research" id="research">
+          <div class="panel-head">
+            <p class="section-title">ls ./research</p>
+            <button class="back" type="button" data-back>← back to map</button>
+          </div>
+          <div class="photo-slot">[ photo: research ]</div>
+          <div class="timeline">
+            {
+              research.map((r) => (
+                <div class="timeline-item">
+                  <div class="role">
+                    {r.role} · {r.org}
+                  </div>
+                  <div class="meta">{r.period}</div>
+                  <p>{r.summary}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="panel" data-panel="projects" id="projects">
+          <div class="panel-head">
+            <p class="section-title">ls ./projects</p>
+            <button class="back" type="button" data-back>← back to map</button>
+          </div>
+          <div class="photo-slot">[ photo: projects ]</div>
+          <div class="cards">
+            {
+              projects.map((p) => (
+                <article class="card">
+                  <h3>{p.name}</h3>
+                  <div class="tags">
+                    {p.tags.map((t) => (
+                      <span class="tag">{t}</span>
+                    ))}
+                  </div>
+                  <p>{p.description}</p>
+                  <div class="card-links">
+                    {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
+                    {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Blog -->
+        <div class="panel" data-panel="blog" id="blog">
+          <div class="panel-head">
+            <p class="section-title">tail -n 3 ./blog</p>
+            <button class="back" type="button" data-back>← back to map</button>
+          </div>
+          <div class="photo-slot">[ photo: blog ]</div>
+          <ul class="post-list">
+            {
+              posts.map((post) => (
+                <li>
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </time>
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                </li>
+              ))
+            }
+          </ul>
+          <p style="margin-top:1rem"><a href="/blog">All posts →</a></p>
+        </div>
+
+        <!-- Beyond -->
+        <div class="panel" data-panel="beyond" id="beyond">
+          <div class="panel-head">
+            <p class="section-title">ls ./beyond</p>
+            <button class="back" type="button" data-back>← back to map</button>
+          </div>
+          <div class="photo-slot">[ photo: beyond ]</div>
+          <ul class="post-list">
+            {beyond.map((b) => <li>{b}</li>)}
+          </ul>
         </div>
       </div>
-    </section>
-
-    <!-- Experience -->
-    <section id="experience">
-      <p class="section-title">git log --oneline experience</p>
-      <div class="timeline">
-        {
-          experience.map((e) => (
-            <div class="timeline-item">
-              <div class="role">
-                {e.role} · {e.org}
-              </div>
-              <div class="meta">{e.period}</div>
-              <p>{e.summary}</p>
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    <!-- Research -->
-    <section id="research">
-      <p class="section-title">ls ./research</p>
-      <div class="timeline">
-        {
-          research.map((r) => (
-            <div class="timeline-item">
-              <div class="role">
-                {r.role} · {r.org}
-              </div>
-              <div class="meta">{r.period}</div>
-              <p>{r.summary}</p>
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects">
-      <p class="section-title">ls ./projects</p>
-      <div class="cards">
-        {
-          projects.map((p) => (
-            <article class="card">
-              <h3>{p.name}</h3>
-              <div class="tags">
-                {p.tags.map((t) => (
-                  <span class="tag">{t}</span>
-                ))}
-              </div>
-              <p>{p.description}</p>
-              <div class="card-links">
-                {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
-                {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <!-- Latest writing -->
-    <section id="writing">
-      <p class="section-title">tail -n 3 ./writing</p>
-      <ul class="post-list">
-        {
-          posts.map((post) => (
-            <li>
-              <time datetime={post.data.pubDate.toISOString()}>
-                {post.data.pubDate.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                })}
-              </time>
-              <a href={`/blog/${post.id}`}>{post.data.title}</a>
-            </li>
-          ))
-        }
-      </ul>
-      <p style="margin-top:1rem"><a href="/blog">All posts →</a></p>
     </section>
   </div>
 </Base>
+
+<style>
+  /* Map stage */
+  .map-section {
+    padding-bottom: 2rem;
+  }
+  .map-stage {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .map-canvas {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    transform-origin: var(--zx, 50%) var(--zy, 50%);
+    transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .map-stage.is-zooming .map-canvas {
+    transform: scale(1.7);
+  }
+  @media (max-width: 640px) {
+    .map-canvas {
+      aspect-ratio: 1 / 1.1;
+    }
+  }
+  .map-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .map-svg :global(.grid-line) {
+    stroke: var(--border);
+    stroke-width: 1;
+    opacity: 0.5;
+  }
+  .map-svg :global(.land) {
+    fill: var(--bg);
+    stroke: var(--border);
+    stroke-width: 2;
+  }
+  .map-svg :global(.route) {
+    stroke: var(--muted);
+    stroke-width: 2;
+    stroke-dasharray: 6 8;
+    opacity: 0.6;
+  }
+
+  .home {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -50%);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .home::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+    margin: 0 auto 4px;
+  }
+
+  /* Pins */
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--text);
+    font-family: var(--mono);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .pin:hover {
+    color: var(--strong);
+    text-decoration: none;
+  }
+  .pin:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 6px;
+    border-radius: 6px;
+  }
+  .pin-dot {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .pin-dot::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    opacity: 0;
+    animation: pin-pulse 2.2s ease-out infinite;
+  }
+  .pin-label {
+    font-size: 0.85rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    white-space: nowrap;
+  }
+  .pin.is-active .pin-dot {
+    background: var(--strong);
+  }
+  .pin.is-active .pin-label {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  @keyframes pin-pulse {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1.6);
+      opacity: 0;
+    }
+  }
+
+  /* Viewer + panels */
+  .viewer {
+    margin-top: 2rem;
+  }
+  .viewer-hint {
+    font-family: var(--mono);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .viewer-hint[hidden] {
+    display: none;
+  }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+  .panel-head .section-title {
+    margin-bottom: 0;
+  }
+  .back {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
+  }
+  .back:hover {
+    border-color: var(--accent);
+  }
+  .back:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Photo placeholder: replace the div with an <img> when pictures are ready */
+  .photo-slot {
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    aspect-ratio: 16 / 7;
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  /* Panels are hidden until a pin is opened, but only when JavaScript runs */
+  :global(html.js) [data-panel] {
+    display: none;
+  }
+  :global(html.js) [data-panel].is-open {
+    display: block;
+  }
+  .panel.panel-enter {
+    animation: panel-in 0.5s ease both;
+  }
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map-canvas {
+      transition: none;
+    }
+    .pin-dot::after {
+      animation: none;
+    }
+    .panel.panel-enter {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  root.classList.add('js');
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stage = document.querySelector<HTMLElement>('[data-map-stage]');
+  const canvas = document.querySelector<HTMLElement>('[data-map-canvas]');
+  const hint = document.querySelector<HTMLElement>('[data-hint]');
+  const pins = Array.from(document.querySelectorAll<HTMLElement>('[data-pin]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
+
+  if (stage && canvas && hint) {
+    let busy = false;
+
+    const panelById = (id: string) =>
+      panels.find((p) => p.dataset.panel === id);
+
+    function reveal(id: string, scroll: boolean) {
+      const panel = panelById(id);
+      if (!panel) return;
+      panels.forEach((p) => p.classList.toggle('is-open', p === panel));
+      pins.forEach((p) => p.classList.toggle('is-active', p.dataset.pin === id));
+      hint!.hidden = true;
+      panel.classList.remove('panel-enter');
+      void panel.offsetWidth; // restart the entrance animation
+      panel.classList.add('panel-enter');
+      if (scroll) {
+        panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      }
+    }
+
+    function backToMap() {
+      panels.forEach((p) => p.classList.remove('is-open'));
+      pins.forEach((p) => p.classList.remove('is-active'));
+      hint!.hidden = false;
+      history.replaceState(null, '', location.pathname);
+      stage!.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    function openFromPin(pin: HTMLElement) {
+      if (busy) return;
+      busy = true;
+      const [x, y] = (pin.dataset.pos ?? '50,50').split(',');
+      canvas!.style.setProperty('--zx', `${x}%`);
+      canvas!.style.setProperty('--zy', `${y}%`);
+      stage!.classList.add('is-zooming');
+      const id = pin.dataset.pin ?? '';
+      // Zoom toward the pin first, then reveal the section.
+      setTimeout(
+        () => {
+          stage!.classList.remove('is-zooming');
+          reveal(id, true);
+          history.replaceState(null, '', `#${id}`);
+          setTimeout(() => (busy = false), reduce ? 0 : 400);
+        },
+        reduce ? 0 : 650,
+      );
+    }
+
+    pins.forEach((pin) =>
+      pin.addEventListener('click', (e) => {
+        e.preventDefault();
+        openFromPin(pin);
+      }),
+    );
+
+    document.querySelectorAll<HTMLElement>('[data-back]').forEach((btn) =>
+      btn.addEventListener('click', backToMap),
+    );
+
+    // Deep links (#research) and header nav clicks open the matching panel.
+    function fromHash(scroll: boolean) {
+      const id = location.hash.slice(1);
+      if (id && panelById(id)) {
+        reveal(id, scroll);
+      }
+    }
+    window.addEventListener('hashchange', () => fromHash(true));
+    fromHash(false);
+  }
+</script>
