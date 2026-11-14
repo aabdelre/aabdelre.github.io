@@ -94,6 +94,7 @@ const research = [
     poster:
       'https://drive.google.com/file/d/1dzpNwBr2ef_vshR0SRdZVnXamdxb32Zd/view?usp=sharing',
     paper: 'https://dl.acm.org/doi/abs/10.1145/3583133.3596373',
+    project: 'https://drive.google.com/file/d/12rHC_vamsPnrEZp0ttqf_5AIpDW4Mu9-/view?usp=sharing',
   },
 ];
 
@@ -346,7 +347,7 @@ const posts = (await getCollection('blog'))
                         <div class="role">{r.role} · {r.org}</div>
                         <div class="meta">{r.period}</div>
                         <p>{r.summary}</p>
-                        {(r.poster || r.paper) && (
+                        {(r.poster || r.paper || r.project) && (
                           <p>
                             {r.poster && (
                               <a href={r.poster} target="_blank" rel="noopener">View poster →</a>
@@ -354,6 +355,10 @@ const posts = (await getCollection('blog'))
                             {r.poster && r.paper && ' · '}
                             {r.paper && (
                               <a href={r.paper} target="_blank" rel="noopener">Read paper →</a>
+                            )}
+                            {(r.poster || r.paper) && r.project && ' · '}
+                            {r.project && (
+                              <a href={r.project} target="_blank" rel="noopener">GECCO presentation →</a>
                             )}
                           </p>
                         )}
