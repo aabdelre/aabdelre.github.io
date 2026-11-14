@@ -81,6 +81,7 @@ const experience = [
     period: 'May 2024 — Aug 2024',
     summary:
       'Rewrote a Python microservice (−72% code) and migrated Address Pool Manager monitoring to Prometheus/Grafana with custom gRPC metrics endpoints on Kubernetes.',
+    images: ['/experience/hpe-1.jpg', '/experience/hpe-2.jpg'],
     details: [
       'Develops networking hardware, software, and cloud services for enterprise and service-provider infrastructure.',
       'Migrated Python microservices to Go, and instrumented asynchronous workflows with Prometheus and Grafana to track metrics and build dashboards.',
@@ -133,6 +134,7 @@ const commits = [
     when: e.period,
     body: e.summary,
     details: e.details ?? [],
+    images: e.images ?? [],
   })),
 ];
 
@@ -472,6 +474,13 @@ const posts = (await getCollection('blog'))
                         <div class="cv-msg">{c.msg}</div>
                         <div class="cv-when">{c.when}</div>
                         <p>{c.body}</p>
+                        {c.images.length > 0 && (
+                          <div class="cv-imgs">
+                            {c.images.map((src) => (
+                              <img src={src} alt={`${c.msg} photo`} loading="lazy" />
+                            ))}
+                          </div>
+                        )}
                         {c.details.length > 0 && (
                           <ul class="cv-list">
                             {c.details.map((d) => (
@@ -2126,6 +2135,18 @@ const posts = (await getCollection('blog'))
     font-family: var(--mono);
     color: var(--muted);
     font-size: 0.9rem;
+  }
+  .cv-imgs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .cv-imgs img {
+    width: 100%;
+    height: clamp(180px, 30vh, 280px);
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
   }
   .cv-list {
     margin: 0;
