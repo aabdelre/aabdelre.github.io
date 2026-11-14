@@ -86,7 +86,8 @@ const education = [
 
 const research = [
   {
-    role: 'Human-Driven Genetic Programming (HDGP)',
+    name: 'Human-Driven Genetic Programming (HDGP)',
+    role: 'Do counterexamples let non-experts verify programs without labeling hundreds of cases?',
     org: 'Hamilton College CS Department',
     period: '2023',
     summary:
@@ -98,22 +99,28 @@ const research = [
       'https://drive.google.com/file/d/12rHC_vamsPnrEZp0ttqf_5AIpDW4Mu9-/view?usp=sharing',
   },
   {
-    role: 'Vertex Clique Coverage',
+    name: 'Vertex Clique Coverage',
+    role: 'What if a huge graph’s complement never had to fit in memory?',
     summary:
       "Designed a modified DSATUR heuristic that colors large graph complements implicitly with a new 'grayness degree', then ported it to C++. On SNAP graphs, clique counts landed within 1% of exact or best-known bounds, and profiling cut runtime about 10x (19s to 2s). I also tested Tabu search as an alternative.",
   },
   {
-    role: 'LLMs with Databases',
+    name: 'LLMs with Databases',
+    role: "Could a language model write a database's API from its schema alone?",
     summary:
       "Tested whether the GPT-3 API could write a database's GET and POST endpoints from only its schema, so a UI could read and write data with no hand-written backend. I designed the prompts, built the endpoints from the model's output, and verified them end to end. Verifying that generated code works is still the question I work on in production.",
   },
   {
-    role: 'Irish Music Composer',
+    name: 'Irish Music Composer',
+    role: 'Which composer’s fingerprint hides inside an unattributed reel?',
     summary:
       'Team research project for a biology professor and Irish music enthusiast: which of 36 unattributed reels did fiddler John McFadden compose? I collected 158 reels in ABC notation and built a CLI and a UI to add tunes, test unknown ones, and visualize clusters of 20 musical features. Our best model (K-means, an MLP, and fine-tuned BERT were compared) reached 68% validation accuracy, limited by the amount of data.',
+    presentation:
+      'https://drive.google.com/file/d/1yqd0Ps7oHD0w2pgkXvhwaG3kVZR3DQQT/view?usp=sharing',
   },
   {
-    role: 'Emotion Detection',
+    name: 'Emotion Detection',
+    role: "Where does a viewer's emotion live: in the words, the voice, or the face?",
     summary:
       "Semester-long project predicting a viewer's emotions continuously as a scene unfolds, not one label per clip. The architecture fuses dialogue (BERT), vocal tone (ResNet on mel-spectrograms), and facial expressions (ResNet). I gathered and prepared data from RAVDESS, CMU-MOSEI, IEMOCAP, MELD, and a dataset we collected from Hamilton students, reaching 83% accuracy on 7 emotions.",
   },
@@ -374,7 +381,7 @@ const posts = (await getCollection('blog'))
                         <button class="rcard" type="button" data-rcard={i} style={`left:${[4, 36, 68, 4, 68][i]}%;top:${[8, 8, 8, 56, 56][i]}%`}>
                           <span class="rbar" style={`background:${['var(--accent)', '#58a6ff', 'var(--warn)', '#bc8cff', '#ff7b72'][i]}`}></span>
                           <span class="rtitle">{r.role}</span>
-                          <span class="rsub">{r.org ?? ''}</span>
+                          <span class="rsub">{r.name ?? ''}</span>
                         </button>
                       ))
                     }
@@ -392,25 +399,26 @@ const posts = (await getCollection('blog'))
                             <div class="nb-ls">$ ls ./research</div>
                             {research.map((x, j) => (
                               <button class={`nb-item${j === i ? ' on' : ''}`} type="button" data-rjump={j}>
-                                <span>{x.role}</span>
-                                <small>{x.org ?? ''}</small>
+                                <span>{x.name ?? x.role}</span>
                               </button>
                             ))}
                           </aside>
                           <div class="nb-main">
-                            <div class="nb-title">{r.role}</div>
-                            {(r.org || r.period) && <div class="nb-meta">{r.org}{r.period ? ` · ${r.period}` : ''}</div>}
+                            <div class="nb-title">{r.name ?? r.role}</div>
+                            <div class="nb-question">{r.role}</div>
+                            {(r.org || r.period) && <div class="nb-meta">{[r.org, r.period].filter(Boolean).join(' · ')}</div>}
                             <div class="nb-cell">
                               <div class="nb-head">[1] the idea</div>
                               <p>{r.summary}</p>
                             </div>
-                            {(r.poster || r.paper || r.project) && (
+                            {(r.poster || r.paper || r.project || r.presentation) && (
                               <div class="nb-cell">
                                 <div class="nb-head">[2] artifacts</div>
                                 <ul class="nb-links">
                                   {r.poster && <li><a href={r.poster} target="_blank" rel="noopener">poster →</a></li>}
                                   {r.paper && <li><a href={r.paper} target="_blank" rel="noopener">paper →</a></li>}
                                   {r.project && <li><a href={r.project} target="_blank" rel="noopener">GECCO presentation →</a></li>}
+                                  {r.presentation && <li><a href={r.presentation} target="_blank" rel="noopener">presentation →</a></li>}
                                 </ul>
                               </div>
                             )}
@@ -438,7 +446,11 @@ const posts = (await getCollection('blog'))
                   {
                     projects.map((p, i) => (
                       <div class="project-win" data-project-win={i} hidden>
-                        <button class="back" type="button" data-up>← up</button>
+                        <div class="win-bar">
+                          <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                          <span class="win-title">{p.name}</span>
+                          <button class="win-close" type="button" data-up aria-label="Close window">×</button>
+                        </div>
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
@@ -521,6 +533,7 @@ const posts = (await getCollection('blog'))
                 <span data-count>1 / 1</span>
                 <button type="button" data-next>next →</button>
                 <span class="foot-os" data-foot-os hidden>ahmed.os</span>
+                <span class="foot-time" data-foot-time hidden></span>
               </div>
             </div>
           </div>
@@ -1590,6 +1603,7 @@ const posts = (await getCollection('blog'))
   .nb {
     display: grid;
     grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
     flex: 1;
     min-height: 0;
     border: 1px solid var(--border);
@@ -1605,7 +1619,8 @@ const posts = (await getCollection('blog'))
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    overflow: hidden;
+    min-height: 0;
+    overflow-y: auto;
   }
   .nb-ls {
     font-size: 0.8rem;
@@ -1653,6 +1668,14 @@ const posts = (await getCollection('blog'))
     font-size: 1.5rem;
     color: var(--strong);
     line-height: 1.25;
+  }
+  .nb-question {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--accent);
+    margin-top: -0.5rem;
   }
   .nb-meta {
     font-size: 0.85rem;
@@ -1811,6 +1834,104 @@ const posts = (await getCollection('blog'))
     align-self: flex-start;
   }
 
+  /* Projects as a desktop: an opened project is a window on the right */
+  .panel {
+    position: relative;
+  }
+  .panel.win-open .desk {
+    width: 50%;
+  }
+  .project-win {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: min(440px, 48%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-bottom: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    z-index: 3;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .project-win[hidden] {
+    display: none;
+  }
+  .win-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .win-bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .win-bar .dot-r { background: #ff5f56; }
+  .win-bar .dot-y { background: #ffbd2e; }
+  .win-bar .dot-g { background: #27c93f; }
+  .win-title {
+    margin-left: 0.5rem;
+    color: var(--accent);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .win-close {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    width: 26px;
+    height: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .win-close:hover {
+    border-color: var(--accent);
+  }
+  .win-close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .project-win > :not(.win-bar) {
+    margin: 0 1.1rem;
+  }
+  .project-win .role {
+    font-weight: 600;
+    color: var(--strong);
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  .project-win .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .project-win p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .project-win .card-links {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
   /* ahmed.os label in the footer of the projects view */
   .foot-os {
     font-family: var(--mono);
@@ -1818,6 +1939,15 @@ const posts = (await getCollection('blog'))
     color: var(--muted);
   }
   .foot-os[hidden] {
+    display: none;
+  }
+  .foot-time {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .foot-time[hidden] {
     display: none;
   }
 
@@ -2070,6 +2200,7 @@ const posts = (await getCollection('blog'))
       nextBtn!.hidden = mode !== 'paged';
       counter!.hidden = mode !== 'paged';
       popup!.querySelector<HTMLElement>('[data-foot-os]')!.hidden = mode !== 'folders';
+      popup!.querySelector<HTMLElement>('[data-foot-time]')!.hidden = mode !== 'folders';
       popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = mode === 'board';
       if (mode === 'folders') showDesk();
       if (mode === 'board') showBoard();
@@ -2316,13 +2447,34 @@ const posts = (await getCollection('blog'))
       b.addEventListener('click', () => openResearch(Number(b.dataset.rjump))),
     );
 
+    // Viewer's local time, shown in the projects footer
+    const footTime = document.querySelector<HTMLElement>('[data-foot-time]');
+    const tickClock = () => {
+      if (footTime) {
+        footTime.textContent = new Date().toLocaleString([], {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZoneName: 'short',
+        });
+      }
+    };
+    tickClock();
+    setInterval(tickClock, 1000);
+
     // Projects folders: click selects, double-click (or Enter) opens, "up" returns to the desktop
+    // The folders stay on screen; an opened project appears as a window on the right
     function showDesk() {
       document.querySelector<HTMLElement>('[data-desk]')!.hidden = false;
+      document.querySelector<HTMLElement>('[data-panel="projects"]')!.classList.remove('win-open');
       document.querySelectorAll<HTMLElement>('[data-project-win]').forEach((w) => (w.hidden = true));
     }
     function openProject(i: number) {
-      document.querySelector<HTMLElement>('[data-desk]')!.hidden = true;
+      document.querySelector<HTMLElement>('[data-desk]')!.hidden = false;
+      document.querySelector<HTMLElement>('[data-panel="projects"]')!.classList.add('win-open');
       document.querySelectorAll<HTMLElement>('[data-project-win]').forEach(
         (w) => (w.hidden = w.dataset.projectWin !== String(i)),
       );
