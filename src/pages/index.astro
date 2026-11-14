@@ -57,6 +57,9 @@ const experience = [
     summary:
       'Built an inventory app on AWS (DynamoDB, S3, Lambda) behind a Django REST API, and revamped a 7-page digital archive in React.',
   },
+];
+
+const research = [
   {
     role: 'ML Research Assistant',
     org: 'Hamilton College CS Department',
@@ -127,27 +130,23 @@ const posts = (await getCollection('blog'))
       </div>
     </section>
 
-    <!-- Projects -->
-    <section id="projects">
-      <p class="section-title">ls ./projects</p>
-      <div class="cards">
-        {
-          projects.map((p) => (
-            <article class="card">
-              <h3>{p.name}</h3>
-              <div class="tags">
-                {p.tags.map((t) => (
-                  <span class="tag">{t}</span>
-                ))}
-              </div>
-              <p>{p.description}</p>
-              <div class="card-links">
-                {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
-                {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
-              </div>
-            </article>
-          ))
-        }
+    <!-- Education -->
+    <section id="education">
+      <p class="section-title">cat ./education</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="role">B.A., Computer Science &amp; Mathematics · Hamilton College</div>
+          <div class="meta">Clinton, NY · Dec 2024 · GPA 3.88</div>
+          <p>
+            Magna Cum Laude · CS Honors · Phi Beta Kappa · Dean's List (every
+            semester)
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="role">Study Abroad · The University of Manchester</div>
+          <div class="meta">Jan 2023 — Jan 2024 · Merit-based</div>
+          <p>Year abroad awarded for merit.</p>
+        </div>
       </div>
     </section>
 
@@ -169,23 +168,45 @@ const posts = (await getCollection('blog'))
       </div>
     </section>
 
-    <!-- Education -->
-    <section id="education">
-      <p class="section-title">cat ./education</p>
+    <!-- Research -->
+    <section id="research">
+      <p class="section-title">ls ./research</p>
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="role">B.A., Computer Science &amp; Mathematics · Hamilton College</div>
-          <div class="meta">Clinton, NY · Dec 2024 · GPA 3.88</div>
-          <p>
-            Magna Cum Laude · CS Honors · Phi Beta Kappa · Dean's List (every
-            semester)
-          </p>
-        </div>
-        <div class="timeline-item">
-          <div class="role">Study Abroad · The University of Manchester</div>
-          <div class="meta">Jan 2023 — Jan 2024 · Merit-based</div>
-          <p>Year abroad awarded for merit.</p>
-        </div>
+        {
+          research.map((r) => (
+            <div class="timeline-item">
+              <div class="role">
+                {r.role} · {r.org}
+              </div>
+              <div class="meta">{r.period}</div>
+              <p>{r.summary}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <p class="section-title">ls ./projects</p>
+      <div class="cards">
+        {
+          projects.map((p) => (
+            <article class="card">
+              <h3>{p.name}</h3>
+              <div class="tags">
+                {p.tags.map((t) => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+              <p>{p.description}</p>
+              <div class="card-links">
+                {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
+                {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
+              </div>
+            </article>
+          ))
+        }
       </div>
     </section>
 
