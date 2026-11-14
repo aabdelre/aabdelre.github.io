@@ -5,11 +5,12 @@ import { getCollection } from 'astro:content';
 // ---- Edit your content here -------------------------------------------------
 // Map pins. x/y are percentages across the map. `id` must match a panel below.
 const pins = [
-  { id: 'experience', num: '01', label: 'Experience', x: 24, y: 34 },
-  { id: 'research', num: '02', label: 'Research', x: 50, y: 20 },
-  { id: 'projects', num: '03', label: 'Projects', x: 76, y: 34 },
-  { id: 'blog', num: '04', label: 'Blog', x: 32, y: 72 },
-  { id: 'beyond', num: '05', label: 'Beyond', x: 70, y: 72 },
+  { id: 'about', num: '01', label: 'About', x: 50, y: 50 },
+  { id: 'experience', num: '02', label: 'Experience', x: 24, y: 34 },
+  { id: 'research', num: '03', label: 'Research', x: 50, y: 18 },
+  { id: 'projects', num: '04', label: 'Projects', x: 76, y: 34 },
+  { id: 'blog', num: '05', label: 'Blog', x: 32, y: 72 },
+  { id: 'beyond', num: '06', label: 'Beyond', x: 70, y: 72 },
 ];
 
 const projects = [
@@ -46,6 +47,11 @@ const experience = [
     period: 'Mar 2026 — Present',
     summary:
       'Building an AI-native LMS for AI-assisted curriculum building, teaching, assessment, and grading; benchmarking 10+ models for grading quality.',
+    details: [
+      'Lead technical direction with 2 co-founders: benchmark models, build agents, and design evaluation protocols, privacy controls, and integrity safeguards.',
+      'Benchmarked 20+ open and closed models. Reached final-stage accelerator conversations with YC, a16z, and Afore Capital.',
+      'Building reliable AI feedback and voice personas. Working through model failures, privacy concerns, and a broken live demo, with limited testing because of a lack of funding.',
+    ],
   },
   {
     role: 'Software Engineer, ML Infrastructure',
@@ -53,6 +59,12 @@ const experience = [
     period: 'Feb 2025 — Present',
     summary:
       'Build ML workflow orchestration for Ads ranking — cut model-iteration latency ~88% and drove avg 2.45% accuracy gains across production models.',
+    details: [
+      'Builds products and infrastructure that connect people and businesses, including ad platforms, large-scale Ads ML systems, and evaluation tools.',
+      'Developing agents and platform capabilities for model iteration, and designing self-improving workflows for models. Shipping model improvements.',
+      'Cut iteration latency about 35% and lifted accuracy about 2.45% on average across 5 models. Among the org’s top 5% of contributors, and fast-tracked for promotion in 11 months.',
+      'The org’s youngest member (of about 200 headcount), filling AI/ML knowledge gaps while delivering impact. Honing time estimation and navigating corporate politics.',
+    ],
   },
   {
     role: 'Software Engineer Intern',
@@ -60,6 +72,11 @@ const experience = [
     period: 'May 2024 — Aug 2024',
     summary:
       'Rewrote a Python microservice (−72% code) and migrated Address Pool Manager monitoring to Prometheus/Grafana with custom gRPC metrics endpoints on Kubernetes.',
+    details: [
+      'Develops networking hardware, software, and cloud services for enterprise and service-provider infrastructure.',
+      'Migrated Python microservices to Go, and instrumented asynchronous workflows with Prometheus and Grafana to track metrics and build dashboards.',
+      'Finished my project mid-internship and expanded its scope. Reduced build size by about 72%, and earned the best intern presentation and a return offer.',
+    ],
   },
   {
     role: 'Software Developer',
@@ -67,6 +84,22 @@ const experience = [
     period: 'Jun 2023 — Jan 2024',
     summary:
       'Built an inventory app on AWS (DynamoDB, S3, Lambda) behind a Django REST API, and revamped a 7-page digital archive in React.',
+    details: [
+      'Supports faculty and students with research, course design, tech troubleshooting, digital learning, media production, workshops, and makerspace projects.',
+      'Led development for on-campus projects, connected students to resources for their research, and documented the work for blogs.',
+      'Completed 2 projects and worked with 3 departments and off-campus organizations. Offered part-time work after the summer, for merit.',
+    ],
+  },
+  {
+    role: 'Teaching Assistant',
+    org: 'Hamilton College CS, Math & Physics',
+    period: '',
+    summary:
+      'Led labs, graded quizzes, projects, and exams, and supported students in office hours across computer science, mathematics, and physics.',
+    details: [
+      'Repeatedly selected for TA positions by departments, for merit, across all semesters. Represented departments at professorship candidate dinners.',
+      'Catered explanations to students with different baselines of understanding, while managing time between tutoring and other commitments.',
+    ],
   },
 ];
 
@@ -82,6 +115,16 @@ const education = [
     meta: 'Manchester, UK · Jan 2023 — Jan 2024 · Merit-based',
     summary: 'Year abroad awarded for merit.',
   },
+];
+
+const commits = [
+  ...experience.map((e, i) => ({
+    hash: ['a91f2c0', '7b03e4d', '3c8e1a7', '5d2f9b1', 'e27a0b3'][i],
+    msg: `${e.role} · ${e.org}`,
+    when: e.period,
+    body: e.summary,
+    details: e.details ?? [],
+  })),
 ];
 
 const research = [
@@ -156,7 +199,7 @@ const posts = (await getCollection('blog'))
     <div class="landing" data-landing>
       <!-- Left column: bio terminal -->
       <div class="bio-col">
-        <section class="hero" id="about">
+        <section class="hero" id="intro">
           <div class="term-window">
             <div class="term-bar">
               <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
@@ -345,23 +388,88 @@ const posts = (await getCollection('blog'))
                 <button class="back" type="button" data-close>close ✕</button>
               </div>
               <div class="popup-body">
-                <div class="panel" data-panel="experience" data-title="git log --oneline experience" hidden>
-                  <div class="photo-slot">[ photo: experience ]</div>
-                  {
-                    experience.map((e) => (
-                      <div class="page" data-page>
-                        <div class="role">{e.role} · {e.org}</div>
-                        <div class="meta">{e.period}</div>
-                        <p>{e.summary}</p>
+                <div class="panel" data-panel="about" data-title="cat ./about" data-mode="flat" hidden>
+                  <div class="about-body">
+                    <div class="ab-top">
+                      <div class="ab-prompt">whoami</div>
+                      <div class="about-cap"><span class="ab-dollar">$</span> open ahmed.jpg</div>
+                    </div>
+                    <div class="about-side">
+                      <div class="about-photo-wrap">
+                        <img class="about-photo" src="/about/ahmed.jpg" alt="Ahmed wearing a mixed-reality headset" loading="lazy" />
                       </div>
-                    ))
-                  }
+                    </div>
+                    <div class="about-text">
+                      <h2 class="ab-title">Hi, I'm Ahmed!</h2>
+                      <p class="ab-intro">
+                        By day I work on ML infrastructure at <b>Meta</b>, where I help train and tune the models that decide which <b>ads</b> people see.
+                      </p>
+                      <p class="ab-intro">
+                        Outside work, I'm building an <b>AI startup</b> for educators: tools for planning courses, returning feedback, and grading, plus <b>round-the-clock office hours</b> for students.
+                      </p>
+                    </div>
+                    <div class="ab-wide">
+                      <div class="ab-prompt">cat mission.txt</div>
+                      <div class="ab-box">
+                        I want to build AI tools that make teaching and learning better: feedback students can trust, evaluation that holds up, and products teachers actually use.
+                      </div>
+                    </div>
+                    <div class="ab-wide">
+                      <div class="ab-prompt">ls ./education</div>
+                      <div class="ab-edu">
+                        {
+                          education.map((ed, i) => (
+                            <div class="ab-card">
+                              <h4>{ed.role}</h4>
+                              <div class="ab-meta">{ed.meta}</div>
+                              {i === 0 && (
+                                <div>
+                                  {["Magna Cum Laude", "CS Honors", "Phi Beta Kappa", "Dean's List (every semester)"].map((t) => (
+                                    <span class="chip">{t}</span>
+                                  ))}
+                                </div>
+                              )}
+                              {i === 1 && (
+                                <div>
+                                  <span class="chip">Study abroad</span>
+                                </div>
+                              )}
+                            </div>
+                          ))
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel" data-panel="experience" data-title="git log --oneline experience" data-mode="log" hidden>
+                  <!-- Experience as a commit history: click a commit to open it -->
+                  <div class="log" data-log>
+                    {
+                      commits.map((c, i) => (
+                        <button class="commit" type="button" data-commit={i}>
+                          <span class="hash">{c.hash}</span>
+                          <span class="msg">{c.msg}{i === 0 && <span class="head">HEAD</span>}</span>
+                          <span class="when">{c.when}</span>
+                        </button>
+                      ))
+                    }
+                  </div>
                   {
-                    education.map((ed) => (
-                      <div class="page" data-page>
-                        <div class="role">{ed.role}</div>
-                        <div class="meta">{ed.meta}</div>
-                        <p>{ed.summary}</p>
+                    commits.map((c, i) => (
+                      <div class="commit-view" data-cview={i} hidden>
+                        <button class="back" type="button" data-cup>← git log</button>
+                        <div class="cv-hash">commit {c.hash}</div>
+                        <div class="cv-msg">{c.msg}</div>
+                        <div class="cv-when">{c.when}</div>
+                        <p>{c.body}</p>
+                        {c.details.length > 0 && (
+                          <ul class="cv-list">
+                            {c.details.map((d) => (
+                              <li>{d}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     ))
                   }
@@ -924,7 +1032,7 @@ const posts = (await getCollection('blog'))
     padding: 1rem 1.75rem;
   }
   .popup.takeover .popup-body {
-    padding: 2rem 3rem;
+    padding: 1.25rem 2rem;
   }
   .popup.takeover .page .role {
     font-size: 1.5rem;
@@ -1019,7 +1127,8 @@ const posts = (await getCollection('blog'))
   .popup-body {
     flex: 1;
     min-height: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 0.9rem 1.1rem;
     display: flex;
     flex-direction: column;
@@ -1347,8 +1456,8 @@ const posts = (await getCollection('blog'))
     font-weight: 500;
   }
   .w-research {
-    left: 50%;
-    top: 32%;
+    left: 60%;
+    top: 12%;
     width: 200px;
     text-align: center;
   }
@@ -1726,6 +1835,291 @@ const posts = (await getCollection('blog'))
       border-right: 0;
       border-bottom: 1px solid var(--border);
     }
+  }
+
+  /* About: photo placeholder and education entries */
+  /* One row, with each prompt sitting over the content it labels */
+  .ab-top {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: end;
+  }
+  .ab-top .about-cap {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+  }
+  .ab-top .ab-prompt {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  @media (max-width: 560px) {
+    .ab-top {
+      grid-template-columns: 1fr;
+    }
+    .ab-top .about-cap,
+    .ab-top .ab-prompt {
+      grid-column: 1;
+      grid-row: auto;
+      justify-self: start;
+    }
+  }
+  .ab-wide {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+  .about-body {
+    display: grid;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: center;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .about-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+  }
+  .about-photo-wrap {
+    width: 100%;
+    max-width: 160px;
+    padding: 6px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent), var(--border) 35%, var(--accent) 70%, var(--border));
+  }
+  .about-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 0;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .ab-dollar {
+    color: var(--accent);
+  }
+  .about-cap {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .ab-prompt {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .ab-prompt::before {
+    content: "$ ";
+    color: var(--accent);
+  }
+  .ab-gap {
+    margin-top: 0.4rem;
+  }
+  .ab-title {
+    font-size: clamp(1.7rem, 3vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--strong);
+    margin: 0.2rem 0 0.4rem;
+  }
+  .ab-intro {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--text);
+    margin: 0;
+  }
+  .ab-intro b {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .ab-box {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .ab-edu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.6rem;
+  }
+  .ab-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 0.6rem 0.9rem;
+  }
+  .ab-card h4 {
+    margin: 0 0 0.2rem;
+    font-size: 1.05rem;
+    color: var(--strong);
+  }
+  .ab-meta {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+    margin: 0.5rem 0.35rem 0 0;
+  }
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    min-width: 0;
+  }
+  .about-text p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .about-sub {
+    margin-top: 0.6rem;
+  }
+  @media (max-width: 560px) {
+    .about-body {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .about-text {
+      width: 100%;
+    }
+  }
+  .edu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 0.9rem;
+  }
+
+  /* Experience as a git log */
+  .log {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--mono);
+    padding: 0.5rem 0;
+  }
+  .log[hidden] {
+    display: none;
+  }
+  .commit {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr) auto;
+    gap: 0.9rem;
+    align-items: center;
+    text-align: left;
+    background: none;
+    border: 0;
+    border-left: 2px solid var(--border);
+    margin-left: 0.5rem;
+    padding: 0.8rem 1rem 0.8rem 1.2rem;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  .commit::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    transform: translateY(-50%);
+  }
+  .commit:hover {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+  .commit:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .commit .hash {
+    color: var(--warn);
+  }
+  .commit .head {
+    margin-left: 0.6rem;
+    padding: 0 0.45rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+  .commit .when {
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: right;
+  }
+  .commit-view {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .commit-view[hidden] {
+    display: none;
+  }
+  .commit-view .back {
+    align-self: flex-start;
+  }
+  .cv-hash {
+    font-family: var(--mono);
+    color: var(--warn);
+  }
+  .cv-msg {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--strong);
+  }
+  .cv-when {
+    font-family: var(--mono);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .cv-list {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .commit-view {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .commit-view p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text);
   }
 
   /* Research as a whiteboard */
@@ -2201,9 +2595,10 @@ const posts = (await getCollection('blog'))
       counter!.hidden = mode !== 'paged';
       popup!.querySelector<HTMLElement>('[data-foot-os]')!.hidden = mode !== 'folders';
       popup!.querySelector<HTMLElement>('[data-foot-time]')!.hidden = mode !== 'folders';
-      popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = mode === 'board';
+      popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = mode === 'board' || mode === 'log' || mode === 'flat';
       if (mode === 'folders') showDesk();
       if (mode === 'board') showBoard();
+      if (mode === 'log') showLog();
       render();
     }
 
@@ -2426,6 +2821,24 @@ const posts = (await getCollection('blog'))
     });
 
     // Deep links (#research) and header nav clicks open the matching popup.
+    // Experience git log: a commit opens its details, "← git log" returns
+    function showLog() {
+      document.querySelector<HTMLElement>('[data-log]')!.hidden = false;
+      document.querySelectorAll<HTMLElement>('[data-cview]').forEach((v) => (v.hidden = true));
+    }
+    function openCommit(i: number) {
+      document.querySelector<HTMLElement>('[data-log]')!.hidden = true;
+      document.querySelectorAll<HTMLElement>('[data-cview]').forEach(
+        (v) => (v.hidden = v.dataset.cview !== String(i)),
+      );
+    }
+    document.querySelectorAll<HTMLButtonElement>('[data-commit]').forEach((b) =>
+      b.addEventListener('click', () => openCommit(Number(b.dataset.commit))),
+    );
+    document.querySelectorAll<HTMLElement>('[data-cup]').forEach((b) =>
+      b.addEventListener('click', showLog),
+    );
+
     // Research whiteboard: a card opens its details, "← board" returns
     function showBoard() {
       document.querySelector<HTMLElement>('[data-board]')!.hidden = false;
