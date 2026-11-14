@@ -77,37 +77,49 @@ const posts = (await getCollection('blog'))
   <div class="container">
     <!-- Hero + About -->
     <section class="hero" id="about">
-      <div class="hero-head">
-        <img
-          class="avatar"
-          src="/personalPic.jpeg"
-          alt="Ahmed Abdelrehim"
-          width="120"
-          height="120"
-        />
-        <div>
-          <h1>Ahmed Abdelrehim</h1>
-          <p class="tagline">
-            Software engineer building thoughtful, useful tools.
-          </p>
+      <div class="term-window">
+        <div class="term-bar">
+          <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+          <span class="title">aabdelre — zsh</span>
         </div>
-      </div>
-      <p>
-        Short bio goes here — a few sentences about your background, what you're
-        focused on right now, and what you care about. Keep it human and
-        specific.
-      </p>
-      <div class="socials">
-        <a href="https://github.com/aabdelre">GitHub</a>
-        <a href="https://www.linkedin.com/in/aash2024/">LinkedIn</a>
-        <a href="mailto:aabdelre.ahmed@gmail.com">Email</a>
-        <a href="/resume.pdf">Résumé (PDF)</a>
+        <div class="term-body">
+          <p class="prompt">whoami</p>
+          <div class="hero-head">
+            <img
+              class="avatar"
+              src="/personalPic.jpeg"
+              alt="Ahmed Abdelrehim"
+              width="120"
+              height="120"
+            />
+            <div>
+              <h1>Ahmed Abdelrehim</h1>
+              <p class="out-accent">
+                Software engineer building thoughtful, useful tools.
+              </p>
+            </div>
+          </div>
+          <p class="prompt">cat about.txt</p>
+          <p>
+            Short bio goes here — a few sentences about your background, what
+            you're focused on right now, and what you care about. Keep it human
+            and specific.
+          </p>
+          <p class="prompt">open links</p>
+          <div class="socials">
+            <a href="https://github.com/aabdelre">github</a>
+            <a href="https://www.linkedin.com/in/aash2024/">linkedin</a>
+            <a href="mailto:aabdelre.ahmed@gmail.com">email</a>
+            <a href="/resume.pdf">resume.pdf</a>
+          </div>
+          <p class="prompt" style="margin-top: 1.5rem"><span class="caret"></span></p>
+        </div>
       </div>
     </section>
 
     <!-- Projects -->
     <section id="projects">
-      <p class="section-title">Projects</p>
+      <p class="section-title">ls ./projects</p>
       <div class="cards">
         {
           projects.map((p) => (
@@ -131,7 +143,7 @@ const posts = (await getCollection('blog'))
 
     <!-- Experience -->
     <section id="experience">
-      <p class="section-title">Experience</p>
+      <p class="section-title">git log --oneline experience</p>
       <div class="timeline">
         {
           experience.map((e) => (
@@ -149,7 +161,7 @@ const posts = (await getCollection('blog'))
 
     <!-- Latest writing -->
     <section id="writing">
-      <p class="section-title">Latest writing</p>
+      <p class="section-title">tail -n 3 ./writing</p>
       <ul class="post-list">
         {
           posts.map((post) => (
