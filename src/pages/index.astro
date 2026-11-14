@@ -410,11 +410,13 @@ const posts = (await getCollection('blog'))
                   {
                     beyond.map((b) => (
                       <div class="page" data-page>
-                        <div class="role">{b.title}</div>
-                        {b.text && <p>{b.text}</p>}
+                        {!b.images && <div class="role">{b.title}</div>}
+                        {!b.images && b.text && <p>{b.text}</p>}
                         {b.images && (
                           <div class="split">
                             <div class="split-text">
+                              <div class="role">{b.title}</div>
+                              {b.text && <p>{b.text}</p>}
                               <img src={b.images[0]} alt={`${b.title} photo`} loading="lazy" />
                             </div>
                             <div class="split-imgs">
