@@ -402,7 +402,7 @@ const posts = (await getCollection('blog'))
                     <div class="about-text">
                       <h2 class="ab-title">Hi, I'm Ahmed!</h2>
                       <p class="ab-intro">
-                        By day I work on ML infrastructure at <b>Meta</b>, where I help train and tune the models that decide which <b>ads</b> people see.
+                        I'm a software, ML engineer, originally from Egypt. By day I work on ML infrastructure at <b>Meta</b>, where I build agents that recursively self-improve the <b>ads</b> models that decide which ads people see. I also iterate on these models myself, from ideating new techniques to launching them.
                       </p>
                       <p class="ab-intro">
                         Outside work, I'm building an <b>AI startup</b> for educators: tools for planning courses, returning feedback, and grading, plus <b>round-the-clock office hours</b> for students.
@@ -1876,7 +1876,7 @@ const posts = (await getCollection('blog'))
   .about-body {
     display: grid;
     grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
-    gap: 1.75rem;
+    gap: 1rem 1.75rem;
     align-items: center;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
@@ -1924,7 +1924,7 @@ const posts = (await getCollection('blog'))
     margin-top: 0.4rem;
   }
   .ab-title {
-    font-size: clamp(1.7rem, 3vw, 2.1rem);
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -1932,8 +1932,8 @@ const posts = (await getCollection('blog'))
     margin: 0.2rem 0 0.4rem;
   }
   .ab-intro {
-    font-size: 1.05rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.45;
     color: var(--text);
     margin: 0;
   }
