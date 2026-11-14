@@ -1618,7 +1618,8 @@ const posts = (await getCollection('blog'))
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    overflow: hidden;
+    min-height: 0;
+    overflow-y: auto;
   }
   .nb-ls {
     font-size: 0.8rem;
