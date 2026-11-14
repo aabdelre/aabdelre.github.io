@@ -360,27 +360,40 @@ const posts = (await getCollection('blog'))
                   }
                 </div>
 
-                <div class="panel" data-panel="research" data-title="ls ./research" hidden>
-                  
+                <div class="panel" data-panel="research" data-title="ls ./research --board" data-mode="board" hidden>
+                  <!-- Whiteboard of research: click a card to open it -->
+                  <div class="board" data-board>
+                    <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M30 20 L62 20" />
+                      <path d="M30 60 L62 60" />
+                      <path d="M16 36 L16 52" />
+                      <path d="M80 36 L80 52" />
+                    </svg>
+                    {
+                      research.map((r, i) => (
+                        <button class="rcard" type="button" data-rcard={i} style={`left:${[4, 36, 68, 4, 68][i]}%;top:${[8, 8, 8, 56, 56][i]}%`}>
+                          <span class="rbar" style={`background:${['var(--accent)', '#58a6ff', 'var(--warn)', '#bc8cff', '#ff7b72'][i]}`}></span>
+                          <span class="rtitle">{r.role}</span>
+                          <span class="rsub">{r.org ?? ''}</span>
+                        </button>
+                      ))
+                    }
+                    <span class="rnote">click a card to open it</span>
+                  </div>
                   {
-                    research.map((r) => (
-                      <div class="page" data-page>
-                        <div class="role">{r.org ? `${r.role} · ${r.org}` : r.role}</div>
-                        {r.period && <div class="meta">{r.period}</div>}
+                    research.map((r, i) => (
+                      <div class="rdetail" data-rdetail={i} hidden>
+                        <button class="back" type="button" data-rup>← board</button>
+                        <div class="role">{r.role}</div>
+                        {r.org && <div class="meta">{r.org}{r.period ? ` · ${r.period}` : ''}</div>}
                         <p>{r.summary}</p>
                         {(r.poster || r.paper || r.project) && (
                           <p>
-                            {r.poster && (
-                              <a href={r.poster} target="_blank" rel="noopener">View poster →</a>
-                            )}
+                            {r.poster && <a href={r.poster} target="_blank" rel="noopener">View poster →</a>}
                             {r.poster && r.paper && ' · '}
-                            {r.paper && (
-                              <a href={r.paper} target="_blank" rel="noopener">Read paper →</a>
-                            )}
+                            {r.paper && <a href={r.paper} target="_blank" rel="noopener">Read paper →</a>}
                             {(r.poster || r.paper) && r.project && ' · '}
-                            {r.project && (
-                              <a href={r.project} target="_blank" rel="noopener">GECCO presentation →</a>
-                            )}
+                            {r.project && <a href={r.project} target="_blank" rel="noopener">GECCO presentation →</a>}
                           </p>
                         )}
                       </div>
@@ -1517,6 +1530,112 @@ const posts = (await getCollection('blog'))
     }
   }
 
+  /* Research as a whiteboard */
+  .board {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background-color: var(--bg);
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 26px 26px;
+    overflow: hidden;
+  }
+  .board[hidden] {
+    display: none;
+  }
+  .wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .wires path {
+    stroke: var(--muted);
+    stroke-width: 1.5;
+    stroke-dasharray: 1.2 1.2;
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.6;
+  }
+  .rcard {
+    position: absolute;
+    width: 27%;
+    min-height: 28%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.9rem 1rem 1rem;
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    color: var(--text);
+    font-family: var(--mono);
+  }
+  .rcard:hover,
+  .rcard:focus-visible {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .rbar {
+    display: block;
+    height: 4px;
+    border-radius: 2px;
+    margin-bottom: 0.3rem;
+  }
+  .rtitle {
+    font-size: 0.95rem;
+    color: var(--strong);
+    line-height: 1.3;
+  }
+  .rsub {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .rnote {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.7rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .rdetail {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .rdetail[hidden] {
+    display: none;
+  }
+  .rdetail .role {
+    font-weight: 600;
+    color: var(--strong);
+    font-size: 1.4rem;
+  }
+  .rdetail .meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .rdetail p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .rdetail .back {
+    align-self: flex-start;
+  }
+
   /* ahmed.os label in the footer of the projects view */
   .foot-os {
     font-family: var(--mono);
@@ -1770,13 +1889,15 @@ const posts = (await getCollection('blog'))
       popup!.classList.remove('grow', 'shrink');
       void popup!.offsetWidth; // restart the entrance animation
       popup!.classList.add('grow');
-      // Folder mode (projects): no paging, the desktop of folders instead
-      const folderMode = panel.dataset.mode === 'folders';
-      prevBtn!.hidden = folderMode;
-      nextBtn!.hidden = folderMode;
-      counter!.hidden = folderMode;
-      popup!.querySelector<HTMLElement>('[data-foot-os]')!.hidden = !folderMode;
-      if (folderMode) showDesk();
+      // Modes: paged (default), folders (projects), board (research)
+      const mode = panel.dataset.mode ?? 'paged';
+      prevBtn!.hidden = mode !== 'paged';
+      nextBtn!.hidden = mode !== 'paged';
+      counter!.hidden = mode !== 'paged';
+      popup!.querySelector<HTMLElement>('[data-foot-os]')!.hidden = mode !== 'folders';
+      popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = mode === 'board';
+      if (mode === 'folders') showDesk();
+      if (mode === 'board') showBoard();
       render();
     }
 
@@ -1999,6 +2120,24 @@ const posts = (await getCollection('blog'))
     });
 
     // Deep links (#research) and header nav clicks open the matching popup.
+    // Research whiteboard: a card opens its details, "← board" returns
+    function showBoard() {
+      document.querySelector<HTMLElement>('[data-board]')!.hidden = false;
+      document.querySelectorAll<HTMLElement>('[data-rdetail]').forEach((d) => (d.hidden = true));
+    }
+    function openResearch(i: number) {
+      document.querySelector<HTMLElement>('[data-board]')!.hidden = true;
+      document.querySelectorAll<HTMLElement>('[data-rdetail]').forEach(
+        (d) => (d.hidden = d.dataset.rdetail !== String(i)),
+      );
+    }
+    document.querySelectorAll<HTMLButtonElement>('[data-rcard]').forEach((c) =>
+      c.addEventListener('click', () => openResearch(Number(c.dataset.rcard))),
+    );
+    document.querySelectorAll<HTMLElement>('[data-rup]').forEach((b) =>
+      b.addEventListener('click', showBoard),
+    );
+
     // Projects folders: click selects, double-click (or Enter) opens, "up" returns to the desktop
     function showDesk() {
       document.querySelector<HTMLElement>('[data-desk]')!.hidden = false;
