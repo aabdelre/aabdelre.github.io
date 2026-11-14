@@ -18,11 +18,11 @@ const isHome = pathname === '/' || pathname === '';
       <span>Ahmed</span>
     </a>
     <nav>
-      <a href={isHome ? '#experience' : '/#experience'}>Experience</a>
-      <a href={isHome ? '#research' : '/#research'}>Research</a>
-      <a href={isHome ? '#projects' : '/#projects'}>Projects</a>
-      <a href={isHome ? '#blog' : '/#blog'}>Blog</a>
-      <a href={isHome ? '#beyond' : '/#beyond'}>Beyond</a>
+      <a href={isHome ? '#experience' : '/#experience'}><span class="num">01</span> Experience</a>
+      <a href={isHome ? '#research' : '/#research'}><span class="num">02</span> Research</a>
+      <a href={isHome ? '#projects' : '/#projects'}><span class="num">03</span> Projects</a>
+      <a href={isHome ? '#blog' : '/#blog'}><span class="num">04</span> Blog</a>
+      <a href={isHome ? '#beyond' : '/#beyond'}><span class="num">05</span> Beyond</a>
     </nav>
   </div>
 </header>
@@ -43,6 +43,10 @@ const isHome = pathname === '/' || pathname === '';
     height: 28px;
     color: var(--text);
     flex-shrink: 0;
+  }
+  .num {
+    color: var(--accent);
+    margin-right: 0.25rem;
   }
   .logo circle {
     fill: var(--accent);
