@@ -417,11 +417,23 @@ const posts = (await getCollection('blog'))
                             <div class="split-text">
                               <div class="role">{b.title}</div>
                               {b.text && <p>{b.text}</p>}
-                              <img src={b.images[0]} alt={`${b.title} photo`} loading="lazy" />
+                              <figure class="shot">
+                                <div class="shot-bar">
+                                  <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                                  <span>{b.images[0].split('/').pop()}</span>
+                                </div>
+                                <img src={b.images[0]} alt={`${b.title} photo`} loading="lazy" />
+                              </figure>
                             </div>
                             <div class="split-imgs">
                               {b.images.slice(1).map((src) => (
-                                <img src={src} alt={`${b.title} photo`} loading="lazy" />
+                                <figure class="shot">
+                                  <div class="shot-bar">
+                                    <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                                    <span>{src.split('/').pop()}</span>
+                                  </div>
+                                  <img src={src} alt={`${b.title} photo`} loading="lazy" />
+                                </figure>
                               ))}
                             </div>
                           </div>
@@ -1331,6 +1343,62 @@ const posts = (await getCollection('blog'))
     50% {
       opacity: 0;
     }
+  }
+
+  /* Terminal-window frames around photos */
+  .shot {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .shot-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .shot-bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .shot-bar .dot-r { background: #ff5f56; }
+  .shot-bar .dot-y { background: #ffbd2e; }
+  .shot-bar .dot-g { background: #27c93f; }
+  .shot-bar span {
+    margin-left: 0.5rem;
+    color: var(--accent);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .split-text .shot {
+    height: clamp(220px, 42vh, 400px);
+  }
+  .split-imgs .shot {
+    flex: 1;
+    min-height: 0;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: calc(100% - 2rem);
+    min-height: 0;
+    object-fit: contain;
+    background: var(--surface);
+    border: 0;
+    border-radius: 0;
   }
 
   /* Two-page spread: text and one photo on the left, the rest on the right */
