@@ -203,7 +203,76 @@ const posts = (await getCollection('blog'))
             }
           </svg>
 
-          <div class="home">~/ahmed</div>
+
+          <!-- Live background: radar, flight paths, drifting tokens, map symbols -->
+          <div class="bg-layer" aria-hidden="true">
+            <div class="radar-ring" style="width:220px;height:220px;"></div>
+            <div class="radar-ring" style="width:380px;height:380px;"></div>
+            <div class="radar"></div>
+            <svg class="bg-paths" viewBox="0 0 1000 625" preserveAspectRatio="none">
+              <path d="M40 560 Q 260 430 480 520 T 930 470" />
+              <path d="M60 120 Q 300 40 520 130 T 960 90" />
+              <path d="M150 300 Q 420 240 640 330" />
+            </svg>
+            <span class="mover" style="left:38%;top:70%;"></span>
+            <span class="mover" style="left:62%;top:20%;"></span>
+            <span class="mover mover-b" style="left:22%;top:48%;"></span>
+            <span class="pt" style="left:12%;top:40%;"></span>
+            <span class="pt" style="left:33%;top:8%;animation-delay:-1s;"></span>
+            <span class="pt" style="left:58%;top:86%;animation-delay:-2s;"></span>
+            <span class="pt" style="left:88%;top:30%;animation-delay:-1.5s;"></span>
+            <span class="pt" style="left:6%;top:88%;animation-delay:-2.5s;"></span>
+            <span class="pt" style="left:94%;top:82%;animation-delay:-0.5s;"></span>
+            <span class="pt" style="left:46%;top:44%;animation-delay:-1.8s;"></span>
+            <span class="pt" style="left:80%;top:12%;animation-delay:-2.2s;"></span>
+            <span class="tok" style="left:4%;top:24%;">−88% latency</span>
+            <span class="tok alt" style="left:86%;top:54%;">+2.45%</span>
+            <span class="tok warn" style="left:14%;top:70%;">~102 hrs / yr</span>
+            <span class="tok" style="left:62%;top:6%;animation-delay:-3s;">{'{ }'}</span>
+            <span class="tok alt" style="left:44%;top:92%;animation-delay:-5s;">=&gt;</span>
+            <span class="tok" style="left:92%;top:40%;animation-delay:-6s;">+1.45% NE</span>
+            <span class="tok warn" style="left:28%;top:34%;animation-delay:-2s;">−72% code</span>
+            <span class="tok alt" style="left:70%;top:76%;animation-delay:-7s;">git push</span>
+            <span class="tri" style="left:84%;top:86%;"></span>
+            <span class="tri tri-s" style="left:88%;top:88%;"></span>
+            <span class="net" style="left:52%;top:62%;"></span>
+            <span class="brk" style="left:60%;top:48%;">&lt;/&gt;</span>
+            <span class="brk" style="left:10%;top:56%;animation-delay:-4s;">{'{ }'}</span>
+            <span class="ring" style="left:50%;top:20%;"></span>
+            <span class="glyph" style="left:68%;top:44%;">{'{ }'}</span>
+            <span class="glyph" style="left:80%;top:40%;animation-delay:-2s;">=&gt;</span>
+            <span class="glyph" style="left:88%;top:48%;animation-delay:-3.5s;">#</span>
+            <div class="compass"><div class="needle"></div></div>
+            <div class="scan"></div>
+          </div>
+
+          <!-- Pin widgets: one live readout per section -->
+          <div class="w w-research">
+            <b>loss ↓ 11%</b> · genetic programming
+            <svg class="wave-svg" viewBox="0 0 186 46" aria-hidden="true">
+              <path class="wave" d="M0 30 Q 23 6 46 24 T 93 18 T 140 22 T 186 8" />
+            </svg>
+          </div>
+          <div class="w w-exp">
+            <b>ranking · Ads models</b>
+            <div class="rank rise"><span>orchestrator</span><span>−88% latency</span></div>
+            <div class="rank"><span>feature swap</span><span>+1.45% NE</span></div>
+            <div class="rank rise delay"><span>avg accuracy</span><span>+2.45%</span></div>
+            <div class="agent-line">agent&gt; iterating<span class="blink">_</span></div>
+          </div>
+          <div class="w w-proj">
+            <b>{projects[0]?.name}</b> · audit log
+            <div class="code-line">bias_audit.run()<span class="blink">_</span></div>
+          </div>
+          <div class="w w-blog">
+            <b>latest writing</b>
+            <div class="clip">{posts[0]?.data.title}</div>
+          </div>
+          <div class="w w-beyond">
+            <b>off the map</b>
+            <div>volleyball · hiking</div>
+            <div>hackathons · judging · mentoring</div>
+          </div>
 
           {
             pins.map((p) => (
@@ -632,6 +701,345 @@ const posts = (await getCollection('blog'))
   @media (max-width: 860px) {
     .landing {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* Live map background and pin widgets (design I) */
+  .bg-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .bg-layer > * {
+    position: absolute;
+  }
+  .radar-ring {
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed var(--border);
+  }
+  .radar {
+    left: 50%;
+    top: 20%;
+    width: 520px;
+    height: 520px;
+    margin: -260px 0 0 -260px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      color-mix(in srgb, var(--accent) 14%, transparent) 0deg,
+      transparent 60deg,
+      transparent 360deg
+    );
+    animation: spin 8s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .bg-paths {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .bg-paths path {
+    stroke: var(--border);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 4 6;
+  }
+  .mover {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--strong);
+    box-shadow: 0 0 8px var(--accent);
+    animation: mv 9s ease-in-out infinite alternate;
+  }
+  .mover-b {
+    background: var(--muted);
+  }
+  @keyframes mv {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(120px, 40px);
+    }
+  }
+  .pt {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--muted);
+    animation: tw 3s ease-in-out infinite;
+  }
+  @keyframes tw {
+    0%,
+    100% {
+      opacity: 0.15;
+    }
+    50% {
+      opacity: 0.9;
+    }
+  }
+  .tok,
+  .glyph {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    opacity: 0.35;
+    white-space: nowrap;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .glyph {
+    font-size: 10px;
+    opacity: 0.5;
+    animation: fall 5s linear infinite;
+  }
+  .tok.alt {
+    color: var(--accent-hover);
+  }
+  .tok.warn {
+    color: var(--warn);
+  }
+  @keyframes drift {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(18px, -22px);
+    }
+  }
+  @keyframes fall {
+    from {
+      transform: translateY(-10px);
+    }
+    to {
+      transform: translateY(60px);
+    }
+  }
+  .brk {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--muted);
+    opacity: 0.4;
+    animation: drift 10s ease-in-out infinite alternate;
+  }
+  .tri {
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 20px solid var(--border);
+  }
+  .tri-s {
+    transform: scale(0.7);
+  }
+  .net {
+    width: 120px;
+    height: 2px;
+    background: var(--border);
+    transform: rotate(-4deg);
+  }
+  .scan {
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(
+      transparent,
+      color-mix(in srgb, var(--accent) 7%, transparent),
+      transparent
+    );
+    animation: scan 7s linear infinite;
+  }
+  @keyframes scan {
+    from {
+      top: -80px;
+    }
+    to {
+      top: 100%;
+    }
+  }
+  .compass {
+    right: 18px;
+    top: 18px;
+    width: 54px;
+    height: 54px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .compass::before {
+    content: "N";
+    position: absolute;
+    top: 2px;
+    color: var(--accent);
+  }
+  .needle {
+    position: absolute;
+    width: 2px;
+    height: 22px;
+    background: linear-gradient(var(--accent) 50%, var(--muted) 50%);
+    animation: wobble 6s ease-in-out infinite alternate;
+  }
+  @keyframes wobble {
+    from {
+      transform: rotate(-12deg);
+    }
+    to {
+      transform: rotate(14deg);
+    }
+  }
+  .ring {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    animation: ping 2.4s ease-out infinite;
+  }
+  @keyframes ping {
+    from {
+      transform: translate(-50%, -50%) scale(0.4);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  .w {
+    position: absolute;
+    z-index: 1;
+    width: 220px;
+    transform: translate(-50%, 0);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .w b {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .w-research {
+    left: 50%;
+    top: 32%;
+    width: 200px;
+    text-align: center;
+  }
+  .w-exp {
+    left: 24%;
+    top: 50%;
+    width: 230px;
+  }
+  .w-proj {
+    left: 76%;
+    top: 52%;
+  }
+  .w-blog {
+    left: 32%;
+    top: 82%;
+  }
+  .w-beyond {
+    left: 70%;
+    top: 82%;
+  }
+  .wave-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 6px;
+  }
+  .wave {
+    stroke: var(--accent);
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 200;
+    animation: draw 3s linear infinite;
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 200;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .rank {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--text);
+    padding: 2px 0;
+  }
+  .rank.rise {
+    animation: rise 4s ease-in-out infinite alternate;
+  }
+  .rank.delay {
+    animation-delay: -2s;
+  }
+  @keyframes rise {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-18px);
+    }
+  }
+  .agent-line {
+    margin-top: 6px;
+    color: var(--warn);
+  }
+  .code-line {
+    margin-top: 6px;
+    color: var(--text);
+  }
+  .clip {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .blink {
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  .pin {
+    z-index: 2;
+  }
+  @media (max-width: 560px) {
+    .w,
+    .tok,
+    .glyph {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bg-layer *,
+    .w *,
+    .rank,
+    .wave,
+    .pin-dot::after {
+      animation: none !important;
     }
   }
 
