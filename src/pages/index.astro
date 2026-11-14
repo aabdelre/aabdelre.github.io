@@ -387,6 +387,12 @@ const posts = (await getCollection('blog'))
 </Base>
 
 <style>
+  /* Homepage only: widen the page and header to nearly full screen */
+  :global(.site-header .container),
+  .container {
+    max-width: min(1600px, 96vw);
+  }
+
   /* Desktop: the landing page fits the window with no scrolling */
   @media (min-width: 861px) {
     :global(html),
