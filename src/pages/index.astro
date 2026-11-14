@@ -87,7 +87,7 @@ const education = [
 const research = [
   {
     name: 'Human-Driven Genetic Programming (HDGP)',
-    role: 'Can non-experts verify program-synthesis results with counterexamples instead of labeling hundreds of cases?',
+    role: 'Do counterexamples let non-experts verify programs without labeling hundreds of cases?',
     org: 'Hamilton College CS Department',
     period: '2023',
     summary:
@@ -100,19 +100,19 @@ const research = [
   },
   {
     name: 'Vertex Clique Coverage',
-    role: 'Can a DSATUR-based heuristic color large graph complements implicitly, without holding them in memory?',
+    role: 'What if a huge graph’s complement never had to fit in memory?',
     summary:
       "Designed a modified DSATUR heuristic that colors large graph complements implicitly with a new 'grayness degree', then ported it to C++. On SNAP graphs, clique counts landed within 1% of exact or best-known bounds, and profiling cut runtime about 10x (19s to 2s). I also tested Tabu search as an alternative.",
   },
   {
     name: 'LLMs with Databases',
-    role: "Can GPT-3 write a database's read and write endpoints from its schema alone?",
+    role: "Could a language model write a database's API from its schema alone?",
     summary:
       "Tested whether the GPT-3 API could write a database's GET and POST endpoints from only its schema, so a UI could read and write data with no hand-written backend. I designed the prompts, built the endpoints from the model's output, and verified them end to end. Verifying that generated code works is still the question I work on in production.",
   },
   {
     name: 'Irish Music Composer',
-    role: 'Can musical features and models identify which composer wrote an unattributed reel?',
+    role: 'Which composer’s fingerprint hides inside an unattributed reel?',
     summary:
       'Team research project for a biology professor and Irish music enthusiast: which of 36 unattributed reels did fiddler John McFadden compose? I collected 158 reels in ABC notation and built a CLI and a UI to add tunes, test unknown ones, and visualize clusters of 20 musical features. Our best model (K-means, an MLP, and fine-tuned BERT were compared) reached 68% validation accuracy, limited by the amount of data.',
     presentation:
@@ -120,7 +120,7 @@ const research = [
   },
   {
     name: 'Emotion Detection',
-    role: "Can dialogue, vocal tone, and facial expressions together predict a viewer's emotions as a scene unfolds?",
+    role: "Where does a viewer's emotion live: in the words, the voice, or the face?",
     summary:
       "Semester-long project predicting a viewer's emotions continuously as a scene unfolds, not one label per clip. The architecture fuses dialogue (BERT), vocal tone (ResNet on mel-spectrograms), and facial expressions (ResNet). I gathered and prepared data from RAVDESS, CMU-MOSEI, IEMOCAP, MELD, and a dataset we collected from Hamilton students, reaching 83% accuracy on 7 emotions.",
   },
