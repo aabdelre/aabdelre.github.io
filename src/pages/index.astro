@@ -407,13 +407,11 @@ const posts = (await getCollection('blog'))
                             {(r.poster || r.paper || r.project) && (
                               <div class="nb-cell">
                                 <div class="nb-head">[2] artifacts</div>
-                                <p>
-                                  {r.poster && <a href={r.poster} target="_blank" rel="noopener">poster →</a>}
-                                  {r.poster && r.paper && ' · '}
-                                  {r.paper && <a href={r.paper} target="_blank" rel="noopener">paper →</a>}
-                                  {(r.poster || r.paper) && r.project && ' · '}
-                                  {r.project && <a href={r.project} target="_blank" rel="noopener">GECCO presentation →</a>}
-                                </p>
+                                <ul class="nb-links">
+                                  {r.poster && <li><a href={r.poster} target="_blank" rel="noopener">poster →</a></li>}
+                                  {r.paper && <li><a href={r.paper} target="_blank" rel="noopener">paper →</a></li>}
+                                  {r.project && <li><a href={r.project} target="_blank" rel="noopener">GECCO presentation →</a></li>}
+                                </ul>
                               </div>
                             )}
                           </div>
@@ -1680,6 +1678,21 @@ const posts = (await getCollection('blog'))
   }
   .nb-cell a {
     color: var(--accent);
+  }
+  .nb-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.95rem;
+  }
+  .nb-links li {
+    padding: 0.35rem 0.6rem;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
   }
   @media (max-width: 560px) {
     .nb {
