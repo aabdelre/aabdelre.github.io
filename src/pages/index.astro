@@ -41,8 +41,9 @@ const projects = [
   {
     name: 'Maze Explorer & Sketcher',
     description:
-      'A maze-exploring robot that sketches the entire maze as it explores. It finds a light-source goal, records its position, and then navigates to the goal once exploration is done.',
+      'A maze-exploring robot that sketches the entire maze as it explores. It finds a light-source goal, records its position, and then navigates to the goal once exploration is done. Once it reaches the goal, it dances.',
     tags: ['Robotics', 'Mapping', 'Path Planning'],
+    video: '/projects/maze-explorer.mp4',
     demo: '#',
     repo: '#',
   },
@@ -567,7 +568,11 @@ const posts = (await getCollection('blog'))
                           <span class="win-title">{p.name}</span>
                           <button class="win-close" type="button" data-up aria-label="Close window">×</button>
                         </div>
-                        <div class="win-media">[ video: {p.name} ]</div>
+                        {p.video ? (
+                          <video class="win-media" src={p.video} controls playsinline preload="metadata" aria-label={`${p.name} video`}></video>
+                        ) : (
+                          <div class="win-media">[ video: {p.name} ]</div>
+                        )}
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
