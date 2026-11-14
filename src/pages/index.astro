@@ -5,11 +5,11 @@ import { getCollection } from 'astro:content';
 // ---- Edit your content here -------------------------------------------------
 // Map pins. x/y are percentages across the map. `id` must match a panel below.
 const pins = [
-  { id: 'experience', label: 'Experience', x: 24, y: 34 },
-  { id: 'research', label: 'Research', x: 50, y: 20 },
-  { id: 'projects', label: 'Projects', x: 76, y: 34 },
-  { id: 'blog', label: 'Blog', x: 32, y: 72 },
-  { id: 'beyond', label: 'Beyond', x: 70, y: 72 },
+  { id: 'experience', num: '01', label: 'Experience', x: 24, y: 34 },
+  { id: 'research', num: '02', label: 'Research', x: 50, y: 20 },
+  { id: 'projects', num: '03', label: 'Projects', x: 76, y: 34 },
+  { id: 'blog', num: '04', label: 'Blog', x: 32, y: 72 },
+  { id: 'beyond', num: '05', label: 'Beyond', x: 70, y: 72 },
 ];
 
 const projects = [
@@ -264,7 +264,7 @@ const posts = (await getCollection('blog'))
                     aria-label={`Open ${p.label}`}
                   >
                     <span class="pin-dot"></span>
-                    <span class="pin-label">{p.label}</span>
+                    <span class="pin-label"><span class="pin-num">{p.num}</span> {p.label}</span>
                   </a>
                 ))
               }
@@ -645,6 +645,10 @@ const posts = (await getCollection('blog'))
     border-radius: 6px;
     padding: 0.15rem 0.5rem;
     white-space: nowrap;
+  }
+  .pin-num {
+    color: var(--accent);
+    margin-right: 0.3rem;
   }
   .pin.is-active .pin-dot {
     background: var(--strong);
