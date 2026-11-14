@@ -368,6 +368,7 @@ const posts = (await getCollection('blog'))
                 </div>
 
                 <div class="panel" data-panel="projects" data-title="ls ./projects" data-mode="folders" hidden>
+                  <span class="os-tag">ahmed.os</span>
                   <!-- Desktop of project folders: double-click one to open it -->
                   <div class="desk" data-desk>
                     {
@@ -1493,6 +1494,21 @@ const posts = (await getCollection('blog'))
     .img-row img {
       height: 200px;
     }
+  }
+
+  /* Small OS label in the bottom-left of the projects view */
+  .popup-body {
+    position: relative;
+  }
+  .os-tag {
+    position: absolute;
+    left: 1rem;
+    bottom: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    opacity: 0.7;
+    pointer-events: none;
   }
 
   /* Projects as a desktop of folders */
