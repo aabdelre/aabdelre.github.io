@@ -134,6 +134,17 @@ section:last-of-type {
   height: 1.1em;
   background: var(--text);
   vertical-align: middle;
+  animation: caret-blink 1s steps(1, end) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none;
+  }
 }
 
 /* Hero */
