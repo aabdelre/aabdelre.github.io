@@ -972,7 +972,7 @@ const posts = (await getCollection('blog'))
   }
   .w-exp {
     left: 24%;
-    top: 50%;
+    top: 4%;
     width: 230px;
   }
   .w-proj {
@@ -1016,17 +1016,18 @@ const posts = (await getCollection('blog'))
     padding: 2px 0;
   }
   .rank.rise {
-    animation: rise 4s ease-in-out infinite alternate;
+    animation: glow 4s ease-in-out infinite alternate;
   }
   .rank.delay {
     animation-delay: -2s;
   }
-  @keyframes rise {
+  /* Highlight instead of moving: rows stay in place and never overlap */
+  @keyframes glow {
     from {
-      transform: translateY(0);
+      color: var(--text);
     }
     to {
-      transform: translateY(-18px);
+      color: var(--accent);
     }
   }
   .agent-line {
