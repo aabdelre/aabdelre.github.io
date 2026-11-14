@@ -89,13 +89,28 @@ const research = [
     period: 'May 2022 — Aug 2022',
     summary:
       'Fine-tuned a Clojure genetic-programming model (−11% training cases) and automated HPC experiment runs with results visualization.',
+    poster:
+      'https://drive.google.com/file/d/1dzpNwBr2ef_vshR0SRdZVnXamdxb32Zd/view?usp=sharing',
+    paper: 'https://dl.acm.org/doi/abs/10.1145/3583133.3596373',
   },
 ];
 
 const beyond = [
-  { title: 'Volleyball' },
-  { title: 'Hiking' },
-  { title: 'Hackathons', text: 'Participating, mentoring, and judging.' },
+  {
+    title: 'Volleyball',
+    text: "I've played volleyball leagues since senior year, and have been progressing with my team through Volo leagues. Our highest finish so far is 2nd place.",
+    images: ['/volleyball/team.jpg', '/volleyball/successful-dig.jpg', '/volleyball/failed-spiking.jpg'],
+  },
+  {
+    title: 'Hiking',
+    text: "I really love driving and touching grass. Getting out of the city, whether it's a long drive or a trail, is how I recharge.",
+    images: ['/hiking/tahoe-driving.mp4', '/hiking/zion.jpg', '/hiking/yosemite-lower.jpg'],
+  },
+  {
+    title: 'Hackathons',
+    text: "I love sharing knowledge and helping communities grow, so I volunteer to mentor and judge hackathons, and take part in them myself.",
+    images: ['/hackathons/hackmit.jpg', '/hackathons/calhacks.jpg', '/hackathons/hamilton-hack.jpg'],
+  },
 ];
 // -----------------------------------------------------------------------------
 
@@ -329,16 +344,40 @@ const posts = (await getCollection('blog'))
                         <div class="role">{r.role} · {r.org}</div>
                         <div class="meta">{r.period}</div>
                         <p>{r.summary}</p>
+                        {(r.poster || r.paper) && (
+                          <p>
+                            {r.poster && (
+                              <a href={r.poster} target="_blank" rel="noopener">View poster →</a>
+                            )}
+                            {r.poster && r.paper && ' · '}
+                            {r.paper && (
+                              <a href={r.paper} target="_blank" rel="noopener">Read paper →</a>
+                            )}
+                          </p>
+                        )}
                       </div>
                     ))
                   }
                 </div>
 
-                <div class="panel" data-panel="projects" data-title="ls ./projects" hidden>
-                  <div class="photo-slot">[ photo: projects ]</div>
+                <div class="panel" data-panel="projects" data-title="ls ./projects" data-mode="folders" hidden>
+                  <!-- Desktop of project folders: double-click one to open it -->
+                  <div class="desk" data-desk>
+                    {
+                      projects.map((p, i) => (
+                        <button class="folder" type="button" data-folder={i} aria-label={`Open folder ${p.name}`}>
+                          <svg class="folder-icon" viewBox="0 0 24 20" aria-hidden="true" focusable="false">
+                            <path fill="currentColor" d="M1 3a2 2 0 0 1 2-2h5l2 2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z" />
+                          </svg>
+                          <span class="folder-name">{p.name}</span>
+                        </button>
+                      ))
+                    }
+                  </div>
                   {
-                    projects.map((p) => (
-                      <div class="page" data-page>
+                    projects.map((p, i) => (
+                      <div class="project-win" data-project-win={i} hidden>
+                        <button class="back" type="button" data-up>← up</button>
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
@@ -352,7 +391,6 @@ const posts = (await getCollection('blog'))
                 </div>
 
                 <div class="panel" data-panel="blog" data-title="tail -n 3 ./blog" hidden>
-                  <div class="photo-slot">[ photo: blog ]</div>
                   {
                     posts.map((post) => (
                       <div class="page" data-page>
@@ -373,12 +411,45 @@ const posts = (await getCollection('blog'))
                 </div>
 
                 <div class="panel" data-panel="beyond" data-title="ls ./beyond" hidden>
-                  <div class="photo-slot">[ photo: beyond ]</div>
                   {
                     beyond.map((b) => (
                       <div class="page" data-page>
-                        <div class="role">{b.title}</div>
-                        {b.text && <p>{b.text}</p>}
+                        {!b.images && <div class="role">{b.title}</div>}
+                        {!b.images && b.text && <p>{b.text}</p>}
+                        {b.images && (
+                          <div class="split">
+                            <div class="split-text">
+                              <div class="role">{b.title}</div>
+                              {b.text && <p>{b.text}</p>}
+                              <figure class="shot">
+                                <div class="shot-bar">
+                                  <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                                  <span>{b.images[0].split('/').pop()}</span>
+                                </div>
+                                {b.images[0].endsWith('.mp4') ? (
+                                  <video src={b.images[0]} autoplay muted loop playsinline aria-label="Driving clip"></video>
+                                ) : (
+                                  <img src={b.images[0]} alt={`${b.title} photo`} loading="lazy" />
+                                )}
+                              </figure>
+                            </div>
+                            <div class="split-imgs">
+                              {b.images.slice(1).map((src) => (
+                                <figure class="shot">
+                                  <div class="shot-bar">
+                                    <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                                    <span>{src.split('/').pop()}</span>
+                                  </div>
+                                  {src.endsWith('.mp4') ? (
+                                    <video src={src} autoplay muted loop playsinline aria-label="Driving clip"></video>
+                                  ) : (
+                                    <img src={src} alt={`${b.title} photo`} loading="lazy" />
+                                  )}
+                                </figure>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))
                   }
@@ -750,6 +821,67 @@ const posts = (await getCollection('blog'))
     font-family: var(--mono);
   }
   .popup[hidden] {
+    display: none;
+  }
+  /* Takeover: the section fills the whole map and grows out of the pin that opened it */
+  .popup {
+    --ox: 50%;
+    --oy: 50%;
+  }
+  .popup.takeover {
+    inset: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .popup.takeover .popup-head {
+    padding: 1rem 1.75rem;
+    font-size: 1rem;
+  }
+  .popup.takeover .popup-foot {
+    padding: 1rem 1.75rem;
+  }
+  .popup.takeover .popup-body {
+    padding: 2rem 3rem;
+  }
+  .popup.takeover .page .role {
+    font-size: 1.5rem;
+  }
+  .popup.takeover .page p,
+  .popup.takeover .page li {
+    font-size: 1.15rem;
+    line-height: 1.7;
+  }
+  .popup.grow {
+    animation: grow-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    transform-origin: var(--ox) var(--oy);
+  }
+  @keyframes grow-in {
+    from {
+      opacity: 0;
+      transform: scale(0.12);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .popup.shrink {
+    animation: shrink-out 0.35s ease-in both;
+    transform-origin: var(--ox) var(--oy);
+  }
+  @keyframes shrink-out {
+    to {
+      opacity: 0;
+      transform: scale(0.12);
+    }
+  }
+  .map-stage:has(.popup.takeover) .zoom-controls {
     display: none;
   }
   .popup.pop-in {
@@ -1225,6 +1357,217 @@ const posts = (await getCollection('blog'))
     }
   }
 
+  /* Terminal-window frames around photos */
+  .shot {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .shot-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .shot-bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .shot-bar .dot-r { background: #ff5f56; }
+  .shot-bar .dot-y { background: #ffbd2e; }
+  .shot-bar .dot-g { background: #27c93f; }
+  .shot-bar span {
+    margin-left: 0.5rem;
+    color: var(--accent);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .split-text .shot {
+    height: clamp(220px, 42vh, 400px);
+  }
+  .split-imgs .shot {
+    flex: 1;
+    min-height: 0;
+  }
+  .shot video {
+    display: block;
+    width: 100%;
+    height: calc(100% - 2rem);
+    min-height: 0;
+    object-fit: contain;
+    background: var(--surface);
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: calc(100% - 2rem);
+    min-height: 0;
+    object-fit: contain;
+    background: var(--surface);
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* Two-page spread: text and one photo on the left, the rest on the right */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    flex: 1;
+    min-height: 0;
+    margin-top: 0.4rem;
+  }
+  .split-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 0;
+  }
+  .split-text img {
+    width: 100%;
+    height: clamp(200px, 40vh, 380px);
+    object-fit: contain;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .split-imgs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 0;
+  }
+  .split-imgs img {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    object-fit: contain;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 560px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Photo rows inside a section page */
+  .img-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 0.4rem;
+  }
+  .img-row img {
+    width: 100%;
+    height: clamp(180px, 34vh, 340px);
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 560px) {
+    .img-row {
+      grid-template-columns: 1fr;
+    }
+    .img-row img {
+      height: 200px;
+    }
+  }
+
+  /* Projects as a desktop of folders */
+  .desk {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+    align-content: start;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .desk[hidden] {
+    display: none;
+  }
+  .folder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--text);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .folder:hover {
+    border-color: var(--border);
+  }
+  .folder.is-selected {
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: var(--accent);
+  }
+  .folder:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .folder-icon {
+    width: 56px;
+    height: 46px;
+    color: var(--accent);
+  }
+  .folder-name {
+    text-align: center;
+    word-break: break-word;
+  }
+  .project-win {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .project-win[hidden] {
+    display: none;
+  }
+  .project-win .back {
+    align-self: flex-start;
+  }
+  .project-win .role {
+    font-weight: 600;
+    color: var(--strong);
+    font-size: 1.1rem;
+  }
+  .project-win .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .project-win p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .project-win .card-links {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
   /* Transitions into and out of the full-screen map */
   .bio-col {
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -1384,16 +1727,38 @@ const posts = (await getCollection('blog'))
       panels.forEach((p) => (p.hidden = p !== panel));
       popupTitle!.textContent = panel.dataset.title ?? id;
       popup!.hidden = false;
-      popup!.classList.remove('pop-in');
+      popup!.classList.add('takeover');
+      popup!.classList.remove('grow', 'shrink');
       void popup!.offsetWidth; // restart the entrance animation
-      popup!.classList.add('pop-in');
+      popup!.classList.add('grow');
+      // Folder mode (projects): no paging, the desktop of folders instead
+      const folderMode = panel.dataset.mode === 'folders';
+      prevBtn!.hidden = folderMode;
+      nextBtn!.hidden = folderMode;
+      counter!.hidden = folderMode;
+      popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = folderMode;
+      if (folderMode) showDesk();
       render();
     }
 
-    function closePopup() {
+    function hidePopupNow() {
       popup!.hidden = true;
+      popup!.classList.remove('takeover', 'grow', 'shrink');
+    }
+
+    // Closing from the close button or Escape shrinks the section back into its pin.
+    function closePopup(animated = false) {
       current = '';
       pins.forEach((p) => p.classList.remove('is-active'));
+      if (animated && !popup!.hidden && !reduce) {
+        popup!.classList.remove('grow');
+        popup!.classList.add('shrink');
+        setTimeout(() => {
+          if (popup!.classList.contains('shrink')) hidePopupNow();
+        }, 350);
+      } else {
+        hidePopupNow();
+      }
     }
 
     function step(d: number) {
@@ -1436,6 +1801,8 @@ const posts = (await getCollection('blog'))
       closePopup();
       await enterMap();
       const [x, y] = (pin.dataset.pos ?? '50,50').split(',');
+      popup!.style.setProperty('--ox', `${x}%`);
+      popup!.style.setProperty('--oy', `${y}%`);
       canvas!.style.setProperty('--zx', `${x}%`);
       canvas!.style.setProperty('--zy', `${y}%`);
       stage!.classList.add('is-zooming');
@@ -1459,7 +1826,7 @@ const posts = (await getCollection('blog'))
     );
 
     popup.querySelector<HTMLElement>('[data-close]')?.addEventListener('click', () => {
-      closePopup();
+      closePopup(true);
       history.replaceState(null, '', location.pathname);
     });
     prevBtn.addEventListener('click', () => step(-1));
@@ -1564,7 +1931,7 @@ const posts = (await getCollection('blog'))
       if (popup.hidden) return;
       if (e.key === 'ArrowRight') step(1);
       if (e.key === 'ArrowLeft') step(-1);
-      if (e.key === 'Escape') closePopup();
+      if (e.key === 'Escape') closePopup(true);
     });
 
     // Back to bio: the map pulls back into the distance, then the bio fades in.
@@ -1593,6 +1960,31 @@ const posts = (await getCollection('blog'))
     });
 
     // Deep links (#research) and header nav clicks open the matching popup.
+    // Projects folders: click selects, double-click (or Enter) opens, "up" returns to the desktop
+    function showDesk() {
+      document.querySelector<HTMLElement>('[data-desk]')!.hidden = false;
+      document.querySelectorAll<HTMLElement>('[data-project-win]').forEach((w) => (w.hidden = true));
+    }
+    function openProject(i: number) {
+      document.querySelector<HTMLElement>('[data-desk]')!.hidden = true;
+      document.querySelectorAll<HTMLElement>('[data-project-win]').forEach(
+        (w) => (w.hidden = w.dataset.projectWin !== String(i)),
+      );
+    }
+    const folders = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-folder]'));
+    folders.forEach((f) => {
+      f.addEventListener('click', () => {
+        folders.forEach((x) => x.classList.toggle('is-selected', x === f));
+      });
+      f.addEventListener('dblclick', () => openProject(Number(f.dataset.folder)));
+      f.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') openProject(Number(f.dataset.folder));
+      });
+    });
+    document.querySelectorAll<HTMLElement>('[data-up]').forEach((b) =>
+      b.addEventListener('click', showDesk),
+    );
+
     // Header nav: move to the map, then open the section. A deep link on load opens directly.
     window.addEventListener('hashchange', () => {
       const id = location.hash.slice(1);
