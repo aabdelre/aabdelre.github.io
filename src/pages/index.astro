@@ -92,7 +92,11 @@ const research = [
   },
 ];
 
-const beyond = ['Volleyball', 'Hiking', 'Hackathon participation, mentoring, and judging'];
+const beyond = [
+  { title: 'Volleyball' },
+  { title: 'Hiking' },
+  { title: 'Hackathons', text: 'Participating, mentoring, and judging.' },
+];
 // -----------------------------------------------------------------------------
 
 // Latest 3 blog posts, newest first
@@ -184,9 +188,13 @@ const posts = (await getCollection('blog'))
                 <path class="land" d="M600 380 C700 340 880 360 920 450 C960 540 860 580 760 570 C660 560 560 520 560 450 Z" />
                 <path class="land" d="M430 470 C520 440 600 500 580 560 C560 610 440 600 420 550 Z" />
                 <path class="land" d="M720 60 C820 40 940 90 950 180 C960 260 860 260 800 240 C740 220 680 120 720 60 Z" />
+              </svg>
+
+              <!-- Routes: from the map centre to each pin, in the same percentage space as the pins -->
+              <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
                 {
                   pins.map((p) => (
-                    <line class="route" x1="500" y1="325" x2={p.x * 10} y2={p.y * 6.25} />
+                    <line class="route" x1="50" y1="50" x2={p.x} y2={p.y} />
                   ))
                 }
               </svg>
@@ -366,11 +374,14 @@ const posts = (await getCollection('blog'))
 
                 <div class="panel" data-panel="beyond" data-title="ls ./beyond" hidden>
                   <div class="photo-slot">[ photo: beyond ]</div>
-                  <div class="page" data-page>
-                    <ul>
-                      {beyond.map((b) => <li>{b}</li>)}
-                    </ul>
-                  </div>
+                  {
+                    beyond.map((b) => (
+                      <div class="page" data-page>
+                        <div class="role">{b.title}</div>
+                        {b.text && <p>{b.text}</p>}
+                      </div>
+                    ))
+                  }
                 </div>
               </div>
               <div class="popup-foot">
@@ -403,7 +414,8 @@ const posts = (await getCollection('blog'))
       overflow: hidden;
     }
     .landing {
-      height: calc(100dvh - 128px);
+      height: calc(100dvh - 152px);
+      margin-top: 1.5rem;
     }
   }
 
@@ -466,7 +478,7 @@ const posts = (await getCollection('blog'))
   .bio-col {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem; /* matches the column gap on .landing */
   }
   .bio-col .hero {
     flex: 1;
@@ -591,15 +603,22 @@ const posts = (await getCollection('blog'))
     stroke: var(--border);
     stroke-width: 2;
   }
-  .map-svg :global(.route) {
+  .route-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .route-svg :global(.route) {
     stroke: var(--muted);
     stroke-width: 2;
     stroke-dasharray: 6 8;
     opacity: 0.6;
+    vector-effect: non-scaling-stroke;
   }
   .back-bio {
     display: none;
-    margin: 1.25rem 0 0.6rem;
+    margin: 0 0 0.6rem;
     align-self: flex-start;
     font-family: var(--mono);
     font-size: 0.85rem;
