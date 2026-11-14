@@ -104,354 +104,360 @@ const posts = (await getCollection('blog'))
 <Base title="Ahmed Abdelrehim">
   <div class="container">
     <div class="landing" data-landing>
-    <!-- Left column: bio -->
-    <div class="bio-col">
-    <!-- Hero + About -->
-    <section class="hero" id="about">
-      <div class="term-window">
-        <div class="term-bar">
-          <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
-          <span class="title">aabdelre — zsh</span>
-        </div>
-        <div class="term-body">
-          <p class="prompt">whoami</p>
-          <div class="hero-head">
-            <img
-              class="avatar"
-              src="/personalPic.jpeg"
-              alt="Ahmed Abdelrehim"
-              width="120"
-              height="120"
-            />
-            <div>
-              <h1>Ahmed Abdelrehim</h1>
-              <p class="out-accent">AI/ML enthusiast. Aspiring disrupter.</p>
+      <!-- Left column: bio terminal -->
+      <div class="bio-col">
+        <section class="hero" id="about">
+          <div class="term-window">
+            <div class="term-bar">
+              <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+              <span class="title">aabdelre — zsh</span>
+            </div>
+            <div class="term-body">
+              <p class="prompt">whoami</p>
+              <div class="hero-head">
+                <img
+                  class="avatar"
+                  src="/personalPic.jpeg"
+                  alt="Ahmed Abdelrehim"
+                  width="96"
+                  height="96"
+                />
+                <div>
+                  <h1>Ahmed Abdelrehim</h1>
+                  <p class="out-accent">AI/ML enthusiast. Aspiring disrupter.</p>
+                </div>
+              </div>
+              <p class="prompt">cat about.txt</p>
+              <p>
+                I'm a software and machine learning engineer at Meta, where I build
+                the systems that train and improve the models deciding which ads
+                people see. I work on the models themselves, testing which
+                techniques actually help and building tools that make that testing
+                faster and more reliable.
+              </p>
+              <p>
+                I love explaining things, and I learn best by building. That's why
+                I'm now co-founding an AI startup that helps teachers design
+                courses, give feedback, and grade work, with people in the loop at
+                every step. I want to bring what I've learned about getting ML to
+                work reliably at scale into the classroom, where getting it right
+                matters just as much.
+              </p>
+              <p class="prompt">open links</p>
+              <div class="socials">
+                <a class="icon-link" href="https://github.com/aabdelre" aria-label="GitHub" title="GitHub">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                </a>
+                <a class="icon-link" href="https://www.linkedin.com/in/aash2024/" aria-label="LinkedIn" title="LinkedIn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a class="icon-link" href="mailto:aabdelre.ahmed@gmail.com" aria-label="Email" title="Email">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                </a>
+                <a class="icon-link" href="/resume.pdf" aria-label="Résumé (PDF)" title="Résumé (PDF)">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h8"/></svg>
+                </a>
+              </div>
+              <p class="prompt">
+                <button class="cmd" type="button" data-explore>explore ./map</button>
+              </p>
+              <p class="prompt"><span class="caret"></span></p>
             </div>
           </div>
-          <p class="prompt">cat about.txt</p>
-          <p>
-            I'm a software and machine learning engineer at Meta, where I build
-            the systems that train and improve the models deciding which ads
-            people see. I work on the models themselves, testing which
-            techniques actually help and building tools that make that testing
-            faster and more reliable.
-          </p>
-          <p>
-            I love explaining things, and I learn best by building. That's why
-            I'm now co-founding an AI startup that helps teachers design
-            courses, give feedback, and grade work, with people in the loop at
-            every step. I want to bring what I've learned about getting ML to
-            work reliably at scale into the classroom, where getting it right
-            matters just as much.
-          </p>
-          <p class="prompt">open links</p>
-          <div class="socials">
-            <a class="icon-link" href="https://github.com/aabdelre" aria-label="GitHub" title="GitHub">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            </a>
-            <a class="icon-link" href="https://www.linkedin.com/in/aash2024/" aria-label="LinkedIn" title="LinkedIn">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-            <a class="icon-link" href="mailto:aabdelre.ahmed@gmail.com" aria-label="Email" title="Email">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-            </a>
-            <a class="icon-link" href="/resume.pdf" aria-label="Résumé (PDF)" title="Résumé (PDF)">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h8"/></svg>
-            </a>
-          </div>
-          <p class="prompt" style="margin-top: 1.5rem">
-            <button class="cmd" type="button" data-explore>explore ./map</button>
-          </p>
-          <p class="prompt"><span class="caret"></span></p>
-        </div>
+        </section>
       </div>
-    </section>
-    </div>
 
-    <!-- Right column: map -->
-    <div class="map-col">
-    <button class="back-bio" type="button" data-back-bio>← back to bio</button>
-    <!-- Interactive map -->
-    <section class="map-section" id="map" aria-labelledby="map-title">
-      <p class="section-title" id="map-title">cat ./map</p>
-      <div class="map-stage" data-map-stage>
-        <div class="map-canvas" data-map-canvas>
-          <svg
-            class="map-svg"
-            viewBox="0 0 1000 625"
-            preserveAspectRatio="xMidYMid slice"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <defs>
-              <pattern id="map-grid" width="50" height="50" patternUnits="userSpaceOnUse">
-                <path d="M50 0H0V50" class="grid-line" fill="none" />
-              </pattern>
-            </defs>
-            <rect width="1000" height="625" fill="url(#map-grid)" />
-            <path class="land" d="M80 90 C200 40 340 70 380 150 C420 230 330 260 250 300 C170 340 60 300 40 220 Z" />
-            <path class="land" d="M600 380 C700 340 880 360 920 450 C960 540 860 580 760 570 C660 560 560 520 560 450 Z" />
-            <path class="land" d="M430 470 C520 440 600 500 580 560 C560 610 440 600 420 550 Z" />
-            <path class="land" d="M720 60 C820 40 940 90 950 180 C960 260 860 260 800 240 C740 220 680 120 720 60 Z" />
-            {
-              pins.map((p) => (
-                <line
-                  class="route"
-                  x1="500"
-                  y1="325"
-                  x2={p.x * 10}
-                  y2={p.y * 6.25}
-                />
-              ))
-            }
-          </svg>
-
-
-          <!-- Live background: radar, flight paths, drifting tokens, map symbols -->
-          <div class="bg-layer" aria-hidden="true">
-            <div class="radar-ring" style="width:220px;height:220px;"></div>
-            <div class="radar-ring" style="width:380px;height:380px;"></div>
-            <div class="radar"></div>
-            <svg class="bg-paths" viewBox="0 0 1000 625" preserveAspectRatio="none">
-              <path d="M40 560 Q 260 430 480 520 T 930 470" />
-              <path d="M60 120 Q 300 40 520 130 T 960 90" />
-              <path d="M150 300 Q 420 240 640 330" />
-            </svg>
-            <span class="mover" style="left:38%;top:70%;"></span>
-            <span class="mover" style="left:62%;top:20%;"></span>
-            <span class="mover mover-b" style="left:22%;top:48%;"></span>
-            <span class="pt" style="left:12%;top:40%;"></span>
-            <span class="pt" style="left:33%;top:8%;animation-delay:-1s;"></span>
-            <span class="pt" style="left:58%;top:86%;animation-delay:-2s;"></span>
-            <span class="pt" style="left:88%;top:30%;animation-delay:-1.5s;"></span>
-            <span class="pt" style="left:6%;top:88%;animation-delay:-2.5s;"></span>
-            <span class="pt" style="left:94%;top:82%;animation-delay:-0.5s;"></span>
-            <span class="pt" style="left:46%;top:44%;animation-delay:-1.8s;"></span>
-            <span class="pt" style="left:80%;top:12%;animation-delay:-2.2s;"></span>
-            <span class="tok" style="left:4%;top:24%;">−88% latency</span>
-            <span class="tok alt" style="left:86%;top:54%;">+2.45%</span>
-            <span class="tok warn" style="left:14%;top:70%;">~102 hrs / yr</span>
-            <span class="tok" style="left:62%;top:6%;animation-delay:-3s;">{'{ }'}</span>
-            <span class="tok alt" style="left:44%;top:92%;animation-delay:-5s;">=&gt;</span>
-            <span class="tok" style="left:92%;top:40%;animation-delay:-6s;">+1.45% NE</span>
-            <span class="tok warn" style="left:28%;top:34%;animation-delay:-2s;">−72% code</span>
-            <span class="tok alt" style="left:70%;top:76%;animation-delay:-7s;">git push</span>
-            <span class="tri" style="left:84%;top:86%;"></span>
-            <span class="tri tri-s" style="left:88%;top:88%;"></span>
-            <span class="net" style="left:52%;top:62%;"></span>
-            <span class="brk" style="left:60%;top:48%;">&lt;/&gt;</span>
-            <span class="brk" style="left:10%;top:56%;animation-delay:-4s;">{'{ }'}</span>
-            <span class="ring" style="left:50%;top:20%;"></span>
-            <span class="glyph" style="left:68%;top:44%;">{'{ }'}</span>
-            <span class="glyph" style="left:80%;top:40%;animation-delay:-2s;">=&gt;</span>
-            <span class="glyph" style="left:88%;top:48%;animation-delay:-3.5s;">#</span>
-            <div class="compass"><div class="needle"></div></div>
-            <div class="scan"></div>
-          </div>
-
-          <!-- Pin widgets: one live readout per section -->
-          <div class="w w-research">
-            <b>loss ↓ 11%</b> · genetic programming
-            <svg class="wave-svg" viewBox="0 0 186 46" aria-hidden="true">
-              <path class="wave" d="M0 30 Q 23 6 46 24 T 93 18 T 140 22 T 186 8" />
-            </svg>
-          </div>
-          <div class="w w-exp">
-            <b>ranking · Ads models</b>
-            <div class="rank rise"><span>orchestrator</span><span>−88% latency</span></div>
-            <div class="rank"><span>feature swap</span><span>+1.45% NE</span></div>
-            <div class="rank rise delay"><span>avg accuracy</span><span>+2.45%</span></div>
-            <div class="agent-line">agent&gt; iterating<span class="blink">_</span></div>
-          </div>
-          <div class="w w-proj">
-            <b>{projects[0]?.name}</b> · audit log
-            <div class="code-line">bias_audit.run()<span class="blink">_</span></div>
-          </div>
-          <div class="w w-blog">
-            <b>latest writing</b>
-            <div class="clip">{posts[0]?.data.title}</div>
-          </div>
-          <div class="w w-beyond">
-            <b>off the map</b>
-            <div>volleyball · hiking</div>
-            <div>hackathons · judging · mentoring</div>
-          </div>
-
-          {
-            pins.map((p) => (
-              <a
-                class="pin"
-                href={`#${p.id}`}
-                data-pin={p.id}
-                data-pos={`${p.x},${p.y}`}
-                style={`left:${p.x}%;top:${p.y}%`}
-                aria-label={`Open ${p.label}`}
+      <!-- Right column: map with popup -->
+      <div class="map-col">
+        <button class="back-bio" type="button" data-back-bio>← back to bio</button>
+        <section class="map-section" id="map" aria-label="Interactive map">
+          <div class="map-stage" data-map-stage>
+            <div class="map-canvas" data-map-canvas>
+              <svg
+                class="map-svg"
+                viewBox="0 0 1000 625"
+                preserveAspectRatio="xMidYMid slice"
+                aria-hidden="true"
+                focusable="false"
               >
-                <span class="pin-dot"></span>
-                <span class="pin-label">{p.label}</span>
-              </a>
-            ))
-          }
-        </div>
+                <defs>
+                  <pattern id="map-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <path d="M50 0H0V50" class="grid-line" fill="none" />
+                  </pattern>
+                </defs>
+                <rect width="1000" height="625" fill="url(#map-grid)" />
+                <path class="land" d="M80 90 C200 40 340 70 380 150 C420 230 330 260 250 300 C170 340 60 300 40 220 Z" />
+                <path class="land" d="M600 380 C700 340 880 360 920 450 C960 540 860 580 760 570 C660 560 560 520 560 450 Z" />
+                <path class="land" d="M430 470 C520 440 600 500 580 560 C560 610 440 600 420 550 Z" />
+                <path class="land" d="M720 60 C820 40 940 90 950 180 C960 260 860 260 800 240 C740 220 680 120 720 60 Z" />
+                {
+                  pins.map((p) => (
+                    <line class="route" x1="500" y1="325" x2={p.x * 10} y2={p.y * 6.25} />
+                  ))
+                }
+              </svg>
+
+              <!-- Live background: radar, flight paths, drifting tokens, map symbols -->
+              <div class="bg-layer" aria-hidden="true">
+                <div class="radar-ring" style="width:220px;height:220px;"></div>
+                <div class="radar-ring" style="width:380px;height:380px;"></div>
+                <div class="radar"></div>
+                <svg class="bg-paths" viewBox="0 0 1000 625" preserveAspectRatio="none">
+                  <path d="M40 560 Q 260 430 480 520 T 930 470" />
+                  <path d="M60 120 Q 300 40 520 130 T 960 90" />
+                  <path d="M150 300 Q 420 240 640 330" />
+                </svg>
+                <span class="mover" style="left:38%;top:70%;"></span>
+                <span class="mover" style="left:62%;top:20%;"></span>
+                <span class="mover mover-b" style="left:22%;top:48%;"></span>
+                <span class="pt" style="left:12%;top:40%;"></span>
+                <span class="pt" style="left:33%;top:8%;animation-delay:-1s;"></span>
+                <span class="pt" style="left:58%;top:86%;animation-delay:-2s;"></span>
+                <span class="pt" style="left:88%;top:30%;animation-delay:-1.5s;"></span>
+                <span class="pt" style="left:6%;top:88%;animation-delay:-2.5s;"></span>
+                <span class="pt" style="left:94%;top:82%;animation-delay:-0.5s;"></span>
+                <span class="pt" style="left:46%;top:44%;animation-delay:-1.8s;"></span>
+                <span class="pt" style="left:80%;top:12%;animation-delay:-2.2s;"></span>
+                <span class="tok" style="left:4%;top:24%;">−88% latency</span>
+                <span class="tok alt" style="left:86%;top:54%;">+2.45%</span>
+                <span class="tok warn" style="left:14%;top:70%;">~102 hrs / yr</span>
+                <span class="tok" style="left:62%;top:6%;animation-delay:-3s;">{'{ }'}</span>
+                <span class="tok alt" style="left:44%;top:92%;animation-delay:-5s;">=&gt;</span>
+                <span class="tok" style="left:92%;top:40%;animation-delay:-6s;">+1.45% NE</span>
+                <span class="tok warn" style="left:28%;top:34%;animation-delay:-2s;">−72% code</span>
+                <span class="tok alt" style="left:70%;top:76%;animation-delay:-7s;">git push</span>
+                <span class="tri" style="left:84%;top:86%;"></span>
+                <span class="tri tri-s" style="left:88%;top:88%;"></span>
+                <span class="net" style="left:52%;top:62%;"></span>
+                <span class="brk" style="left:60%;top:48%;">&lt;/&gt;</span>
+                <span class="brk" style="left:10%;top:56%;animation-delay:-4s;">{'{ }'}</span>
+                <span class="ring" style="left:50%;top:20%;"></span>
+                <span class="glyph" style="left:68%;top:44%;">{'{ }'}</span>
+                <span class="glyph" style="left:80%;top:40%;animation-delay:-2s;">=&gt;</span>
+                <span class="glyph" style="left:88%;top:48%;animation-delay:-3.5s;">#</span>
+                <div class="compass"><div class="needle"></div></div>
+                <div class="scan"></div>
+              </div>
+
+              <!-- Pin widgets: one live readout per section -->
+              <div class="w w-research">
+                <b>loss ↓ 11%</b> · genetic programming
+                <svg class="wave-svg" viewBox="0 0 186 46" aria-hidden="true">
+                  <path class="wave" d="M0 30 Q 23 6 46 24 T 93 18 T 140 22 T 186 8" />
+                </svg>
+              </div>
+              <div class="w w-exp">
+                <b>ranking · Ads models</b>
+                <div class="rank rise"><span>orchestrator</span><span>−88% latency</span></div>
+                <div class="rank"><span>feature swap</span><span>+1.45% NE</span></div>
+                <div class="rank rise delay"><span>avg accuracy</span><span>+2.45%</span></div>
+                <div class="agent-line">agent&gt; iterating<span class="blink">_</span></div>
+              </div>
+              <div class="w w-proj">
+                <b>{projects[0]?.name}</b> · audit log
+                <div class="code-line">bias_audit.run()<span class="blink">_</span></div>
+              </div>
+              <div class="w w-blog">
+                <b>latest writing</b>
+                <div class="clip">{posts[0]?.data.title}</div>
+              </div>
+              <div class="w w-beyond">
+                <b>off the map</b>
+                <div>volleyball · hiking</div>
+                <div>hackathons · judging · mentoring</div>
+              </div>
+
+              {
+                pins.map((p) => (
+                  <a
+                    class="pin"
+                    href={`#${p.id}`}
+                    data-pin={p.id}
+                    data-pos={`${p.x},${p.y}`}
+                    style={`left:${p.x}%;top:${p.y}%`}
+                    aria-label={`Open ${p.label}`}
+                  >
+                    <span class="pin-dot"></span>
+                    <span class="pin-label">{p.label}</span>
+                  </a>
+                ))
+              }
+            </div>
+
+            <!-- Popup: section content, paged, on top of the map -->
+            <div class="popup" data-popup hidden role="dialog" aria-modal="false" aria-labelledby="popup-title">
+              <div class="popup-head">
+                <span class="popup-title" id="popup-title" data-popup-title></span>
+                <button class="back" type="button" data-close>close ✕</button>
+              </div>
+              <div class="popup-body">
+                <div class="panel" data-panel="experience" data-title="git log --oneline experience" hidden>
+                  <div class="photo-slot">[ photo: experience ]</div>
+                  {
+                    experience.map((e) => (
+                      <div class="page" data-page>
+                        <div class="role">{e.role} · {e.org}</div>
+                        <div class="meta">{e.period}</div>
+                        <p>{e.summary}</p>
+                      </div>
+                    ))
+                  }
+                  {
+                    education.map((ed) => (
+                      <div class="page" data-page>
+                        <div class="role">{ed.role}</div>
+                        <div class="meta">{ed.meta}</div>
+                        <p>{ed.summary}</p>
+                      </div>
+                    ))
+                  }
+                </div>
+
+                <div class="panel" data-panel="research" data-title="ls ./research" hidden>
+                  <div class="photo-slot">[ photo: research ]</div>
+                  {
+                    research.map((r) => (
+                      <div class="page" data-page>
+                        <div class="role">{r.role} · {r.org}</div>
+                        <div class="meta">{r.period}</div>
+                        <p>{r.summary}</p>
+                      </div>
+                    ))
+                  }
+                </div>
+
+                <div class="panel" data-panel="projects" data-title="ls ./projects" hidden>
+                  <div class="photo-slot">[ photo: projects ]</div>
+                  {
+                    projects.map((p) => (
+                      <div class="page" data-page>
+                        <div class="role">{p.name}</div>
+                        <div class="meta">{p.tags.join(' · ')}</div>
+                        <p>{p.description}</p>
+                        <div class="card-links">
+                          {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
+                          {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+
+                <div class="panel" data-panel="blog" data-title="tail -n 3 ./blog" hidden>
+                  <div class="photo-slot">[ photo: blog ]</div>
+                  {
+                    posts.map((post) => (
+                      <div class="page" data-page>
+                        <div class="meta">
+                          <time datetime={post.data.pubDate.toISOString()}>
+                            {post.data.pubDate.toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                          </time>
+                        </div>
+                        <div class="role"><a href={`/blog/${post.id}`}>{post.data.title}</a></div>
+                        <p>{post.data.description}</p>
+                      </div>
+                    ))
+                  }
+                </div>
+
+                <div class="panel" data-panel="beyond" data-title="ls ./beyond" hidden>
+                  <div class="photo-slot">[ photo: beyond ]</div>
+                  <div class="page" data-page>
+                    <ul>
+                      {beyond.map((b) => <li>{b}</li>)}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="popup-foot">
+                <button type="button" data-prev>← prev</button>
+                <span data-count>1 / 1</span>
+                <button type="button" data-next>next →</button>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-
-      <div class="viewer" data-viewer>
-        <p class="viewer-hint" data-hint>click a pin to explore ↑</p>
-
-        <!-- Experience (includes education) -->
-        <div class="panel" data-panel="experience" id="experience">
-          <div class="panel-head">
-            <p class="section-title">git log --oneline experience</p>
-            <button class="back" type="button" data-back>← back to map</button>
-          </div>
-          <div class="photo-slot">[ photo: experience ]</div>
-          <div class="timeline">
-            {
-              experience.map((e) => (
-                <div class="timeline-item">
-                  <div class="role">
-                    {e.role} · {e.org}
-                  </div>
-                  <div class="meta">{e.period}</div>
-                  <p>{e.summary}</p>
-                </div>
-              ))
-            }
-          </div>
-          <p class="section-title" style="margin-top: 2rem">cat ./education</p>
-          <div class="timeline">
-            {
-              education.map((ed) => (
-                <div class="timeline-item">
-                  <div class="role">{ed.role}</div>
-                  <div class="meta">{ed.meta}</div>
-                  <p>{ed.summary}</p>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Research -->
-        <div class="panel" data-panel="research" id="research">
-          <div class="panel-head">
-            <p class="section-title">ls ./research</p>
-            <button class="back" type="button" data-back>← back to map</button>
-          </div>
-          <div class="photo-slot">[ photo: research ]</div>
-          <div class="timeline">
-            {
-              research.map((r) => (
-                <div class="timeline-item">
-                  <div class="role">
-                    {r.role} · {r.org}
-                  </div>
-                  <div class="meta">{r.period}</div>
-                  <p>{r.summary}</p>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Projects -->
-        <div class="panel" data-panel="projects" id="projects">
-          <div class="panel-head">
-            <p class="section-title">ls ./projects</p>
-            <button class="back" type="button" data-back>← back to map</button>
-          </div>
-          <div class="photo-slot">[ photo: projects ]</div>
-          <div class="cards">
-            {
-              projects.map((p) => (
-                <article class="card">
-                  <h3>{p.name}</h3>
-                  <div class="tags">
-                    {p.tags.map((t) => (
-                      <span class="tag">{t}</span>
-                    ))}
-                  </div>
-                  <p>{p.description}</p>
-                  <div class="card-links">
-                    {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
-                    {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
-                  </div>
-                </article>
-              ))
-            }
-          </div>
-        </div>
-
-        <!-- Blog -->
-        <div class="panel" data-panel="blog" id="blog">
-          <div class="panel-head">
-            <p class="section-title">tail -n 3 ./blog</p>
-            <button class="back" type="button" data-back>← back to map</button>
-          </div>
-          <div class="photo-slot">[ photo: blog ]</div>
-          <ul class="post-list">
-            {
-              posts.map((post) => (
-                <li>
-                  <time datetime={post.data.pubDate.toISOString()}>
-                    {post.data.pubDate.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </time>
-                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
-                </li>
-              ))
-            }
-          </ul>
-          <p style="margin-top:1rem"><a href="/blog">All posts →</a></p>
-        </div>
-
-        <!-- Beyond -->
-        <div class="panel" data-panel="beyond" id="beyond">
-          <div class="panel-head">
-            <p class="section-title">ls ./beyond</p>
-            <button class="back" type="button" data-back>← back to map</button>
-          </div>
-          <div class="photo-slot">[ photo: beyond ]</div>
-          <ul class="post-list">
-            {beyond.map((b) => <li>{b}</li>)}
-          </ul>
-        </div>
-      </div>
-    </section>
-    </div>
     </div>
   </div>
 </Base>
 
 <style>
-  /* Map stage */
+  /* Desktop: the landing page fits the window with no scrolling */
+  @media (min-width: 861px) {
+    :global(html),
+    :global(body) {
+      height: 100%;
+    }
+    :global(body) {
+      overflow: hidden;
+    }
+    .landing {
+      height: calc(100dvh - 128px);
+    }
+  }
+
+  /* Split landing: bio left, map right */
+  .landing {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: 1.5rem;
+    align-items: stretch;
+    min-height: 0;
+  }
+  .bio-col {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .bio-col .hero {
+    padding: 2rem 0 0;
+    border-bottom: none;
+  }
+  .bio-col .term-window {
+    margin-top: 0;
+  }
+  .bio-col .term-body {
+    padding: 1.25rem 1.5rem;
+  }
+  .bio-col .term-body p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 0.6rem;
+  }
+  .map-col {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
   .map-section {
-    padding-bottom: 2rem;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 0;
+    border-bottom: none;
   }
   .map-stage {
     position: relative;
+    flex: 1;
+    min-height: 0;
     border: 1px solid var(--border);
     border-radius: 12px;
     background: var(--surface);
     overflow: hidden;
   }
   .map-canvas {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 10;
+    position: absolute;
+    inset: 0;
     transform-origin: var(--zx, 50%) var(--zy, 50%);
     transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
   .map-stage.is-zooming .map-canvas {
     transform: scale(1.7);
-  }
-  @media (max-width: 640px) {
-    .map-canvas {
-      aspect-ratio: 1 / 1.1;
-    }
   }
   .map-svg {
     position: absolute;
@@ -475,30 +481,54 @@ const posts = (await getCollection('blog'))
     stroke-dasharray: 6 8;
     opacity: 0.6;
   }
-
-  .home {
-    position: absolute;
-    left: 50%;
-    top: 52%;
-    transform: translate(-50%, -50%);
+  .back-bio {
+    display: none;
+    margin: 0 0 0.6rem;
+    align-self: flex-start;
     font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--muted);
-    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
   }
-  .home::before {
-    content: "";
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--muted);
-    margin: 0 auto 4px;
+  .back-bio:hover {
+    border-color: var(--accent);
+  }
+  .landing.is-focus {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .landing.is-focus .bio-col {
+    display: none;
+  }
+  .landing.is-focus .back-bio {
+    display: inline-block;
+  }
+  .cmd {
+    font-family: var(--mono);
+    font-size: inherit;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cmd:hover {
+    color: var(--accent-hover);
+  }
+  .cmd:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   /* Pins */
   .pin {
     position: absolute;
+    z-index: 2;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
@@ -561,34 +591,136 @@ const posts = (await getCollection('blog'))
     }
   }
 
-  /* Viewer + panels */
-  .viewer {
-    margin-top: 2rem;
-  }
-  .viewer-hint {
-    font-family: var(--mono);
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-  .viewer-hint[hidden] {
-    display: none;
-  }
-  .panel {
-    background: var(--surface);
+  /* Popup: section content shown over the map, one page at a time */
+  .popup {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(600px, 92%);
+    height: min(400px, 86%);
+    display: flex;
+    flex-direction: column;
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.5rem;
+    background: var(--surface);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    font-family: var(--mono);
   }
-  .panel-head {
+  .popup[hidden] {
+    display: none;
+  }
+  .popup.pop-in {
+    animation: pop 0.35s ease both;
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -46%) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  .popup-head,
+  .popup-foot {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.5rem;
+    gap: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    flex-shrink: 0;
   }
-  .panel-head .section-title {
-    margin-bottom: 0;
+  .popup-head {
+    border-bottom: 1px solid var(--border);
+  }
+  .popup-foot {
+    border-top: 1px solid var(--border);
+  }
+  .popup-title {
+    color: var(--accent);
+  }
+  .popup-foot button {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
+  }
+  .popup-foot button:hover:not(:disabled) {
+    border-color: var(--accent);
+  }
+  .popup-foot button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .popup-foot button:focus-visible,
+  .back:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .popup-body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel[hidden] {
+    display: none;
+  }
+  .page {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+  }
+  .page[hidden] {
+    display: none;
+  }
+  .page .role {
+    font-weight: 600;
+    color: var(--strong);
+    line-height: 1.3;
+  }
+  .page .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .page p,
+  .page li {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .page ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  .popup .photo-slot {
+    height: 60px;
+    aspect-ratio: auto;
+    margin: 0 0 0.6rem;
+    flex-shrink: 0;
   }
   .back {
     font-family: var(--mono);
@@ -603,10 +735,6 @@ const posts = (await getCollection('blog'))
   .back:hover {
     border-color: var(--accent);
   }
-  .back:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
   /* Photo placeholder: replace the div with an <img> when pictures are ready */
   .photo-slot {
     border: 1px dashed var(--border);
@@ -617,15 +745,10 @@ const posts = (await getCollection('blog'))
     color: var(--muted);
     font-family: var(--mono);
     font-size: 0.85rem;
-    margin: 1rem 0 1.5rem;
+    margin: 0 0 1rem;
   }
-
-  /* Panels are hidden until a pin is opened, but only when JavaScript runs */
-  :global(html.js) [data-panel] {
+  :global(html.js) .popup[hidden] {
     display: none;
-  }
-  :global(html.js) [data-panel].is-open {
-    display: block;
   }
   .panel.panel-enter {
     animation: panel-in 0.5s ease both;
@@ -641,97 +764,7 @@ const posts = (await getCollection('blog'))
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .map-canvas {
-      transition: none;
-    }
-    .pin-dot::after {
-      animation: none;
-    }
-    .panel.panel-enter {
-      animation: none;
-    }
-  }
-  /* Homepage only: widen the page and header to nearly full screen */
-  :global(.site-header .container),
-  .container {
-    max-width: min(1600px, 96vw);
-  }
-
-  /* Split landing: bio left, map right. Focus mode hides the bio. */
-  .landing {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
-    gap: 1.5rem;
-    align-items: start;
-  }
-  .landing section {
-    border-bottom: none;
-  }
-  .bio-col .hero {
-    padding: 2.5rem 0 0;
-  }
-  .bio-col .term-window {
-    margin-top: 0;
-  }
-  .map-col .map-section {
-    padding: 2.5rem 0 2rem;
-  }
-  .landing.is-focus {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .landing.is-focus .bio-col {
-    display: none;
-  }
-  .back-bio {
-    display: none;
-    margin-top: 2.5rem;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--text);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.35rem 0.7rem;
-    cursor: pointer;
-  }
-  .back-bio:hover {
-    border-color: var(--accent);
-  }
-  .landing.is-focus .back-bio {
-    display: inline-block;
-  }
-  /* Full-screen map in focus mode */
-  .landing.is-focus .map-canvas {
-    aspect-ratio: auto;
-    height: calc(100vh - 170px);
-    min-height: 520px;
-  }
-  .cmd {
-    font-family: var(--mono);
-    font-size: inherit;
-    color: var(--accent);
-    background: none;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .cmd:hover {
-    color: var(--accent-hover);
-  }
-  .cmd:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-  @media (max-width: 860px) {
-    .landing {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
-  /* Live map background and pin widgets (design I) */
+  /* Live map background and pin widgets */
   .bg-layer {
     position: absolute;
     inset: 0;
@@ -1051,8 +1084,17 @@ const posts = (await getCollection('blog'))
       opacity: 0;
     }
   }
-  .pin {
-    z-index: 2;
+
+  /* Phone: stacked, the map gets a fixed height and widgets are hidden */
+  @media (max-width: 860px) {
+    .landing {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .map-stage {
+      flex: none;
+      height: 64vh;
+      min-height: 420px;
+    }
   }
   @media (max-width: 560px) {
     .w,
@@ -1062,11 +1104,16 @@ const posts = (await getCollection('blog'))
     }
   }
   @media (prefers-reduced-motion: reduce) {
+    .map-canvas {
+      transition: none;
+    }
     .bg-layer *,
     .w *,
     .rank,
     .wave,
-    .pin-dot::after {
+    .pin-dot::after,
+    .popup.pop-in,
+    .panel.panel-enter {
       animation: none !important;
     }
   }
@@ -1101,40 +1148,61 @@ const posts = (await getCollection('blog'))
   root.classList.add('js');
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const landing = document.querySelector<HTMLElement>('[data-landing]');
   const stage = document.querySelector<HTMLElement>('[data-map-stage]');
   const canvas = document.querySelector<HTMLElement>('[data-map-canvas]');
-  const hint = document.querySelector<HTMLElement>('[data-hint]');
-  const landing = document.querySelector<HTMLElement>('[data-landing]');
+  const popup = document.querySelector<HTMLElement>('[data-popup]');
+  const popupTitle = document.querySelector<HTMLElement>('[data-popup-title]');
+  const counter = document.querySelector<HTMLElement>('[data-count]');
+  const prevBtn = document.querySelector<HTMLButtonElement>('[data-prev]');
+  const nextBtn = document.querySelector<HTMLButtonElement>('[data-next]');
   const pins = Array.from(document.querySelectorAll<HTMLElement>('[data-pin]'));
   const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-panel]'));
 
-  if (stage && canvas && hint) {
+  if (stage && canvas && popup && popupTitle && counter && prevBtn && nextBtn) {
     let busy = false;
+    let current = '';
+    let index = 0;
 
-    const panelById = (id: string) =>
-      panels.find((p) => p.dataset.panel === id);
+    const panelFor = (id: string) => panels.find((p) => p.dataset.panel === id);
+    const pagesFor = (id: string) =>
+      Array.from(panelFor(id)?.querySelectorAll<HTMLElement>('[data-page]') ?? []);
 
-    function reveal(id: string, scroll: boolean) {
-      const panel = panelById(id);
-      if (!panel) return;
-      panels.forEach((p) => p.classList.toggle('is-open', p === panel));
-      pins.forEach((p) => p.classList.toggle('is-active', p.dataset.pin === id));
-      hint!.hidden = true;
-      landing?.classList.add('is-focus');
-      panel.classList.remove('panel-enter');
-      void panel.offsetWidth; // restart the entrance animation
-      panel.classList.add('panel-enter');
-      if (scroll) {
-        panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-      }
+    function render() {
+      const pages = pagesFor(current);
+      pages.forEach((p, i) => {
+        p.hidden = i !== index;
+      });
+      counter!.textContent = `${index + 1} / ${pages.length}`;
+      prevBtn!.disabled = index === 0;
+      nextBtn!.disabled = index >= pages.length - 1;
+      pins.forEach((p) => p.classList.toggle('is-active', p.dataset.pin === current));
     }
 
-    function backToMap() {
-      panels.forEach((p) => p.classList.remove('is-open'));
+    function openPopup(id: string) {
+      const panel = panelFor(id);
+      if (!panel) return;
+      current = id;
+      index = 0;
+      panels.forEach((p) => (p.hidden = p !== panel));
+      popupTitle!.textContent = panel.dataset.title ?? id;
+      popup!.hidden = false;
+      popup!.classList.remove('pop-in');
+      void popup!.offsetWidth; // restart the entrance animation
+      popup!.classList.add('pop-in');
+      render();
+    }
+
+    function closePopup() {
+      popup!.hidden = true;
+      current = '';
       pins.forEach((p) => p.classList.remove('is-active'));
-      hint!.hidden = false;
-      history.replaceState(null, '', location.pathname);
-      stage!.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    function step(d: number) {
+      const n = pagesFor(current).length;
+      index = Math.min(n - 1, Math.max(0, index + d));
+      render();
     }
 
     function openFromPin(pin: HTMLElement) {
@@ -1145,11 +1213,11 @@ const posts = (await getCollection('blog'))
       canvas!.style.setProperty('--zy', `${y}%`);
       stage!.classList.add('is-zooming');
       const id = pin.dataset.pin ?? '';
-      // Zoom toward the pin first, then reveal the section.
+      // Zoom toward the pin first, then open its popup.
       setTimeout(
         () => {
           stage!.classList.remove('is-zooming');
-          reveal(id, true);
+          openPopup(id);
           history.replaceState(null, '', `#${id}`);
           setTimeout(() => (busy = false), reduce ? 0 : 400);
         },
@@ -1164,37 +1232,42 @@ const posts = (await getCollection('blog'))
       }),
     );
 
-    document.querySelectorAll<HTMLElement>('[data-back]').forEach((btn) =>
-      btn.addEventListener('click', backToMap),
-    );
+    popup.querySelector<HTMLElement>('[data-close]')?.addEventListener('click', () => {
+      closePopup();
+      history.replaceState(null, '', location.pathname);
+    });
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
 
+    // Arrow keys page through the popup; Escape closes it.
+    document.addEventListener('keydown', (e) => {
+      if (popup.hidden) return;
+      if (e.key === 'ArrowRight') step(1);
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'Escape') closePopup();
+    });
+
+    // Back to bio: leave focus mode and close any popup.
     document.querySelector<HTMLElement>('[data-back-bio]')?.addEventListener('click', () => {
       landing?.classList.remove('is-focus');
-      panels.forEach((p) => p.classList.remove('is-open'));
-      pins.forEach((p) => p.classList.remove('is-active'));
-      hint!.hidden = false;
+      closePopup();
       history.replaceState(null, '', location.pathname);
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     });
 
-    // "explore ./map" in the terminal: full-screen map, no section open
+    // "explore ./map": full-screen map with no popup open.
     document.querySelector<HTMLElement>('[data-explore]')?.addEventListener('click', () => {
-      panels.forEach((p) => p.classList.remove('is-open'));
-      pins.forEach((p) => p.classList.remove('is-active'));
-      hint!.hidden = false;
+      closePopup();
       landing?.classList.add('is-focus');
       history.replaceState(null, '', '#map');
-      stage!.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     });
 
-    // Deep links (#research) and header nav clicks open the matching panel.
-    function fromHash(scroll: boolean) {
+    // Deep links (#research) and header nav clicks open the matching popup.
+    function fromHash() {
       const id = location.hash.slice(1);
-      if (id && panelById(id)) {
-        reveal(id, scroll);
-      }
+      if (id && panelFor(id)) openPopup(id);
     }
-    window.addEventListener('hashchange', () => fromHash(true));
-    fromHash(false);
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
   }
 </script>
