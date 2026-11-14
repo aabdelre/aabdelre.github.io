@@ -1350,8 +1350,9 @@ const posts = (await getCollection('blog'))
   }
   .split-text img {
     width: 100%;
-    height: clamp(160px, 30vh, 300px);
-    object-fit: cover;
+    height: clamp(140px, 26vh, 260px);
+    object-fit: contain;
+    background: var(--surface);
     border-radius: 10px;
     border: 1px solid var(--border);
   }
@@ -1365,7 +1366,8 @@ const posts = (await getCollection('blog'))
     flex: 1;
     min-height: 0;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: var(--surface);
     border-radius: 10px;
     border: 1px solid var(--border);
   }
