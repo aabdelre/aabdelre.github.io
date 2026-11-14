@@ -388,34 +388,32 @@ const posts = (await getCollection('blog'))
                 <button class="back" type="button" data-close>close ✕</button>
               </div>
               <div class="popup-body">
-                <div class="panel" data-panel="about" data-title="cat ./about" hidden>
-                  <div class="page" data-page>
+                <div class="panel" data-panel="about" data-title="cat ./about" data-mode="flat" hidden>
+                  <div class="about-body">
                     <img class="about-photo" src="/about/ahmed.jpg" alt="Ahmed wearing a mixed-reality headset" loading="lazy" />
-                    <div class="role">Hi, I'm Ahmed!</div>
-                    <p>
-                      I'm a software and machine learning engineer at Meta, building the systems that train and improve the models behind ads ranking.
-                    </p>
-                    <p>
-                      I love teaching, so I'm co-founding an AI startup that helps teachers design courses, give feedback, and grade work, and unlock 24/7 office hours.
-                    </p>
-                  </div>
-                  <div class="page" data-page>
-                    <div class="role">What I want to do</div>
-                    <p>
-                      I want to build AI tools that make teaching and learning better: feedback students can trust, evaluation that holds up, and products teachers actually use.
-                    </p>
-                  </div>
-                  <div class="page" data-page>
-                    <div class="role">Education</div>
-                    {
-                      education.map((ed) => (
-                        <div class="edu">
-                          <div class="meta">{ed.meta}</div>
-                          <p><b>{ed.role}</b></p>
-                          <p>{ed.summary}</p>
-                        </div>
-                      ))
-                    }
+                    <div class="about-text">
+                      <div class="role">Hi, I'm Ahmed!</div>
+                      <p>
+                        I'm a software and machine learning engineer at Meta, building the systems that train and improve the models behind ads ranking.
+                      </p>
+                      <p>
+                        I love teaching, so I'm co-founding an AI startup that helps teachers design courses, give feedback, and grade work, and unlock 24/7 office hours.
+                      </p>
+                      <div class="role about-sub">What I want to do</div>
+                      <p>
+                        I want to build AI tools that make teaching and learning better: feedback students can trust, evaluation that holds up, and products teachers actually use.
+                      </p>
+                      <div class="role about-sub">Education</div>
+                      {
+                        education.map((ed) => (
+                          <div class="edu">
+                            <div class="meta">{ed.meta}</div>
+                            <p><b>{ed.role}</b></p>
+                            <p>{ed.summary}</p>
+                          </div>
+                        ))
+                      }
+                    </div>
                   </div>
                 </div>
 
@@ -1814,15 +1812,49 @@ const posts = (await getCollection('blog'))
   }
 
   /* About: photo placeholder and education entries */
+  .about-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: start;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
   .about-photo {
     display: block;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    aspect-ratio: 4 / 3;
-    max-height: 300px;
     width: 100%;
+    max-width: 240px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--border);
     object-fit: cover;
     object-position: center 30%;
+  }
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    min-width: 0;
+  }
+  .about-text p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .about-sub {
+    margin-top: 0.6rem;
+  }
+  @media (max-width: 560px) {
+    .about-body {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .about-text {
+      width: 100%;
+    }
   }
   .edu {
     display: flex;
@@ -2413,7 +2445,7 @@ const posts = (await getCollection('blog'))
       counter!.hidden = mode !== 'paged';
       popup!.querySelector<HTMLElement>('[data-foot-os]')!.hidden = mode !== 'folders';
       popup!.querySelector<HTMLElement>('[data-foot-time]')!.hidden = mode !== 'folders';
-      popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = mode === 'board' || mode === 'log';
+      popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = mode === 'board' || mode === 'log' || mode === 'flat';
       if (mode === 'folders') showDesk();
       if (mode === 'board') showBoard();
       if (mode === 'log') showLog();
