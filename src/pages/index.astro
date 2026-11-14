@@ -96,7 +96,11 @@ const research = [
 ];
 
 const beyond = [
-  { title: 'Volleyball' },
+  {
+    title: 'Volleyball',
+    text: "I've played volleyball leagues since senior year, and have been progressing with my team through Volo leagues. Our highest finish so far is 2nd place.",
+    images: ['/volleyball/IMG_5735.jpg', '/volleyball/IMG_5787.jpg'],
+  },
   { title: 'Hiking' },
   { title: 'Hackathons', text: 'Participating, mentoring, and judging.' },
 ];
@@ -405,6 +409,13 @@ const posts = (await getCollection('blog'))
                       <div class="page" data-page>
                         <div class="role">{b.title}</div>
                         {b.text && <p>{b.text}</p>}
+                        {b.images && (
+                          <div class="img-row">
+                            {b.images.map((src) => (
+                              <img src={src} alt="Volleyball with my Volo team" loading="lazy" />
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))
                   }
@@ -1309,6 +1320,29 @@ const posts = (await getCollection('blog'))
   @keyframes blink {
     50% {
       opacity: 0;
+    }
+  }
+
+  /* Photo rows inside a section page */
+  .img-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 0.4rem;
+  }
+  .img-row img {
+    width: 100%;
+    height: clamp(180px, 34vh, 340px);
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 560px) {
+    .img-row {
+      grid-template-columns: 1fr;
+    }
+    .img-row img {
+      height: 200px;
     }
   }
 
