@@ -390,14 +390,16 @@ const posts = (await getCollection('blog'))
               <div class="popup-body">
                 <div class="panel" data-panel="about" data-title="cat ./about" data-mode="flat" hidden>
                   <div class="about-body">
+                    <div class="ab-top">
+                      <div class="ab-prompt">whoami</div>
+                      <div class="about-cap">$ open ahmed.jpg</div>
+                    </div>
                     <div class="about-side">
                       <div class="about-photo-wrap">
                         <img class="about-photo" src="/about/ahmed.jpg" alt="Ahmed wearing a mixed-reality headset" loading="lazy" />
                       </div>
-                      <div class="about-cap">$ open ahmed.jpg</div>
                     </div>
                     <div class="about-text">
-                      <div class="ab-prompt">whoami</div>
                       <h2 class="ab-title">Hi, I'm Ahmed!</h2>
                       <p class="ab-intro">
                         By day I work on ML infrastructure at <b>Meta</b>, where I help train and tune the models that decide which <b>ads</b> people see.
@@ -405,11 +407,15 @@ const posts = (await getCollection('blog'))
                       <p class="ab-intro">
                         Outside work, I'm building an <b>AI startup</b> for educators: tools for planning courses, returning feedback, and grading, plus <b>round-the-clock office hours</b> for students.
                       </p>
-                      <div class="ab-prompt ab-gap">cat mission.txt</div>
+                    </div>
+                    <div class="ab-wide">
+                      <div class="ab-prompt">cat mission.txt</div>
                       <div class="ab-box">
                         I want to build AI tools that make teaching and learning better: feedback students can trust, evaluation that holds up, and products teachers actually use.
                       </div>
-                      <div class="ab-prompt ab-gap">ls ./education</div>
+                    </div>
+                    <div class="ab-wide">
+                      <div class="ab-prompt">ls ./education</div>
                       <div class="ab-edu">
                         {
                           education.map((ed, i) => (
@@ -1832,6 +1838,21 @@ const posts = (await getCollection('blog'))
   }
 
   /* About: photo placeholder and education entries */
+  .ab-top {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .ab-wide {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+  }
   .about-body {
     display: grid;
     grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
