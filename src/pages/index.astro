@@ -2314,6 +2314,16 @@ const posts = (await getCollection('blog'))
   .project-win > :not(.win-bar) {
     margin: 0 1.1rem;
   }
+  .win-media {
+    aspect-ratio: 16 / 9;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
   .project-win .role {
     font-weight: 600;
     color: var(--strong);
