@@ -474,19 +474,25 @@ const posts = (await getCollection('blog'))
                         <div class="cv-msg">{c.msg}</div>
                         <div class="cv-when">{c.when}</div>
                         <p>{c.body}</p>
-                        {c.images.length > 0 && (
-                          <div class="cv-imgs">
-                            {c.images.map((src) => (
-                              <img src={src} alt={`${c.msg} photo`} loading="lazy" />
-                            ))}
-                          </div>
-                        )}
                         {c.details.length > 0 && (
                           <ul class="cv-list">
                             {c.details.map((d) => (
                               <li>{d}</li>
                             ))}
                           </ul>
+                        )}
+                        {c.images.length > 0 && (
+                          <div class="cv-imgs">
+                            {c.images.map((src) => (
+                              <figure class="shot">
+                                <div class="shot-bar">
+                                  <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                                  <span>{src.split('/').pop()}</span>
+                                </div>
+                                <img src={src} alt={`${c.msg} photo`} loading="lazy" />
+                              </figure>
+                            ))}
+                          </div>
                         )}
                       </div>
                     ))
@@ -2141,12 +2147,12 @@ const posts = (await getCollection('blog'))
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
   }
-  .cv-imgs img {
+  .cv-imgs .shot img {
     width: 100%;
-    height: clamp(180px, 30vh, 280px);
+    height: clamp(160px, 28vh, 240px);
     object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid var(--border);
+    border: 0;
+    border-radius: 0;
   }
   .cv-list {
     margin: 0;
