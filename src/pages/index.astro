@@ -529,6 +529,7 @@ const posts = (await getCollection('blog'))
                 <span data-count>1 / 1</span>
                 <button type="button" data-next>next →</button>
                 <span class="foot-os" data-foot-os hidden>ahmed.os</span>
+                <span class="foot-time" data-foot-time hidden></span>
               </div>
             </div>
           </div>
@@ -1828,6 +1829,15 @@ const posts = (await getCollection('blog'))
   .foot-os[hidden] {
     display: none;
   }
+  .foot-time {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .foot-time[hidden] {
+    display: none;
+  }
 
   /* Projects as a desktop of folders */
   .desk {
@@ -2078,6 +2088,7 @@ const posts = (await getCollection('blog'))
       nextBtn!.hidden = mode !== 'paged';
       counter!.hidden = mode !== 'paged';
       popup!.querySelector<HTMLElement>('[data-foot-os]')!.hidden = mode !== 'folders';
+      popup!.querySelector<HTMLElement>('[data-foot-time]')!.hidden = mode !== 'folders';
       popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = mode === 'board';
       if (mode === 'folders') showDesk();
       if (mode === 'board') showBoard();
@@ -2323,6 +2334,21 @@ const posts = (await getCollection('blog'))
     document.querySelectorAll<HTMLButtonElement>('[data-rjump]').forEach((b) =>
       b.addEventListener('click', () => openResearch(Number(b.dataset.rjump))),
     );
+
+    // Viewer's local time, shown in the projects footer
+    const footTime = document.querySelector<HTMLElement>('[data-foot-time]');
+    const tickClock = () => {
+      if (footTime) {
+        footTime.textContent = new Date().toLocaleTimeString([], {
+          hour: 'numeric',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZoneName: 'short',
+        });
+      }
+    };
+    tickClock();
+    setInterval(tickClock, 1000);
 
     // Projects folders: click selects, double-click (or Enter) opens, "up" returns to the desktop
     function showDesk() {
