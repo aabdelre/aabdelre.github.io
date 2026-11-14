@@ -16,10 +16,10 @@ const { Content } = await render(post);
 
 <Base title={`${post.data.title} — Ahmed Abdelrehim`} description={post.data.description}>
   <div class="container">
-    <article class="prose" style="padding:3rem 0">
-      <p style="margin-bottom:1.5rem"><a href="/blog">← All posts</a></p>
+    <article class="prose post">
+      <p class="back-row"><a href="/blog">← All posts</a></p>
       <h1>{post.data.title}</h1>
-      <p style="color:var(--muted)">
+      <p class="date">
         <time datetime={post.data.pubDate.toISOString()}>
           {post.data.pubDate.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -28,7 +28,271 @@ const { Content } = await render(post);
           })}
         </time>
       </p>
-      <Content />
+
+      <!-- The full post is the source. With JavaScript it is split into pages below;
+           without JavaScript it simply reads top to bottom. -->
+      <div class="book-src" data-book-src>
+        <Content />
+      </div>
+      <div class="book-pages" data-book-pages></div>
+
+      <div class="book-nav" data-book-nav hidden>
+        <button type="button" data-prev>← prev</button>
+        <span data-count>1 / 1</span>
+        <button type="button" data-next>next →</button>
+      </div>
     </article>
   </div>
 </Base>
+
+<style>
+  .post .back-row {
+    margin: 1.5rem 0 1rem;
+  }
+  .post h1 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin: 0 0 0.25rem;
+  }
+  .post .date {
+    color: var(--muted);
+    margin: 0 0 1.25rem;
+  }
+
+  /* Pages: a fixed-height book, so the post never needs scrolling */
+  .book-pages {
+    position: relative;
+    height: min(580px, calc(100dvh - 300px));
+    min-height: 380px;
+    perspective: 1400px;
+  }
+  .book-page {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    transform-origin: left center;
+    backface-visibility: hidden;
+  }
+  .book-page[hidden] {
+    display: none;
+  }
+  .book-page > :first-child {
+    margin-top: 0;
+  }
+  .book-page h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+  }
+  .book-page p,
+  .book-page li {
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+  .book-page p:last-child {
+    margin-bottom: 0;
+  }
+  .book-page.flip-out-next {
+    animation: flip-out-next 0.45s ease-in forwards;
+  }
+  .book-page.flip-out-prev {
+    animation: flip-out-prev 0.45s ease-in forwards;
+  }
+  .book-page.flip-in-next {
+    animation: flip-in-next 0.5s ease-out;
+  }
+  .book-page.flip-in-prev {
+    animation: flip-in-prev 0.5s ease-out;
+  }
+  @keyframes flip-out-next {
+    to {
+      transform: rotateY(-100deg);
+      opacity: 0;
+    }
+  }
+  @keyframes flip-out-prev {
+    to {
+      transform: rotateY(100deg);
+      opacity: 0;
+    }
+  }
+  @keyframes flip-in-next {
+    from {
+      transform: rotateY(100deg);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes flip-in-prev {
+    from {
+      transform: rotateY(-100deg);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  .book-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .book-nav[hidden] {
+    display: none;
+  }
+  .book-nav button {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+  }
+  .book-nav button:hover:not(:disabled) {
+    border-color: var(--accent);
+  }
+  .book-nav button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .book-nav button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .book-page.flip-out-next,
+    .book-page.flip-out-prev,
+    .book-page.flip-in-next,
+    .book-page.flip-in-prev {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  const LIMIT = 750; // rough characters per page, sized for the book height
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const src = document.querySelector<HTMLElement>('[data-book-src]');
+  const out = document.querySelector<HTMLElement>('[data-book-pages]');
+  const nav = document.querySelector<HTMLElement>('[data-book-nav]');
+
+  if (src && out && nav) {
+    const makeP = (html: string) => {
+      const p = document.createElement('p');
+      p.innerHTML = html;
+      return p;
+    };
+
+    // A long paragraph is split at sentence ends so each piece fits a page.
+    const chunk = (el: HTMLElement): HTMLElement[] => {
+      if (el.tagName !== 'P' || (el.textContent ?? '').length <= LIMIT) return [el];
+      const parts: HTMLElement[] = [];
+      let buf = '';
+      for (const s of el.innerHTML.split(/(?<=[.!?])\s+/)) {
+        const joined = buf ? `${buf} ${s}` : s;
+        if (buf && joined.replace(/<[^>]+>/g, '').length > LIMIT) {
+          parts.push(makeP(buf));
+          buf = s;
+        } else {
+          buf = joined;
+        }
+      }
+      if (buf) parts.push(makeP(buf));
+      return parts;
+    };
+
+    // Group blocks into pages: a heading starts a new page, and so does a full page.
+    const groups: HTMLElement[][] = [];
+    let cur: HTMLElement[] = [];
+    let len = 0;
+    for (const block of Array.from(src.children) as HTMLElement[]) {
+      for (const part of chunk(block)) {
+        if (part.tagName === 'HR') continue;
+        const plen = (part.textContent ?? '').length;
+        const isHeading = /^H[1-6]$/.test(part.tagName);
+        if (cur.length && (isHeading || len + plen > LIMIT)) {
+          groups.push(cur);
+          cur = [];
+          len = 0;
+        }
+        cur.push(part);
+        len += plen;
+      }
+    }
+    if (cur.length) groups.push(cur);
+
+    out.innerHTML = '';
+    for (const group of groups) {
+      const page = document.createElement('div');
+      page.className = 'book-page';
+      group.forEach((el) => page.appendChild(el));
+      out.appendChild(page);
+    }
+    src.remove();
+
+    const pages = Array.from(out.querySelectorAll<HTMLElement>('.book-page'));
+    const counter = nav.querySelector<HTMLElement>('[data-count]');
+    const prev = nav.querySelector<HTMLButtonElement>('[data-prev]');
+    const next = nav.querySelector<HTMLButtonElement>('[data-next]');
+    let index = 0;
+    let busy = false;
+
+    pages.forEach((p, i) => (p.hidden = i !== 0));
+    nav.hidden = false;
+
+    const update = () => {
+      counter!.textContent = `${index + 1} / ${pages.length}`;
+      prev!.disabled = index === 0;
+      next!.disabled = index === pages.length - 1;
+    };
+
+    // Turn the current page away, then bring the next one in.
+    const flip = (dir: 1 | -1) => {
+      const target = index + dir;
+      if (busy || target < 0 || target >= pages.length) return;
+      busy = true;
+      const from = pages[index];
+      const to = pages[target];
+      const outCls = dir > 0 ? 'flip-out-next' : 'flip-out-prev';
+      const inCls = dir > 0 ? 'flip-in-next' : 'flip-in-prev';
+      from.classList.add(outCls);
+      setTimeout(
+        () => {
+          from.hidden = true;
+          from.classList.remove(outCls);
+          to.hidden = false;
+          to.classList.add(inCls);
+          index = target;
+          update();
+          setTimeout(() => {
+            to.classList.remove(inCls);
+            busy = false;
+          }, reduce ? 0 : 500);
+        },
+        reduce ? 0 : 450,
+      );
+    };
+
+    prev!.addEventListener('click', () => flip(-1));
+    next!.addEventListener('click', () => flip(1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') flip(1);
+      if (e.key === 'ArrowLeft') flip(-1);
+    });
+    update();
+  }
+</script>
