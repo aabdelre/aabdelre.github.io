@@ -413,10 +413,15 @@ const posts = (await getCollection('blog'))
                         <div class="role">{b.title}</div>
                         {b.text && <p>{b.text}</p>}
                         {b.images && (
-                          <div class="img-row">
-                            {b.images.map((src) => (
-                              <img src={src} alt="Volleyball with my Volo team" loading="lazy" />
-                            ))}
+                          <div class="split">
+                            <div class="split-text">
+                              <img src={b.images[0]} alt={`${b.title} photo`} loading="lazy" />
+                            </div>
+                            <div class="split-imgs">
+                              {b.images.slice(1).map((src) => (
+                                <img src={src} alt={`${b.title} photo`} loading="lazy" />
+                              ))}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -1323,6 +1328,48 @@ const posts = (await getCollection('blog'))
   @keyframes blink {
     50% {
       opacity: 0;
+    }
+  }
+
+  /* Two-page spread: text and one photo on the left, the rest on the right */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    flex: 1;
+    min-height: 0;
+    margin-top: 0.4rem;
+  }
+  .split-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 0;
+  }
+  .split-text img {
+    width: 100%;
+    height: clamp(200px, 42vh, 420px);
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .split-imgs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 0;
+  }
+  .split-imgs img {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 560px) {
+    .split {
+      grid-template-columns: 1fr;
     }
   }
 
