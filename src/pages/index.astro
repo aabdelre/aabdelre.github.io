@@ -1026,7 +1026,7 @@ const posts = (await getCollection('blog'))
     padding: 1rem 1.75rem;
   }
   .popup.takeover .popup-body {
-    padding: 2rem 3rem;
+    padding: 1.25rem 2rem;
   }
   .popup.takeover .page .role {
     font-size: 1.5rem;
@@ -1848,7 +1848,7 @@ const posts = (await getCollection('blog'))
   }
   .about-photo-wrap {
     width: 100%;
-    max-width: 240px;
+    max-width: 190px;
     padding: 6px;
     border-radius: 50%;
     background: conic-gradient(var(--accent), var(--border) 35%, var(--accent) 70%, var(--border));
@@ -1877,10 +1877,10 @@ const posts = (await getCollection('blog'))
     color: var(--accent);
   }
   .ab-gap {
-    margin-top: 0.8rem;
+    margin-top: 0.4rem;
   }
   .ab-title {
-    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-size: clamp(1.7rem, 3vw, 2.1rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -1888,8 +1888,8 @@ const posts = (await getCollection('blog'))
     margin: 0.2rem 0 0.4rem;
   }
   .ab-intro {
-    font-size: 1.15rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.5;
     color: var(--text);
     margin: 0;
   }
@@ -1902,20 +1902,21 @@ const posts = (await getCollection('blog'))
     border-left: 3px solid var(--accent);
     border-radius: 8px;
     background: var(--surface);
-    padding: 0.9rem 1.1rem;
-    font-size: 1.05rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
     line-height: 1.6;
     color: var(--text);
   }
   .ab-edu {
     display: grid;
-    gap: 0.7rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.6rem;
   }
   .ab-card {
     border: 1px solid var(--border);
     border-radius: 10px;
     background: var(--surface);
-    padding: 0.9rem 1.1rem;
+    padding: 0.6rem 0.9rem;
   }
   .ab-card h4 {
     margin: 0 0 0.2rem;
