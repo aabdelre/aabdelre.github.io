@@ -33,3 +33,14 @@ const posts = (await getCollection('blog')).sort(
     </section>
   </div>
 </Base>
+
+<style>
+  /* Full screen width, same as the other pages */
+  :global(.site-header .container),
+  .container {
+    max-width: min(1600px, 96vw);
+  }
+  .post-list {
+    width: 100%;
+  }
+</style>
