@@ -334,11 +334,24 @@ const posts = (await getCollection('blog'))
                   }
                 </div>
 
-                <div class="panel" data-panel="projects" data-title="ls ./projects" hidden>
-                  <div class="photo-slot">[ photo: projects ]</div>
+                <div class="panel" data-panel="projects" data-title="ls ./projects" data-mode="folders" hidden>
+                  <!-- Desktop of project folders: double-click one to open it -->
+                  <div class="desk" data-desk>
+                    {
+                      projects.map((p, i) => (
+                        <button class="folder" type="button" data-folder={i} aria-label={`Open folder ${p.name}`}>
+                          <svg class="folder-icon" viewBox="0 0 24 20" aria-hidden="true" focusable="false">
+                            <path fill="currentColor" d="M1 3a2 2 0 0 1 2-2h5l2 2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z" />
+                          </svg>
+                          <span class="folder-name">{p.name}</span>
+                        </button>
+                      ))
+                    }
+                  </div>
                   {
-                    projects.map((p) => (
-                      <div class="page" data-page>
+                    projects.map((p, i) => (
+                      <div class="project-win" data-project-win={i} hidden>
+                        <button class="back" type="button" data-up>← up</button>
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
@@ -1224,6 +1237,86 @@ const posts = (await getCollection('blog'))
     }
   }
 
+  /* Projects as a desktop of folders */
+  .desk {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+    align-content: start;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .desk[hidden] {
+    display: none;
+  }
+  .folder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--text);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .folder:hover {
+    border-color: var(--border);
+  }
+  .folder.is-selected {
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: var(--accent);
+  }
+  .folder:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .folder-icon {
+    width: 56px;
+    height: 46px;
+    color: var(--accent);
+  }
+  .folder-name {
+    text-align: center;
+    word-break: break-word;
+  }
+  .project-win {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .project-win[hidden] {
+    display: none;
+  }
+  .project-win .back {
+    align-self: flex-start;
+  }
+  .project-win .role {
+    font-weight: 600;
+    color: var(--strong);
+    font-size: 1.1rem;
+  }
+  .project-win .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .project-win p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .project-win .card-links {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
   /* Transitions into and out of the full-screen map */
   .bio-col {
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -1386,6 +1479,13 @@ const posts = (await getCollection('blog'))
       popup!.classList.remove('pop-in');
       void popup!.offsetWidth; // restart the entrance animation
       popup!.classList.add('pop-in');
+      // Folder mode (projects): no paging, the desktop of folders instead
+      const folderMode = panel.dataset.mode === 'folders';
+      prevBtn!.hidden = folderMode;
+      nextBtn!.hidden = folderMode;
+      counter!.hidden = folderMode;
+      popup!.querySelector<HTMLElement>('.popup-foot')!.hidden = folderMode;
+      if (folderMode) showDesk();
       render();
     }
 
@@ -1592,6 +1692,31 @@ const posts = (await getCollection('blog'))
     });
 
     // Deep links (#research) and header nav clicks open the matching popup.
+    // Projects folders: click selects, double-click (or Enter) opens, "up" returns to the desktop
+    function showDesk() {
+      document.querySelector<HTMLElement>('[data-desk]')!.hidden = false;
+      document.querySelectorAll<HTMLElement>('[data-project-win]').forEach((w) => (w.hidden = true));
+    }
+    function openProject(i: number) {
+      document.querySelector<HTMLElement>('[data-desk]')!.hidden = true;
+      document.querySelectorAll<HTMLElement>('[data-project-win]').forEach(
+        (w) => (w.hidden = w.dataset.projectWin !== String(i)),
+      );
+    }
+    const folders = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-folder]'));
+    folders.forEach((f) => {
+      f.addEventListener('click', () => {
+        folders.forEach((x) => x.classList.toggle('is-selected', x === f));
+      });
+      f.addEventListener('dblclick', () => openProject(Number(f.dataset.folder)));
+      f.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') openProject(Number(f.dataset.folder));
+      });
+    });
+    document.querySelectorAll<HTMLElement>('[data-up]').forEach((b) =>
+      b.addEventListener('click', showDesk),
+    );
+
     // Header nav: move to the map, then open the section. A deep link on load opens directly.
     window.addEventListener('hashchange', () => {
       const id = location.hash.slice(1);
