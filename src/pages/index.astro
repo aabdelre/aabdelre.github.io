@@ -390,7 +390,7 @@ const posts = (await getCollection('blog'))
               <div class="popup-body">
                 <div class="panel" data-panel="about" data-title="cat ./about" hidden>
                   <div class="page" data-page>
-                    <div class="about-photo">[ photo: Ahmed ]</div>
+                    <img class="about-photo" src="/about/ahmed.jpg" alt="Ahmed wearing a mixed-reality headset" loading="lazy" />
                     <div class="role">Hi, I'm Ahmed!</div>
                     <p>
                       I'm a software and machine learning engineer at Meta, building the systems that train and improve the models behind ads ranking.
@@ -1815,16 +1815,14 @@ const posts = (await getCollection('blog'))
 
   /* About: photo placeholder and education entries */
   .about-photo {
-    border: 1px dashed var(--border);
+    display: block;
+    border: 1px solid var(--border);
     border-radius: 10px;
     aspect-ratio: 4 / 3;
-    max-height: 260px;
+    max-height: 300px;
     width: 100%;
-    display: grid;
-    place-items: center;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--muted);
+    object-fit: cover;
+    object-position: center 30%;
   }
   .edu {
     display: flex;
