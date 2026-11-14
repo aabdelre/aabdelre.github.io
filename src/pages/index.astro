@@ -46,6 +46,11 @@ const experience = [
     period: 'Mar 2026 — Present',
     summary:
       'Building an AI-native LMS for AI-assisted curriculum building, teaching, assessment, and grading; benchmarking 10+ models for grading quality.',
+    details: [
+      'Lead technical direction with 2 co-founders: benchmark models, build agents, and design evaluation protocols, privacy controls, and integrity safeguards.',
+      'Benchmarked 20+ open and closed models. Reached final-stage accelerator conversations with YC, a16z, and Afore Capital.',
+      'Building reliable AI feedback and voice personas. Working through model failures, privacy concerns, and a broken live demo, with limited testing because of a lack of funding.',
+    ],
   },
   {
     role: 'Software Engineer, ML Infrastructure',
@@ -53,6 +58,12 @@ const experience = [
     period: 'Feb 2025 — Present',
     summary:
       'Build ML workflow orchestration for Ads ranking — cut model-iteration latency ~88% and drove avg 2.45% accuracy gains across production models.',
+    details: [
+      'Builds products and infrastructure that connect people and businesses, including ad platforms, large-scale Ads ML systems, and evaluation tools.',
+      'Developing agents and platform capabilities for model iteration, and designing self-improving workflows for models. Shipping model improvements.',
+      'Cut iteration latency about 35% and lifted accuracy about 2.45% on average across 5 models. Among the org’s top 5% of contributors, and fast-tracked for promotion in 11 months.',
+      'The org’s youngest member (of about 200 headcount), filling AI/ML knowledge gaps while delivering impact. Honing time estimation and navigating corporate politics.',
+    ],
   },
   {
     role: 'Software Engineer Intern',
@@ -60,6 +71,11 @@ const experience = [
     period: 'May 2024 — Aug 2024',
     summary:
       'Rewrote a Python microservice (−72% code) and migrated Address Pool Manager monitoring to Prometheus/Grafana with custom gRPC metrics endpoints on Kubernetes.',
+    details: [
+      'Develops networking hardware, software, and cloud services for enterprise and service-provider infrastructure.',
+      'Migrated Python microservices to Go, and instrumented asynchronous workflows with Prometheus and Grafana to track metrics and build dashboards.',
+      'Finished my project mid-internship and expanded its scope. Reduced build size by about 72%, and earned the best intern presentation and a return offer.',
+    ],
   },
   {
     role: 'Software Developer',
@@ -67,6 +83,22 @@ const experience = [
     period: 'Jun 2023 — Jan 2024',
     summary:
       'Built an inventory app on AWS (DynamoDB, S3, Lambda) behind a Django REST API, and revamped a 7-page digital archive in React.',
+    details: [
+      'Supports faculty and students with research, course design, tech troubleshooting, digital learning, media production, workshops, and makerspace projects.',
+      'Led development for on-campus projects, connected students to resources for their research, and documented the work for blogs.',
+      'Completed 2 projects and worked with 3 departments and off-campus organizations. Offered part-time work after the summer, for merit.',
+    ],
+  },
+  {
+    role: 'Teaching Assistant',
+    org: 'Hamilton College CS, Math & Physics',
+    period: '',
+    summary:
+      'Led labs, graded quizzes, projects, and exams, and supported students in office hours across computer science, mathematics, and physics.',
+    details: [
+      'Repeatedly selected for TA positions by departments, for merit, across all semesters. Represented departments at professorship candidate dinners.',
+      'Catered explanations to students with different baselines of understanding, while managing time between tutoring and other commitments.',
+    ],
   },
 ];
 
@@ -86,16 +118,18 @@ const education = [
 
 const commits = [
   ...experience.map((e, i) => ({
-    hash: ['a91f2c0', '7b03e4d', '3c8e1a7', '5d2f9b1'][i],
+    hash: ['a91f2c0', '7b03e4d', '3c8e1a7', '5d2f9b1', 'e27a0b3'][i],
     msg: `${e.role} · ${e.org}`,
     when: e.period,
     body: e.summary,
+    details: e.details ?? [],
   })),
   ...education.map((ed, i) => ({
     hash: ['9e4a6c2', '1f7b8d0'][i],
     msg: ed.role,
     when: ed.meta,
     body: ed.summary,
+    details: [],
   })),
 ];
 
@@ -381,6 +415,13 @@ const posts = (await getCollection('blog'))
                         <div class="cv-msg">{c.msg}</div>
                         <div class="cv-when">{c.when}</div>
                         <p>{c.body}</p>
+                        {c.details.length > 0 && (
+                          <ul class="cv-list">
+                            {c.details.map((d) => (
+                              <li>{d}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     ))
                   }
@@ -1833,6 +1874,21 @@ const posts = (await getCollection('blog'))
     font-family: var(--mono);
     color: var(--muted);
     font-size: 0.9rem;
+  }
+  .cv-list {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .commit-view {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
   }
   .commit-view p {
     margin: 0;
