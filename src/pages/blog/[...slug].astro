@@ -184,7 +184,9 @@ const { Content } = await render(post);
 </style>
 
 <script>
-  const LIMIT = 750; // rough characters per page, sized for the book height
+  const PARAS_PER_PAGE = 2; // paragraphs per page
+  const PAGE_CAP = 1300; // hard cap on characters per page, sized for the book height
+  const SPLIT_AT = 900; // paragraphs longer than this are split at sentence ends
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const src = document.querySelector<HTMLElement>('[data-book-src]');
   const out = document.querySelector<HTMLElement>('[data-book-pages]');
@@ -199,12 +201,12 @@ const { Content } = await render(post);
 
     // A long paragraph is split at sentence ends so each piece fits a page.
     const chunk = (el: HTMLElement): HTMLElement[] => {
-      if (el.tagName !== 'P' || (el.textContent ?? '').length <= LIMIT) return [el];
+      if (el.tagName !== 'P' || (el.textContent ?? '').length <= SPLIT_AT) return [el];
       const parts: HTMLElement[] = [];
       let buf = '';
       for (const s of el.innerHTML.split(/(?<=[.!?])\s+/)) {
         const joined = buf ? `${buf} ${s}` : s;
-        if (buf && joined.replace(/<[^>]+>/g, '').length > LIMIT) {
+        if (buf && joined.replace(/<[^>]+>/g, '').length > SPLIT_AT) {
           parts.push(makeP(buf));
           buf = s;
         } else {
@@ -219,18 +221,22 @@ const { Content } = await render(post);
     const groups: HTMLElement[][] = [];
     let cur: HTMLElement[] = [];
     let len = 0;
+    let paras = 0;
     for (const block of Array.from(src.children) as HTMLElement[]) {
       for (const part of chunk(block)) {
         if (part.tagName === 'HR') continue;
         const plen = (part.textContent ?? '').length;
         const isHeading = /^H[1-6]$/.test(part.tagName);
-        if (cur.length && (isHeading || len + plen > LIMIT)) {
+        const isPara = part.tagName === 'P';
+        if (cur.length && (isHeading || (isPara && paras >= PARAS_PER_PAGE) || len + plen > PAGE_CAP)) {
           groups.push(cur);
           cur = [];
           len = 0;
+          paras = 0;
         }
         cur.push(part);
         len += plen;
+        if (isPara) paras++;
       }
     }
     if (cur.length) groups.push(cur);
