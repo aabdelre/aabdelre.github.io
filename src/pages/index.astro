@@ -2765,6 +2765,8 @@ const posts = (await getCollection('blog'))
       'wheel',
       (e) => {
         if (busy) return;
+        // Scrolling inside the popup scrolls the popup, not the map
+        if ((e.target as HTMLElement).closest('.popup')) return;
         e.preventDefault();
         zoomTo(scale * (e.deltaY < 0 ? 1.12 : 1 / 1.12));
       },
