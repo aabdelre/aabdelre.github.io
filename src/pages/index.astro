@@ -5,11 +5,11 @@ import { getCollection } from 'astro:content';
 // ---- Edit your content here -------------------------------------------------
 // Map pins. x/y are percentages across the map. `id` must match a panel below.
 const pins = [
-  { id: 'experience', label: 'Experience', x: 24, y: 34 },
-  { id: 'research', label: 'Research', x: 50, y: 20 },
-  { id: 'projects', label: 'Projects', x: 76, y: 34 },
-  { id: 'blog', label: 'Blog', x: 32, y: 72 },
-  { id: 'beyond', label: 'Beyond', x: 70, y: 72 },
+  { id: 'experience', num: '01', label: 'Experience', x: 24, y: 34 },
+  { id: 'research', num: '02', label: 'Research', x: 50, y: 20 },
+  { id: 'projects', num: '03', label: 'Projects', x: 76, y: 34 },
+  { id: 'blog', num: '04', label: 'Blog', x: 32, y: 72 },
+  { id: 'beyond', num: '05', label: 'Beyond', x: 70, y: 72 },
 ];
 
 const projects = [
@@ -129,6 +129,9 @@ const posts = (await getCollection('blog'))
                 I love teaching, so I'm co-founding an AI startup that helps
                 teachers design courses, give feedback, and grade work.
               </p>
+              <p class="prompt">
+                <button class="cmd" type="button" data-explore>explore ./map</button>
+              </p>
               <p class="prompt">open links</p>
               <div class="socials">
                 <a class="icon-link" href="https://github.com/aabdelre" aria-label="GitHub" title="GitHub">
@@ -144,9 +147,6 @@ const posts = (await getCollection('blog'))
                   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h8"/></svg>
                 </a>
               </div>
-              <p class="prompt">
-                <button class="cmd" type="button" data-explore>explore ./map</button>
-              </p>
               <p class="prompt"><span class="caret"></span></p>
             </div>
           </div>
@@ -264,7 +264,7 @@ const posts = (await getCollection('blog'))
                     aria-label={`Open ${p.label}`}
                   >
                     <span class="pin-dot"></span>
-                    <span class="pin-label">{p.label}</span>
+                    <span class="pin-label"><span class="pin-num">{p.num}</span> {p.label}</span>
                   </a>
                 ))
               }
@@ -402,7 +402,7 @@ const posts = (await getCollection('blog'))
   /* Split landing: bio left, map right */
   .landing {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 1.5rem;
     align-items: stretch;
     min-height: 0;
@@ -427,42 +427,39 @@ const posts = (await getCollection('blog'))
     margin: 0 0 0.6rem;
   }
   /* Bio column: compact so the whole terminal fits without clipping */
-  .bio-col .term-bar {
-    padding: 0.5rem 0.75rem;
-  }
   .bio-col .term-body {
-    padding: 1rem 1.25rem;
+    padding: 1.75rem 2rem;
   }
   .bio-col .term-body .prompt {
-    font-size: 0.8rem;
-    margin: 0 0 0.15rem;
-  }
-  .bio-col .hero-head {
-    margin-bottom: 0.5rem;
-  }
-  .bio-col .hero h1 {
-    font-size: 1.6rem;
-    margin: 0 0 0.2rem;
-  }
-  .bio-col .term-body .out-accent {
-    font-size: 0.9rem;
-    margin: 0;
-  }
-  .bio-col .term-body p {
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 0.95rem;
     margin: 0 0 0.4rem;
   }
+  .bio-col .hero-head {
+    margin-bottom: 1.25rem;
+  }
+  .bio-col .hero h1 {
+    font-size: 2.6rem;
+    margin: 0 0 0.4rem;
+  }
+  .bio-col .term-body .out-accent {
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem;
+  }
+  .bio-col .term-body p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 0.9rem;
+  }
   .bio-col .socials {
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
   .bio-col .icon-link {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
   }
   .bio-col .icon-link svg {
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
   }
   .map-col {
     display: flex;
@@ -559,7 +556,7 @@ const posts = (await getCollection('blog'))
   }
   .back-bio {
     display: none;
-    margin: 0 0 0.6rem;
+    margin: 1.25rem 0 0.6rem;
     align-self: flex-start;
     font-family: var(--mono);
     font-size: 0.85rem;
@@ -648,6 +645,10 @@ const posts = (await getCollection('blog'))
     border-radius: 6px;
     padding: 0.15rem 0.5rem;
     white-space: nowrap;
+  }
+  .pin-num {
+    color: var(--accent);
+    margin-right: 0.3rem;
   }
   .pin.is-active .pin-dot {
     background: var(--strong);
@@ -1161,6 +1162,63 @@ const posts = (await getCollection('blog'))
     }
   }
 
+  /* Transitions into and out of the full-screen map */
+  .bio-col {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .bio-col.is-leaving {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  .bio-col.bio-in {
+    animation: bio-in 0.6s ease both;
+  }
+  @keyframes bio-in {
+    from {
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .map-stage.enter {
+    animation: map-in 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes map-in {
+    from {
+      opacity: 0;
+      transform: scale(0.55);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+  }
+  .map-stage.exit {
+    animation: map-out 0.5s ease-in both;
+  }
+  @keyframes map-out {
+    to {
+      opacity: 0;
+      transform: scale(0.55);
+      filter: blur(4px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bio-col,
+    .bio-col.is-leaving,
+    .map-stage.enter,
+    .map-stage.exit,
+    .bio-col.bio-in {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
   /* Phone: stacked, the map gets a fixed height and widgets are hidden */
   @media (max-width: 860px) {
     .landing {
@@ -1417,19 +1475,41 @@ const posts = (await getCollection('blog'))
       if (e.key === 'Escape') closePopup();
     });
 
-    // Back to bio: leave focus mode and close any popup.
+    // Back to bio: the map pulls back into the distance, then the bio fades in.
     document.querySelector<HTMLElement>('[data-back-bio]')?.addEventListener('click', () => {
-      landing?.classList.remove('is-focus');
       closePopup();
       history.replaceState(null, '', location.pathname);
-      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      const bio = document.querySelector<HTMLElement>('.bio-col');
+      if (reduce) {
+        landing?.classList.remove('is-focus');
+        return;
+      }
+      stage!.classList.add('exit');
+      setTimeout(() => {
+        stage!.classList.remove('exit');
+        landing?.classList.remove('is-focus');
+        bio?.classList.add('bio-in');
+        bio?.addEventListener('animationend', () => bio.classList.remove('bio-in'), { once: true });
+      }, 500);
     });
 
-    // "explore ./map": full-screen map with no popup open.
+    // "explore ./map": the bio fades out, then the map zooms in from a distance.
     document.querySelector<HTMLElement>('[data-explore]')?.addEventListener('click', () => {
+      if (landing?.classList.contains('is-focus')) return;
       closePopup();
-      landing?.classList.add('is-focus');
       history.replaceState(null, '', '#map');
+      const bio = document.querySelector<HTMLElement>('.bio-col');
+      if (reduce) {
+        landing?.classList.add('is-focus');
+        return;
+      }
+      bio?.classList.add('is-leaving');
+      setTimeout(() => {
+        landing?.classList.add('is-focus');
+        bio?.classList.remove('is-leaving');
+        stage!.classList.add('enter');
+        stage!.addEventListener('animationend', () => stage!.classList.remove('enter'), { once: true });
+      }, 400);
     });
 
     // Deep links (#research) and header nav clicks open the matching popup.
