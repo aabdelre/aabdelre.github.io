@@ -399,8 +399,7 @@ const posts = (await getCollection('blog'))
                             <div class="nb-ls">$ ls ./research</div>
                             {research.map((x, j) => (
                               <button class={`nb-item${j === i ? ' on' : ''}`} type="button" data-rjump={j}>
-                                <span>{x.role}</span>
-                                <small>{x.name ?? ''}</small>
+                                <span>{x.name ?? x.role}</span>
                               </button>
                             ))}
                           </aside>
