@@ -628,7 +628,7 @@ const posts = (await getCollection('blog'))
                                 )}
                               </figure>
                             </div>
-                            <div class="split-imgs">
+                            <div class={b.title === 'Volleyball' ? 'split-imgs split-grid' : 'split-imgs'}>
                               {b.images.slice(1).map((src) => (
                                 <figure class="shot">
                                   <div class="shot-bar">
@@ -1599,10 +1599,13 @@ const posts = (await getCollection('blog'))
     height: clamp(220px, 42vh, 400px);
   }
   .split-imgs .shot {
+    flex: 1;
     min-height: 0;
   }
-  /* The video takes the top half of the right column; the two photos sit side by side below it */
-  .split-imgs .shot:has(video) {
+  .split-grid .shot {
+    min-height: 0;
+  }
+  .split-grid .shot:has(video) {
     grid-column: 1 / -1;
     grid-row: 1;
   }
@@ -1649,11 +1652,16 @@ const posts = (await getCollection('blog'))
     border: 1px solid var(--border);
   }
   .split-imgs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 0;
+  }
+  /* Volleyball only: the video fills the top half, the two photos sit side by side below */
+  .split-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0.75rem;
-    min-height: 0;
   }
   .split-imgs img {
     flex: 1;
