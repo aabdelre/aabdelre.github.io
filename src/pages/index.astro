@@ -390,29 +390,48 @@ const posts = (await getCollection('blog'))
               <div class="popup-body">
                 <div class="panel" data-panel="about" data-title="cat ./about" data-mode="flat" hidden>
                   <div class="about-body">
-                    <img class="about-photo" src="/about/ahmed.jpg" alt="Ahmed wearing a mixed-reality headset" loading="lazy" />
+                    <div class="about-side">
+                      <div class="about-photo-wrap">
+                        <img class="about-photo" src="/about/ahmed.jpg" alt="Ahmed wearing a mixed-reality headset" loading="lazy" />
+                      </div>
+                      <div class="about-cap">$ open ahmed.jpg</div>
+                    </div>
                     <div class="about-text">
-                      <div class="role">Hi, I'm Ahmed!</div>
-                      <p>
-                        I'm a software and machine learning engineer at Meta, building the systems that train and improve the models behind ads ranking.
+                      <div class="ab-prompt">whoami</div>
+                      <h2 class="ab-title">Hi, I'm Ahmed!</h2>
+                      <p class="ab-intro">
+                        I'm a software and machine learning engineer at <b>Meta</b>, building the systems that train and improve the models behind <b>ads ranking</b>.
                       </p>
-                      <p>
-                        I love teaching, so I'm co-founding an AI startup that helps teachers design courses, give feedback, and grade work, and unlock 24/7 office hours.
+                      <p class="ab-intro">
+                        I love teaching, so I'm co-founding an <b>AI startup</b> that helps teachers design courses, give feedback, and grade work, and unlock <b>24/7 office hours</b>.
                       </p>
-                      <div class="role about-sub">What I want to do</div>
-                      <p>
+                      <div class="ab-prompt ab-gap">cat mission.txt</div>
+                      <div class="ab-box">
                         I want to build AI tools that make teaching and learning better: feedback students can trust, evaluation that holds up, and products teachers actually use.
-                      </p>
-                      <div class="role about-sub">Education</div>
-                      {
-                        education.map((ed) => (
-                          <div class="edu">
-                            <div class="meta">{ed.meta}</div>
-                            <p><b>{ed.role}</b></p>
-                            <p>{ed.summary}</p>
-                          </div>
-                        ))
-                      }
+                      </div>
+                      <div class="ab-prompt ab-gap">ls ./education</div>
+                      <div class="ab-edu">
+                        {
+                          education.map((ed, i) => (
+                            <div class="ab-card">
+                              <h4>{ed.role}</h4>
+                              <div class="ab-meta">{ed.meta}</div>
+                              {i === 0 && (
+                                <div>
+                                  {["Magna Cum Laude", "CS Honors", "Phi Beta Kappa", "Dean's List (every semester)"].map((t) => (
+                                    <span class="chip">{t}</span>
+                                  ))}
+                                </div>
+                              )}
+                              {i === 1 && (
+                                <div>
+                                  <span class="chip">Study abroad</span>
+                                </div>
+                              )}
+                            </div>
+                          ))
+                        }
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1822,15 +1841,103 @@ const posts = (await getCollection('blog'))
     align-items: start;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
+  .about-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+  }
+  .about-photo-wrap {
+    width: 100%;
+    max-width: 240px;
+    padding: 6px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent), var(--border) 35%, var(--accent) 70%, var(--border));
+  }
   .about-photo {
     display: block;
     width: 100%;
-    max-width: 240px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 2px solid var(--border);
+    border: 0;
     object-fit: cover;
     object-position: center 30%;
+  }
+  .about-cap {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .ab-prompt {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .ab-prompt::before {
+    content: "$ ";
+    color: var(--accent);
+  }
+  .ab-gap {
+    margin-top: 0.8rem;
+  }
+  .ab-title {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--strong);
+    margin: 0.2rem 0 0.4rem;
+  }
+  .ab-intro {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+  }
+  .ab-intro b {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .ab-box {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 0.9rem 1.1rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .ab-edu {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .ab-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 0.9rem 1.1rem;
+  }
+  .ab-card h4 {
+    margin: 0 0 0.2rem;
+    font-size: 1.05rem;
+    color: var(--strong);
+  }
+  .ab-meta {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+    margin: 0.5rem 0.35rem 0 0;
   }
   .about-text {
     display: flex;
