@@ -92,7 +92,11 @@ const research = [
   },
 ];
 
-const beyond = ['Volleyball', 'Hiking', 'Hackathon participation, mentoring, and judging'];
+const beyond = [
+  { title: 'Volleyball' },
+  { title: 'Hiking' },
+  { title: 'Hackathons', text: 'Participating, mentoring, and judging.' },
+];
 // -----------------------------------------------------------------------------
 
 // Latest 3 blog posts, newest first
@@ -366,11 +370,14 @@ const posts = (await getCollection('blog'))
 
                 <div class="panel" data-panel="beyond" data-title="ls ./beyond" hidden>
                   <div class="photo-slot">[ photo: beyond ]</div>
-                  <div class="page" data-page>
-                    <ul>
-                      {beyond.map((b) => <li>{b}</li>)}
-                    </ul>
-                  </div>
+                  {
+                    beyond.map((b) => (
+                      <div class="page" data-page>
+                        <div class="role">{b.title}</div>
+                        {b.text && <p>{b.text}</p>}
+                      </div>
+                    ))
+                  }
                 </div>
               </div>
               <div class="popup-foot">
