@@ -46,6 +46,13 @@ const { Content } = await render(post);
 </Base>
 
 <style>
+  /* Desktop: no page scrolling, same as the homepage */
+  @media (min-width: 861px) {
+    :global(body) {
+      overflow: hidden;
+    }
+  }
+
   /* Full-screen reading: widen the page and header, and let the book fill the screen */
   :global(.site-header .container),
   .container {
@@ -69,8 +76,8 @@ const { Content } = await render(post);
   /* Pages: a fixed-height book, so the post never needs scrolling */
   .book-pages {
     position: relative;
-    height: calc(100dvh - 250px);
-    min-height: 420px;
+    height: calc(100dvh - 300px);
+    min-height: 360px;
     perspective: 1400px;
   }
   .book-page {
