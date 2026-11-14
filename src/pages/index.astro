@@ -1599,8 +1599,13 @@ const posts = (await getCollection('blog'))
     height: clamp(220px, 42vh, 400px);
   }
   .split-imgs .shot {
-    flex: 1;
+    flex: 1 1 calc(50% - 0.375rem);
     min-height: 0;
+  }
+  /* The video takes the top half of the right column; the two photos sit side by side below it */
+  .split-imgs .shot:has(video) {
+    order: -1;
+    flex: 1 1 100%;
   }
   .shot video {
     display: block;
@@ -1646,7 +1651,8 @@ const posts = (await getCollection('blog'))
   }
   .split-imgs {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: stretch;
     gap: 0.75rem;
     min-height: 0;
   }
