@@ -764,6 +764,67 @@ const posts = (await getCollection('blog'))
   .popup[hidden] {
     display: none;
   }
+  /* Takeover: the section fills the whole map and grows out of the pin that opened it */
+  .popup {
+    --ox: 50%;
+    --oy: 50%;
+  }
+  .popup.takeover {
+    inset: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .popup.takeover .popup-head {
+    padding: 1rem 1.75rem;
+    font-size: 1rem;
+  }
+  .popup.takeover .popup-foot {
+    padding: 1rem 1.75rem;
+  }
+  .popup.takeover .popup-body {
+    padding: 2rem 3rem;
+  }
+  .popup.takeover .page .role {
+    font-size: 1.5rem;
+  }
+  .popup.takeover .page p,
+  .popup.takeover .page li {
+    font-size: 1.15rem;
+    line-height: 1.7;
+  }
+  .popup.grow {
+    animation: grow-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    transform-origin: var(--ox) var(--oy);
+  }
+  @keyframes grow-in {
+    from {
+      opacity: 0;
+      transform: scale(0.12);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .popup.shrink {
+    animation: shrink-out 0.35s ease-in both;
+    transform-origin: var(--ox) var(--oy);
+  }
+  @keyframes shrink-out {
+    to {
+      opacity: 0;
+      transform: scale(0.12);
+    }
+  }
+  .map-stage:has(.popup.takeover) .zoom-controls {
+    display: none;
+  }
   .popup.pop-in {
     animation: pop 0.35s ease both;
   }
@@ -1476,9 +1537,10 @@ const posts = (await getCollection('blog'))
       panels.forEach((p) => (p.hidden = p !== panel));
       popupTitle!.textContent = panel.dataset.title ?? id;
       popup!.hidden = false;
-      popup!.classList.remove('pop-in');
+      popup!.classList.add('takeover');
+      popup!.classList.remove('grow', 'shrink');
       void popup!.offsetWidth; // restart the entrance animation
-      popup!.classList.add('pop-in');
+      popup!.classList.add('grow');
       // Folder mode (projects): no paging, the desktop of folders instead
       const folderMode = panel.dataset.mode === 'folders';
       prevBtn!.hidden = folderMode;
@@ -1489,10 +1551,24 @@ const posts = (await getCollection('blog'))
       render();
     }
 
-    function closePopup() {
+    function hidePopupNow() {
       popup!.hidden = true;
+      popup!.classList.remove('takeover', 'grow', 'shrink');
+    }
+
+    // Closing from the close button or Escape shrinks the section back into its pin.
+    function closePopup(animated = false) {
       current = '';
       pins.forEach((p) => p.classList.remove('is-active'));
+      if (animated && !popup!.hidden && !reduce) {
+        popup!.classList.remove('grow');
+        popup!.classList.add('shrink');
+        setTimeout(() => {
+          if (popup!.classList.contains('shrink')) hidePopupNow();
+        }, 350);
+      } else {
+        hidePopupNow();
+      }
     }
 
     function step(d: number) {
@@ -1535,6 +1611,8 @@ const posts = (await getCollection('blog'))
       closePopup();
       await enterMap();
       const [x, y] = (pin.dataset.pos ?? '50,50').split(',');
+      popup!.style.setProperty('--ox', `${x}%`);
+      popup!.style.setProperty('--oy', `${y}%`);
       canvas!.style.setProperty('--zx', `${x}%`);
       canvas!.style.setProperty('--zy', `${y}%`);
       stage!.classList.add('is-zooming');
@@ -1558,7 +1636,7 @@ const posts = (await getCollection('blog'))
     );
 
     popup.querySelector<HTMLElement>('[data-close]')?.addEventListener('click', () => {
-      closePopup();
+      closePopup(true);
       history.replaceState(null, '', location.pathname);
     });
     prevBtn.addEventListener('click', () => step(-1));
@@ -1663,7 +1741,7 @@ const posts = (await getCollection('blog'))
       if (popup.hidden) return;
       if (e.key === 'ArrowRight') step(1);
       if (e.key === 'ArrowLeft') step(-1);
-      if (e.key === 'Escape') closePopup();
+      if (e.key === 'Escape') closePopup(true);
     });
 
     // Back to bio: the map pulls back into the distance, then the bio fades in.
