@@ -405,6 +405,7 @@ const posts = (await getCollection('blog'))
                           </aside>
                           <div class="nb-main">
                             <div class="nb-title">{r.name ?? r.role}</div>
+                            <div class="nb-question">{r.role}</div>
                             {(r.org || r.period) && <div class="nb-meta">{[r.org, r.period].filter(Boolean).join(' · ')}</div>}
                             <div class="nb-cell">
                               <div class="nb-head">[1] the idea</div>
@@ -1667,6 +1668,14 @@ const posts = (await getCollection('blog'))
     font-size: 1.5rem;
     color: var(--strong);
     line-height: 1.25;
+  }
+  .nb-question {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--accent);
+    margin-top: -0.5rem;
   }
   .nb-meta {
     font-size: 0.85rem;
