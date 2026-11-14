@@ -105,6 +105,7 @@ const beyond = [
     title: 'Hiking',
     text: "I really love driving and touching grass. Getting out of the city, whether it's a long drive or a trail, is how I recharge.",
     images: ['/hiking/zion.jpg', '/hiking/waterfall.jpg'],
+    video: '/hiking/clip.mp4',
   },
   { title: 'Hackathons', text: 'Participating, mentoring, and judging.' },
 ];
@@ -435,6 +436,15 @@ const posts = (await getCollection('blog'))
                                   <img src={src} alt={`${b.title} photo`} loading="lazy" />
                                 </figure>
                               ))}
+                              {b.video && (
+                                <figure class="shot">
+                                  <div class="shot-bar">
+                                    <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                                    <span>{b.video.split('/').pop()}</span>
+                                  </div>
+                                  <video src={b.video} autoplay muted loop playsinline aria-label="Hiking clip"></video>
+                                </figure>
+                              )}
                             </div>
                           </div>
                         )}
@@ -1389,6 +1399,14 @@ const posts = (await getCollection('blog'))
   .split-imgs .shot {
     flex: 1;
     min-height: 0;
+  }
+  .shot video {
+    display: block;
+    width: 100%;
+    height: calc(100% - 2rem);
+    min-height: 0;
+    object-fit: contain;
+    background: var(--surface);
   }
   .shot img {
     display: block;
