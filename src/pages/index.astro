@@ -567,6 +567,7 @@ const posts = (await getCollection('blog'))
                           <span class="win-title">{p.name}</span>
                           <button class="win-close" type="button" data-up aria-label="Close window">×</button>
                         </div>
+                        <div class="win-media">[ video: {p.name} ]</div>
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
