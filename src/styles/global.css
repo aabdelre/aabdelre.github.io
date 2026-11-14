@@ -272,7 +272,14 @@ section:last-of-type {
 }
 .site-header nav {
   display: flex;
-  gap: 1.25rem;
+  gap: 1.1rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+.site-header nav::-webkit-scrollbar {
+  display: none;
 }
 .site-header .brand {
   font-weight: 700;
