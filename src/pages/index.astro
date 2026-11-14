@@ -99,12 +99,12 @@ const beyond = [
   {
     title: 'Volleyball',
     text: "I've played volleyball leagues since senior year, and have been progressing with my team through Volo leagues. Our highest finish so far is 2nd place.",
-    images: ['/volleyball/IMG_5735.jpg', '/volleyball/IMG_5787.jpg'],
+    images: ['/volleyball/blue-1.jpg', '/volleyball/blue-2.jpg'],
   },
   {
     title: 'Hiking',
     text: "I really love driving and touching grass. Getting out of the city, whether it's a long drive or a trail, is how I recharge.",
-    images: ['/hiking/zion.jpg', '/hiking/waterfall.jpg'],
+    images: ['/hiking/zion.jpg', '/hiking/waterfall.jpg', '/hiking/boardwalk.jpg'],
   },
   { title: 'Hackathons', text: 'Participating, mentoring, and judging.' },
 ];
@@ -1350,7 +1350,7 @@ const posts = (await getCollection('blog'))
   }
   .split-text img {
     width: 100%;
-    height: clamp(200px, 42vh, 420px);
+    height: clamp(160px, 30vh, 300px);
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid var(--border);
