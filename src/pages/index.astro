@@ -1684,8 +1684,9 @@ const posts = (await getCollection('blog'))
     padding: 0;
     list-style: none;
     display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     font-family: var(--mono);
     font-size: 0.95rem;
   }
