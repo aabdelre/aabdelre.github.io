@@ -1838,13 +1838,30 @@ const posts = (await getCollection('blog'))
   }
 
   /* About: photo placeholder and education entries */
+  /* One row, with each prompt sitting over the content it labels */
   .ab-top {
     grid-column: 1 / -1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: end;
+  }
+  .ab-top .about-cap {
+    grid-column: 1;
+    justify-self: center;
+  }
+  .ab-top .ab-prompt {
+    grid-column: 2;
+  }
+  @media (max-width: 560px) {
+    .ab-top {
+      grid-template-columns: 1fr;
+    }
+    .ab-top .about-cap,
+    .ab-top .ab-prompt {
+      grid-column: 1;
+      justify-self: start;
+    }
   }
   .ab-wide {
     grid-column: 1 / -1;
