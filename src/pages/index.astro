@@ -115,13 +115,6 @@ const posts = (await getCollection('blog'))
             <div class="term-body">
               <p class="prompt">whoami</p>
               <div class="hero-head">
-                <img
-                  class="avatar"
-                  src="/personalPic.jpeg"
-                  alt="Ahmed Abdelrehim"
-                  width="96"
-                  height="96"
-                />
                 <div>
                   <h1>Ahmed Abdelrehim</h1>
                   <p class="out-accent">AI/ML enthusiast. Aspiring disrupter.</p>
@@ -439,6 +432,44 @@ const posts = (await getCollection('blog'))
     font-size: 0.95rem;
     line-height: 1.5;
     margin: 0 0 0.6rem;
+  }
+  /* Bio column: compact so the whole terminal fits without clipping */
+  .bio-col .term-bar {
+    padding: 0.5rem 0.75rem;
+  }
+  .bio-col .term-body {
+    padding: 1rem 1.25rem;
+  }
+  .bio-col .term-body .prompt {
+    font-size: 0.8rem;
+    margin: 0 0 0.15rem;
+  }
+  .bio-col .hero-head {
+    margin-bottom: 0.5rem;
+  }
+  .bio-col .hero h1 {
+    font-size: 1.6rem;
+    margin: 0 0 0.2rem;
+  }
+  .bio-col .term-body .out-accent {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  .bio-col .term-body p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0 0 0.4rem;
+  }
+  .bio-col .socials {
+    gap: 0.5rem;
+  }
+  .bio-col .icon-link {
+    width: 32px;
+    height: 32px;
+  }
+  .bio-col .icon-link svg {
+    width: 16px;
+    height: 16px;
   }
   .map-col {
     display: flex;
