@@ -5,7 +5,18 @@ const isHome = pathname === '/' || pathname === '';
 
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="/">Ahmed Abdelrehim</a>
+    <a class="brand" href="/" aria-label="Ahmed, home">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect x="1" y="1" width="30" height="30" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+        <path d="M9 11 L16 16 L23 11 M9 21 L16 16 L23 21" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.6" />
+        <circle cx="9" cy="11" r="2.4" />
+        <circle cx="9" cy="21" r="2.4" />
+        <circle cx="16" cy="16" r="2.8" />
+        <circle cx="23" cy="11" r="2.4" />
+        <circle cx="23" cy="21" r="2.4" />
+      </svg>
+      <span>Ahmed</span>
+    </a>
     <nav>
       <a href={isHome ? '#experience' : '/#experience'}>Experience</a>
       <a href={isHome ? '#research' : '/#research'}>Research</a>
@@ -15,3 +26,25 @@ const isHome = pathname === '/' || pathname === '';
     </nav>
   </div>
 </header>
+
+<style>
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--strong);
+  }
+  .brand:hover {
+    text-decoration: none;
+  }
+  .logo {
+    width: 28px;
+    height: 28px;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .logo circle {
+    fill: var(--accent);
+  }
+</style>
