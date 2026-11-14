@@ -2339,7 +2339,10 @@ const posts = (await getCollection('blog'))
     const footTime = document.querySelector<HTMLElement>('[data-foot-time]');
     const tickClock = () => {
       if (footTime) {
-        footTime.textContent = new Date().toLocaleTimeString([], {
+        footTime.textContent = new Date().toLocaleString([], {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric',
           hour: 'numeric',
           minute: '2-digit',
           second: '2-digit',
