@@ -272,7 +272,7 @@ section:last-of-type {
 }
 .site-header nav {
   display: flex;
-  gap: 1.1rem;
+  gap: 2.25rem;
   overflow-x: auto;
   white-space: nowrap;
   font-family: var(--mono);
