@@ -1848,10 +1848,12 @@ const posts = (await getCollection('blog'))
   }
   .ab-top .about-cap {
     grid-column: 1;
+    grid-row: 1;
     justify-self: center;
   }
   .ab-top .ab-prompt {
     grid-column: 2;
+    grid-row: 1;
   }
   @media (max-width: 560px) {
     .ab-top {
@@ -1860,6 +1862,7 @@ const posts = (await getCollection('blog'))
     .ab-top .about-cap,
     .ab-top .ab-prompt {
       grid-column: 1;
+      grid-row: auto;
       justify-self: start;
     }
   }
@@ -1886,7 +1889,7 @@ const posts = (await getCollection('blog'))
   }
   .about-photo-wrap {
     width: 100%;
-    max-width: 190px;
+    max-width: 160px;
     padding: 6px;
     border-radius: 50%;
     background: conic-gradient(var(--accent), var(--border) 35%, var(--accent) 70%, var(--border));
