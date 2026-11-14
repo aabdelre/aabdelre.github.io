@@ -1339,15 +1339,44 @@ const posts = (await getCollection('blog'))
       render();
     }
 
-    function openFromPin(pin: HTMLElement) {
+    // Full-screen entrance: the bio fades out, then the map zooms in from a distance.
+    // Resolves once the map is in place.
+    function enterMap(): Promise<void> {
+      return new Promise((resolve) => {
+        if (landing?.classList.contains('is-focus')) return resolve();
+        const bio = document.querySelector<HTMLElement>('.bio-col');
+        if (reduce) {
+          landing?.classList.add('is-focus');
+          return resolve();
+        }
+        bio?.classList.add('is-leaving');
+        setTimeout(() => {
+          landing?.classList.add('is-focus');
+          bio?.classList.remove('is-leaving');
+          stage!.classList.add('enter');
+          stage!.addEventListener(
+            'animationend',
+            () => {
+              stage!.classList.remove('enter');
+              resolve();
+            },
+            { once: true },
+          );
+        }, 400);
+      });
+    }
+
+    // Pin click: move to the full-screen map first, then zoom toward the pin and open its popup.
+    async function openFromPin(pin: HTMLElement) {
       if (busy) return;
       busy = true;
+      closePopup();
+      await enterMap();
       const [x, y] = (pin.dataset.pos ?? '50,50').split(',');
       canvas!.style.setProperty('--zx', `${x}%`);
       canvas!.style.setProperty('--zy', `${y}%`);
       stage!.classList.add('is-zooming');
       const id = pin.dataset.pin ?? '';
-      // Zoom toward the pin first, then open its popup.
       setTimeout(
         () => {
           stage!.classList.remove('is-zooming');
@@ -1493,31 +1522,23 @@ const posts = (await getCollection('blog'))
       }, 500);
     });
 
-    // "explore ./map": the bio fades out, then the map zooms in from a distance.
+    // "explore ./map": full-screen map with no popup open.
     document.querySelector<HTMLElement>('[data-explore]')?.addEventListener('click', () => {
-      if (landing?.classList.contains('is-focus')) return;
       closePopup();
       history.replaceState(null, '', '#map');
-      const bio = document.querySelector<HTMLElement>('.bio-col');
-      if (reduce) {
-        landing?.classList.add('is-focus');
-        return;
-      }
-      bio?.classList.add('is-leaving');
-      setTimeout(() => {
-        landing?.classList.add('is-focus');
-        bio?.classList.remove('is-leaving');
-        stage!.classList.add('enter');
-        stage!.addEventListener('animationend', () => stage!.classList.remove('enter'), { once: true });
-      }, 400);
+      enterMap();
     });
 
     // Deep links (#research) and header nav clicks open the matching popup.
-    function fromHash() {
+    // Header nav: move to the map, then open the section. A deep link on load opens directly.
+    window.addEventListener('hashchange', () => {
       const id = location.hash.slice(1);
-      if (id && panelFor(id)) openPopup(id);
+      if (id && panelFor(id)) enterMap().then(() => openPopup(id));
+    });
+    const initial = location.hash.slice(1);
+    if (initial && panelFor(initial)) {
+      landing?.classList.add('is-focus');
+      openPopup(initial);
     }
-    window.addEventListener('hashchange', fromHash);
-    fromHash();
   }
 </script>
