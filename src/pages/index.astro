@@ -5,11 +5,12 @@ import { getCollection } from 'astro:content';
 // ---- Edit your content here -------------------------------------------------
 // Map pins. x/y are percentages across the map. `id` must match a panel below.
 const pins = [
-  { id: 'experience', num: '01', label: 'Experience', x: 24, y: 34 },
-  { id: 'research', num: '02', label: 'Research', x: 50, y: 20 },
-  { id: 'projects', num: '03', label: 'Projects', x: 76, y: 34 },
-  { id: 'blog', num: '04', label: 'Blog', x: 32, y: 72 },
-  { id: 'beyond', num: '05', label: 'Beyond', x: 70, y: 72 },
+  { id: 'about', num: '01', label: 'About', x: 50, y: 50 },
+  { id: 'experience', num: '02', label: 'Experience', x: 24, y: 34 },
+  { id: 'research', num: '03', label: 'Research', x: 50, y: 18 },
+  { id: 'projects', num: '04', label: 'Projects', x: 76, y: 34 },
+  { id: 'blog', num: '05', label: 'Blog', x: 32, y: 72 },
+  { id: 'beyond', num: '06', label: 'Beyond', x: 70, y: 72 },
 ];
 
 const projects = [
@@ -124,13 +125,6 @@ const commits = [
     body: e.summary,
     details: e.details ?? [],
   })),
-  ...education.map((ed, i) => ({
-    hash: ['9e4a6c2', '1f7b8d0'][i],
-    msg: ed.role,
-    when: ed.meta,
-    body: ed.summary,
-    details: [],
-  })),
 ];
 
 const research = [
@@ -205,7 +199,7 @@ const posts = (await getCollection('blog'))
     <div class="landing" data-landing>
       <!-- Left column: bio terminal -->
       <div class="bio-col">
-        <section class="hero" id="about">
+        <section class="hero" id="intro">
           <div class="term-window">
             <div class="term-bar">
               <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
@@ -394,6 +388,37 @@ const posts = (await getCollection('blog'))
                 <button class="back" type="button" data-close>close ✕</button>
               </div>
               <div class="popup-body">
+                <div class="panel" data-panel="about" data-title="cat ./about" hidden>
+                  <div class="page" data-page>
+                    <div class="about-photo">[ photo: Ahmed ]</div>
+                    <div class="role">Hi, I'm Ahmed!</div>
+                    <p>
+                      I'm a software and machine learning engineer at Meta, building the systems that train and improve the models behind ads ranking.
+                    </p>
+                    <p>
+                      I love teaching, so I'm co-founding an AI startup that helps teachers design courses, give feedback, and grade work, and unlock 24/7 office hours.
+                    </p>
+                  </div>
+                  <div class="page" data-page>
+                    <div class="role">What I want to do</div>
+                    <p>
+                      I want to build AI tools that make teaching and learning better: feedback students can trust, evaluation that holds up, and products teachers actually use.
+                    </p>
+                  </div>
+                  <div class="page" data-page>
+                    <div class="role">Education</div>
+                    {
+                      education.map((ed) => (
+                        <div class="edu">
+                          <div class="meta">{ed.meta}</div>
+                          <p><b>{ed.role}</b></p>
+                          <p>{ed.summary}</p>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+
                 <div class="panel" data-panel="experience" data-title="git log --oneline experience" data-mode="log" hidden>
                   <!-- Experience as a commit history: click a commit to open it -->
                   <div class="log" data-log>
@@ -1407,8 +1432,8 @@ const posts = (await getCollection('blog'))
     font-weight: 500;
   }
   .w-research {
-    left: 50%;
-    top: 32%;
+    left: 14%;
+    top: 56%;
     width: 200px;
     text-align: center;
   }
@@ -1786,6 +1811,26 @@ const posts = (await getCollection('blog'))
       border-right: 0;
       border-bottom: 1px solid var(--border);
     }
+  }
+
+  /* About: photo placeholder and education entries */
+  .about-photo {
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    aspect-ratio: 4 / 3;
+    max-height: 260px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .edu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-bottom: 0.9rem;
   }
 
   /* Experience as a git log */
