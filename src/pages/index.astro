@@ -580,10 +580,16 @@ const posts = (await getCollection('blog'))
       animation: none;
     }
   }
+  /* Homepage only: widen the page and header to nearly full screen */
+  :global(.site-header .container),
+  .container {
+    max-width: min(1600px, 96vw);
+  }
+
   /* Split landing: bio left, map right. Focus mode hides the bio. */
   .landing {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
     gap: 1.5rem;
     align-items: start;
   }
