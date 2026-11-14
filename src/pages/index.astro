@@ -405,8 +405,8 @@ const posts = (await getCollection('blog'))
                             ))}
                           </aside>
                           <div class="nb-main">
-                            <div class="nb-title">{r.role}</div>
-                            {(r.name || r.org || r.period) && <div class="nb-meta">{[r.name, r.org, r.period].filter(Boolean).join(' · ')}</div>}
+                            <div class="nb-title">{r.name ?? r.role}</div>
+                            {(r.org || r.period) && <div class="nb-meta">{[r.org, r.period].filter(Boolean).join(' · ')}</div>}
                             <div class="nb-cell">
                               <div class="nb-head">[1] the idea</div>
                               <p>{r.summary}</p>
