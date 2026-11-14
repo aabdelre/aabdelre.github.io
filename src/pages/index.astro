@@ -159,7 +159,10 @@ const posts = (await getCollection('blog'))
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h8"/></svg>
             </a>
           </div>
-          <p class="prompt" style="margin-top: 1.5rem"><span class="caret"></span></p>
+          <p class="prompt" style="margin-top: 1.5rem">
+            <button class="cmd" type="button" data-explore>explore ./map</button>
+          </p>
+          <p class="prompt"><span class="caret"></span></p>
         </div>
       </div>
     </section>
@@ -698,6 +701,30 @@ const posts = (await getCollection('blog'))
   .landing.is-focus .back-bio {
     display: inline-block;
   }
+  /* Full-screen map in focus mode */
+  .landing.is-focus .map-canvas {
+    aspect-ratio: auto;
+    height: calc(100vh - 170px);
+    min-height: 520px;
+  }
+  .cmd {
+    font-family: var(--mono);
+    font-size: inherit;
+    color: var(--accent);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cmd:hover {
+    color: var(--accent-hover);
+  }
+  .cmd:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
   @media (max-width: 860px) {
     .landing {
       grid-template-columns: minmax(0, 1fr);
@@ -1147,6 +1174,16 @@ const posts = (await getCollection('blog'))
       hint!.hidden = false;
       history.replaceState(null, '', location.pathname);
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+
+    // "explore ./map" in the terminal: full-screen map, no section open
+    document.querySelector<HTMLElement>('[data-explore]')?.addEventListener('click', () => {
+      panels.forEach((p) => p.classList.remove('is-open'));
+      pins.forEach((p) => p.classList.remove('is-active'));
+      hint!.hidden = false;
+      landing?.classList.add('is-focus');
+      history.replaceState(null, '', '#map');
+      stage!.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     });
 
     // Deep links (#research) and header nav clicks open the matching panel.
