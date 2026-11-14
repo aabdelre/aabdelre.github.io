@@ -89,6 +89,8 @@ const research = [
     period: 'May 2022 — Aug 2022',
     summary:
       'Fine-tuned a Clojure genetic-programming model (−11% training cases) and automated HPC experiment runs with results visualization.',
+    poster:
+      'https://drive.google.com/file/d/1dzpNwBr2ef_vshR0SRdZVnXamdxb32Zd/view?usp=sharing',
   },
 ];
 
@@ -329,6 +331,11 @@ const posts = (await getCollection('blog'))
                         <div class="role">{r.role} · {r.org}</div>
                         <div class="meta">{r.period}</div>
                         <p>{r.summary}</p>
+                        {r.poster && (
+                          <p>
+                            <a href={r.poster} target="_blank" rel="noopener">View poster →</a>
+                          </p>
+                        )}
                       </div>
                     ))
                   }
