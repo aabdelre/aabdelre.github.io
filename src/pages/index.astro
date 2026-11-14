@@ -392,7 +392,7 @@ const posts = (await getCollection('blog'))
                   <div class="about-body">
                     <div class="ab-top">
                       <div class="ab-prompt">whoami</div>
-                      <div class="about-cap">$ open ahmed.jpg</div>
+                      <div class="about-cap"><span class="ab-dollar">$</span> open ahmed.jpg</div>
                     </div>
                     <div class="about-side">
                       <div class="about-photo-wrap">
@@ -1903,10 +1903,13 @@ const posts = (await getCollection('blog'))
     object-fit: cover;
     object-position: center 30%;
   }
+  .ab-dollar {
+    color: var(--accent);
+  }
   .about-cap {
     font-family: var(--mono);
     font-size: 0.8rem;
-    color: var(--accent);
+    color: var(--muted);
   }
   .ab-prompt {
     font-family: var(--mono);
