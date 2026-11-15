@@ -404,17 +404,13 @@ const posts = (await getCollection('blog'))
                     l1.setAttribute('points', pt(base) + ' ' + pt(p1));
                     l2.setAttribute('points', pt(p1) + ' ' + pt(p2));
                     l3.setAttribute('points', pt(p2) + ' ' + pt(p3));
-                    var spread = c3 / 2;
-                    var rollOff = Math.sin(rad(c2)) * 6;
-                    var ang = a3 + Math.PI / 2;
-                    var fx = Math.cos(ang), fy = Math.sin(ang);
-                    var fa = { x: p3.x + fx * 6 + rollOff, y: p3.y + fy * 6 };
-                    var fb = { x: p3.x - fx * 6 - rollOff, y: p3.y - fy * 6 };
-                    var tA = { x: fa.x - Math.cos(a3 + rad(spread)) * 12, y: fa.y - Math.sin(a3 + rad(spread)) * 12 };
-                    var tB = { x: fb.x - Math.cos(a3 - rad(spread)) * 12, y: fb.y - Math.sin(a3 - rad(spread)) * 12 };
-                    fingers.innerHTML =
-                      '<line x1="' + fa.x.toFixed(1) + '" y1="' + fa.y.toFixed(1) + '" x2="' + tA.x.toFixed(1) + '" y2="' + tA.y.toFixed(1) + '"/>' +
-                      '<line x1="' + fb.x.toFixed(1) + '" y1="' + fb.y.toFixed(1) + '" x2="' + tB.x.toFixed(1) + '" y2="' + tB.y.toFixed(1) + '"/>';
+                    // claw: a V hinged at the wrist, opening with grip, tilted by roll
+                    var spread = 12 + c3;
+                    var dir = a3 + rad(c2 * 0.15);
+                    var len = 16;
+                    var tA = { x: p3.x - Math.sin(dir + rad(spread)) * len * yaw, y: p3.y - Math.cos(dir + rad(spread)) * len };
+                    var tB = { x: p3.x - Math.sin(dir - rad(spread)) * len * yaw, y: p3.y - Math.cos(dir - rad(spread)) * len };
+                    fingers.innerHTML = '<polyline points="' + pt(tA) + ' ' + pt(p3) + ' ' + pt(tB) + '" fill="none"/>';
                   }
                   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                     pose(0);
