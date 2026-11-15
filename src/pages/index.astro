@@ -607,9 +607,10 @@ const posts = (await getCollection('blog'))
                         {p.video ? (
                           <video class="win-media" src={p.video} controls playsinline preload="metadata" aria-label={`${p.name} video`}></video>
                         ) : (
-                          <div class="win-media">[ video: {p.name} ]</div>
+                          {!p.mocks && <div class="win-media">[ video: {p.name} ]</div>}
                         )}
                         {p.mocks && (
+                          <div class="win-media mk-frame">
                           <div class="mk-row">
                             <div class="mk-phone">
                               <div class="mk-screen">
@@ -2515,6 +2516,12 @@ const posts = (await getCollection('blog'))
   .mk-tag { display: inline-block; font-size: 11px; color: #8e8e93; background: #e5e5ea; border-radius: 999px; padding: 3px 9px; margin: 8px 6px 0 0; }
   .mk-bottom { margin-top: auto; padding: 12px 0 36px; }
   .mk-bottom .mk-btn { width: 100%; box-sizing: border-box; }
+  .mk-frame {
+    aspect-ratio: auto;
+    display: block;
+    padding: 14px;
+    overflow: hidden;
+  }
   .win-media {
     aspect-ratio: 16 / 9;
     border: 1px dashed var(--border);
