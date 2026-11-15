@@ -476,8 +476,8 @@ const posts = (await getCollection('blog'))
                         <div class="cv-hash">commit {c.hash}</div>
                         <div class="cv-msg">{c.msg}</div>
                         <div class="cv-when">{c.when}</div>
-                        <p>{c.body}</p>
                         <div class={c.beside ? 'cv-beside' : 'cv-stack'}>
+                        <p>{c.body}</p>
                         {c.details.length > 0 && (
                           <ul class="cv-list">
                             {c.details.map((d) => (
