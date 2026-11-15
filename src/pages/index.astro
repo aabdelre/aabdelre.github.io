@@ -404,13 +404,23 @@ const posts = (await getCollection('blog'))
                     l1.setAttribute('points', pt(base) + ' ' + pt(p1));
                     l2.setAttribute('points', pt(p1) + ' ' + pt(p2));
                     l3.setAttribute('points', pt(p2) + ' ' + pt(p3));
-                    // claw: a V hinged at the wrist, opening with grip, tilted by roll
-                    var spread = 12 + c3;
-                    var dir = a3 + rad(c2 * 0.15);
-                    var len = 16;
-                    var tA = { x: p3.x - Math.sin(dir + rad(spread)) * len * yaw, y: p3.y - Math.cos(dir + rad(spread)) * len };
-                    var tB = { x: p3.x - Math.sin(dir - rad(spread)) * len * yaw, y: p3.y - Math.cos(dir - rad(spread)) * len };
-                    fingers.innerHTML = '<polyline points="' + pt(tA) + ' ' + pt(p3) + ' ' + pt(tB) + '" fill="none"/>';
+                    // claw: palm bar at the wrist, two jaws that open outward then hook inward
+                    var spread = rad(10 + c3);
+                    var hook = rad(30);
+                    var dirAt = function (base, ang, len) {
+                      return { x: base.x - Math.sin(ang) * len * yaw, y: base.y - Math.cos(ang) * len };
+                    };
+                    var perp = dir + Math.PI / 2;
+                    var pa = dirAt(p3, perp, 6);
+                    var pb = dirAt(p3, perp + Math.PI, 6);
+                    var a1 = dirAt(pa, dir + spread, 12);
+                    var a2 = dirAt(a1, dir + spread - hook, 9);
+                    var b1 = dirAt(pb, dir - spread, 12);
+                    var b2 = dirAt(b1, dir - spread + hook, 9);
+                    fingers.innerHTML =
+                      '<polyline points="' + pt(pa) + ' ' + pt(pb) + '" fill="none"/>' +
+                      '<polyline points="' + pt(pa) + ' ' + pt(a1) + ' ' + pt(a2) + '" fill="none"/>' +
+                      '<polyline points="' + pt(pb) + ' ' + pt(b1) + ' ' + pt(b2) + '" fill="none"/>';
                   }
                   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                     pose(0);
