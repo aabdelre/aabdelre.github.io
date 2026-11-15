@@ -69,6 +69,7 @@ const experience = [
     summary:
       'Build ML workflow orchestration for Ads ranking — cut model-iteration latency ~88% and drove avg 2.45% accuracy gains across production models.',
     images: ['/experience/meta.jpg'],
+    beside: true,
     details: [
       'Builds products and infrastructure that connect people and businesses, including ad platforms, large-scale Ads ML systems, and evaluation tools.',
       'Developing agents and platform capabilities for model iteration, and designing self-improving workflows for models. Shipping model improvements.',
@@ -136,6 +137,7 @@ const commits = [
     body: e.summary,
     details: e.details ?? [],
     images: e.images ?? [],
+    beside: e.beside ?? false,
   })),
 ];
 
@@ -475,6 +477,7 @@ const posts = (await getCollection('blog'))
                         <div class="cv-msg">{c.msg}</div>
                         <div class="cv-when">{c.when}</div>
                         <p>{c.body}</p>
+                        <div class={c.beside ? 'cv-beside' : 'cv-stack'}>
                         {c.details.length > 0 && (
                           <ul class="cv-list">
                             {c.details.map((d) => (
@@ -2147,6 +2150,28 @@ const posts = (await getCollection('blog'))
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
+  }
+  .cv-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .cv-beside {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .cv-beside .cv-imgs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cv-beside .cv-imgs .shot img {
+    height: clamp(180px, 34vh, 300px);
+  }
+  @media (max-width: 560px) {
+    .cv-beside {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
   .cv-imgs .shot img {
     width: 100%;
