@@ -1,7 +1,7 @@
 ---
 title: "The MiniMIT That Changed Everything"
 description: "How witnessing someone's achievement shattered my limiting beliefs"
-pubDate: 2026-11-10
+pubDate: 2025-05-20
 ---
 
 ## The Wrong Choice, or So I Thought

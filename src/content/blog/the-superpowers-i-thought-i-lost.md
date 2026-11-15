@@ -1,7 +1,7 @@
 ---
 title: "The Superpowers I Thought I Lost"
 description: "How the effortless wins of my early life faded, and what a friend's blunt honesty taught me about bar raising."
-pubDate: 2026-11-14
+pubDate: 2025-12-27
 ---
 
 ## Things Used to Come Easily
