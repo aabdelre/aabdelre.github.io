@@ -632,24 +632,29 @@ const posts = (await getCollection('blog'))
                   }
                 </div>
 
-                <div class="panel" data-panel="blog" data-title="tail -n 3 ./blog" hidden>
-                  {
-                    posts.map((post) => (
-                      <div class="page" data-page>
-                        <div class="meta">
-                          <time datetime={post.data.pubDate.toISOString()}>
-                            {post.data.pubDate.toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric',
-                            })}
-                          </time>
-                        </div>
-                        <div class="role"><a href={`/blog/${post.id}`}>{post.data.title}</a></div>
-                        <p>{post.data.description}</p>
-                      </div>
-                    ))
-                  }
+                <div class="panel" data-panel="blog" data-title="tail -n 3 ./blog" data-mode="flat" hidden>
+                  <div class="page">
+                    <ul class="blog-list">
+                      {
+                        posts.map((post) => (
+                          <li>
+                            <div class="meta">
+                              <time datetime={post.data.pubDate.toISOString()}>
+                                {post.data.pubDate.toLocaleDateString('en-US', {
+                                  year: 'numeric',
+                                  month: 'short',
+                                  day: 'numeric',
+                                })}
+                              </time>
+                            </div>
+                            <div class="role"><a href={`/blog/${post.id}`}>{post.data.title}</a></div>
+                            <p>{post.data.description}</p>
+                          </li>
+                        ))
+                      }
+                    </ul>
+                    <p class="blog-all"><a href="/blog">All posts →</a></p>
+                  </div>
                 </div>
 
                 <div class="panel" data-panel="beyond" data-title="ls ./beyond" hidden>
@@ -2550,6 +2555,21 @@ const posts = (await getCollection('blog'))
     font-size: 0.9rem;
   }
 
+  /* Blog window: the latest posts in one list */
+  .blog-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .blog-list li .role a {
+    color: var(--strong);
+  }
+  .blog-all {
+    margin: 0;
+  }
   /* ahmed.os label in the footer of the projects view */
   .foot-os {
     font-family: var(--mono);
