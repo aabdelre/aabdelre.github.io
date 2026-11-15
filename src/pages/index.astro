@@ -33,8 +33,12 @@ const projects = [
   {
     name: 'Menu Gen',
     description:
-      'Turns a menu scan into an image-based menu, showing each dish with its ingredients. Uses Nano Banana to estimate what each dish might look like. Fun fact: Andrej Karpathy later built a similar project also called Menu Gen, so I’m proud we came up with a similar idea.',
+      'Turns a menu scan into an image-based menu, showing each dish with its ingredients. Uses Nano Banana to estimate what each dish might look like.',
     tags: ['OCR', 'Nano Banana', 'Image Generation'],
+    funFact: {
+      text: 'Andrej Karpathy later built a similar project also called Menu Gen, so I’m proud we came up with a similar idea.',
+      url: 'https://www.menugen.app/',
+    },
     demo: '#',
     repo: '#',
   },
@@ -607,6 +611,12 @@ const posts = (await getCollection('blog'))
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
+                        {p.funFact && (
+                          <p class="fun-fact">
+                            Fun fact: {p.funFact.text}{' '}
+                            <a href={p.funFact.url} target="_blank" rel="noopener">menugen.app →</a>
+                          </p>
+                        )}
                         <div class="card-links">
                           {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
                           {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
@@ -2404,6 +2414,11 @@ const posts = (await getCollection('blog'))
   }
   .project-win > :not(.win-bar) {
     margin: 0 1.1rem;
+  }
+  .project-win .fun-fact {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
   }
   .win-media {
     aspect-ratio: 16 / 9;
