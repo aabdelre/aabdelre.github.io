@@ -606,42 +606,12 @@ const posts = (await getCollection('blog'))
                         </div>
                         {p.video ? (
                           <video class="win-media" src={p.video} controls playsinline preload="metadata" aria-label={`${p.name} video`}></video>
-                        ) : (
-                          {!p.mocks && <div class="win-media">[ video: {p.name} ]</div>}
+                        ) : p.mocks ? null : (
+                          <div class="win-media">[ video: {p.name} ]</div>
                         )}
                         {p.mocks && (
                           <div class="win-media mk-frame">
-                          <div class="mk-row">
-                            <div class="mk-phone">
-                              <div class="mk-screen">
-                                <div class="mk-big">Menu Gen</div>
-                                <div class="mk-drop">
-                                  <div class="mk-icon">⊕</div>
-                                  <b>Add a photo of a menu</b>
-                                  <small>Dishes and ingredients are read from the scan</small>
-                                </div>
-                                <div class="mk-section">Dishes</div>
-                                <div class="mk-list">
-                                  <div class="mk-row-item"><div><div class="mk-name">Shakshuka</div><div class="mk-ing">eggs, tomato, cumin, feta</div></div><div class="mk-thumb">▢</div></div>
-                                  <div class="mk-row-item"><div><div class="mk-name">Lamb kofta</div><div class="mk-ing">lamb, parsley, onion, sumac</div></div><div class="mk-thumb">▢</div></div>
-                                  <div class="mk-row-item"><div><div class="mk-name">Fattoush</div><div class="mk-ing">romaine, radish, pita, sumac</div></div><div class="mk-thumb">▢</div></div>
-                                </div>
-                                <div class="mk-footer">
-                                  <div class="mk-btn mk-bordered">Edit ingredients</div>
-                                  <div class="mk-btn mk-prominent">Generate images</div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="mk-phone">
-                              <div class="mk-screen">
-                                <div class="mk-nav"><div class="mk-link">‹ Back</div><div class="mk-t">Image menu</div><div class="mk-link">Export</div></div>
-                                <div class="mk-heading">Spring menu</div>
-                                <div class="mk-sub">3 dishes · images estimated</div>
-                                <div class="mk-card"><div class="mk-pic">Estimated image</div><div class="mk-meta"><div class="mk-name">Shakshuka</div><div class="mk-ing">eggs, tomato, cumin, feta</div><span class="mk-tag">Vegetarian</span><span class="mk-tag">Estimated</span></div></div>
-                                <div class="mk-card"><div class="mk-pic">Estimated image</div><div class="mk-meta"><div class="mk-name">Lamb kofta</div><div class="mk-ing">lamb, parsley, onion, sumac</div><span class="mk-tag">Estimated</span></div></div>
-                                <div class="mk-bottom"><div class="mk-btn mk-bordered">Regenerate images</div></div>
-                              </div>
-                            </div>
+                            <img src="/menugen/swift-mocks.png" alt="Menu Gen app screens: scan screen and image menu" loading="lazy" />
                           </div>
                         )}
                         <div class="role">{p.name}</div>
