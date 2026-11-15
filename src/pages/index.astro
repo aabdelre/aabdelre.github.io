@@ -31,10 +31,15 @@ const projects = [
     repo: '#',
   },
   {
-    name: 'Menu Gen',
+    name: 'Menu Thumbnails Builder',
+    mocks: true,
     description:
       'Turns a menu scan into an image-based menu, showing each dish with its ingredients. Uses Nano Banana to estimate what each dish might look like.',
     tags: ['OCR', 'Nano Banana', 'Image Generation'],
+    funFact: {
+      text: 'I later realized Andrej Karpathy built a similar project also called Menu Gen, so I’m proud we came up with a similar idea.',
+      url: 'https://www.menugen.app/',
+    },
     demo: '#',
     repo: '#',
   },
@@ -44,6 +49,15 @@ const projects = [
       'A maze-exploring robot that sketches the entire maze as it explores. It finds a light-source goal, records its position, and then navigates to the goal once exploration is done. Once it reaches the goal, it dances.',
     tags: ['Robotics', 'Mapping', 'Path Planning'],
     video: '/projects/maze-explorer.mp4',
+    demo: '#',
+    repo: '#',
+  },
+  {
+    name: 'Robotic Arm Controller',
+    description:
+      'Trained a robotic arm to learn a task dynamically through repetition and a feedback loop, improving with each attempt.',
+    tags: ['Robotics', 'Reinforcement Learning'],
+    video: '/projects/robotic-arm.mp4',
     demo: '#',
     repo: '#',
   },
@@ -592,12 +606,23 @@ const posts = (await getCollection('blog'))
                         </div>
                         {p.video ? (
                           <video class="win-media" src={p.video} controls playsinline preload="metadata" aria-label={`${p.name} video`}></video>
-                        ) : (
+                        ) : p.mocks ? null : (
                           <div class="win-media">[ video: {p.name} ]</div>
+                        )}
+                        {p.mocks && (
+                          <div class="win-media mk-frame">
+                            <img src="/menugen/swift-mocks.png" alt="Menu Gen app screens: scan screen and image menu" loading="lazy" />
+                          </div>
                         )}
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
+                        {p.funFact && (
+                          <p class="fun-fact">
+                            Fun fact: {p.funFact.text}{' '}
+                            <a href={p.funFact.url} target="_blank" rel="noopener">menugen.app →</a>
+                          </p>
+                        )}
                         <div class="card-links">
                           {p.demo && p.demo !== '#' && <a href={p.demo}>Live</a>}
                           {p.repo && p.repo !== '#' && <a href={p.repo}>Code</a>}
@@ -2395,6 +2420,84 @@ const posts = (await getCollection('blog'))
   }
   .project-win > :not(.win-bar) {
     margin: 0 1.1rem;
+  }
+  .project-win .fun-fact {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  /* Menu Thumbnails Builder: the two app mocks, side by side, scaled to fit the window */
+  .mk-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .mk-phone {
+    width: 228px;
+    height: 494px;
+    overflow: hidden;
+    border-radius: 26px;
+    border: 6px solid #1c1c1e;
+    background: #f2f2f7;
+    box-sizing: content-box;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .mk-screen {
+    width: 390px;
+    height: 844px;
+    transform: scale(0.5);
+    transform-origin: top left;
+    display: flex;
+    flex-direction: column;
+    background: #f2f2f7;
+    color: #000;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    padding: 54px 20px 0;
+    box-sizing: border-box;
+  }
+  .mk-big { font-size: 34px; font-weight: 700; margin: 8px 0 16px; }
+  .mk-drop { background: #fff; border-radius: 14px; height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
+  .mk-icon { font-size: 34px; color: #007aff; }
+  .mk-drop b { font-size: 17px; font-weight: 600; }
+  .mk-drop small { font-size: 13px; color: #8e8e93; padding: 0 24px; }
+  .mk-section { font-size: 17px; font-weight: 600; margin: 22px 4px 8px; }
+  .mk-list { background: #fff; border-radius: 14px; overflow: hidden; }
+  .mk-row-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 14px; border-bottom: 1px solid #d1d1d6; }
+  .mk-row-item:last-child { border-bottom: 0; }
+  .mk-name { font-size: 17px; }
+  .mk-ing { font-size: 13px; color: #8e8e93; margin-top: 2px; }
+  .mk-thumb { width: 52px; height: 52px; border-radius: 10px; background: #e5e5ea; color: #8e8e93; display: grid; place-items: center; flex-shrink: 0; font-size: 22px; }
+  .mk-footer { margin-top: auto; display: flex; gap: 12px; padding: 0 0 36px; }
+  .mk-btn { flex: 1; padding: 14px 0; border-radius: 12px; font-size: 17px; font-weight: 600; text-align: center; }
+  .mk-bordered { background: #e5e5ea; color: #007aff; }
+  .mk-prominent { background: #007aff; color: #fff; }
+  .mk-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 0 12px; }
+  .mk-t { font-size: 17px; font-weight: 600; flex: 1; text-align: center; }
+  .mk-link { color: #007aff; font-size: 17px; }
+  .mk-heading { font-size: 28px; font-weight: 700; }
+  .mk-sub { font-size: 13px; color: #8e8e93; margin: 4px 0 14px; }
+  .mk-card { background: #fff; border-radius: 14px; overflow: hidden; margin-bottom: 14px; }
+  .mk-pic { height: 130px; background: linear-gradient(135deg, #e5e5ea, #f2f2f7); display: grid; place-items: center; font-size: 13px; color: #8e8e93; }
+  .mk-meta { padding: 12px 14px 14px; }
+  .mk-meta .mk-name { font-size: 17px; font-weight: 600; }
+  .mk-tag { display: inline-block; font-size: 11px; color: #8e8e93; background: #e5e5ea; border-radius: 999px; padding: 3px 9px; margin: 8px 6px 0 0; }
+  .mk-bottom { margin-top: auto; padding: 12px 0 36px; }
+  .mk-bottom .mk-btn { width: 100%; box-sizing: border-box; }
+  .win-media.mk-frame {
+    aspect-ratio: auto;
+    height: auto;
+    display: block;
+    padding: 0;
+    overflow: visible;
+  }
+  .mk-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
   }
   .win-media {
     aspect-ratio: 16 / 9;
