@@ -404,6 +404,7 @@ const posts = (await getCollection('blog'))
                     l1.setAttribute('points', pt(base) + ' ' + pt(p1));
                     l2.setAttribute('points', pt(p1) + ' ' + pt(p2));
                     l3.setAttribute('points', pt(p2) + ' ' + pt(p3));
+                    var dir = a3 + rad(c2 * 0.15);
                     // claw: palm bar at the wrist, two jaws that open outward then hook inward
                     var spread = rad(10 + c3);
                     var hook = rad(30);
