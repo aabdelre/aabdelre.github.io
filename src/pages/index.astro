@@ -2489,8 +2489,14 @@ const posts = (await getCollection('blog'))
   .mk-frame {
     aspect-ratio: auto;
     display: block;
-    padding: 14px;
+    padding: 0;
     overflow: hidden;
+  }
+  .mk-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
   }
   .win-media {
     aspect-ratio: 16 / 9;
