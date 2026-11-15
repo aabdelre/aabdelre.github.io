@@ -206,7 +206,7 @@ const beyond = [
   {
     title: 'Hiking',
     text: "I really love driving and touching grass. Getting out of the city, whether it's a long drive or a trail, is how I recharge from debugging, metrics analysis, and demos. The world indeed has pretty impressive graphics.",
-    images: ['/hiking/tahoe-driving.mp4', '/hiking/zion.jpg', '/hiking/yosemite-lower.jpg', '/hiking/tahoe-overlook.jpg'],
+    images: ['/hiking/tahoe-driving.mp4', '/hiking/yosemite-lower.jpg', '/hiking/tahoe-overlook.jpg', '/hiking/zion.jpg'],
   },
   {
     title: 'Hackathons',
@@ -675,7 +675,7 @@ const posts = (await getCollection('blog'))
                                 )}
                               </figure>
                             </div>
-                            <div class={b.title === 'Volleyball' ? 'split-imgs split-grid' : 'split-imgs'}>
+                            <div class={b.title === 'Volleyball' ? 'split-imgs split-grid' : b.title === 'Hiking' ? 'split-imgs split-pair' : 'split-imgs'}>
                               {b.images.slice(1).map((src) => (
                                 <figure class="shot">
                                   <div class="shot-bar">
@@ -1648,6 +1648,21 @@ const posts = (await getCollection('blog'))
   .split-imgs .shot {
     flex: 1;
     min-height: 0;
+  }
+  /* Hiking: two photos per row, so the waterfall and overlook sit side by side */
+  .split-pair {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 0.75rem;
+  }
+  .split-pair .shot {
+    flex: 1 1 calc(50% - 0.375rem);
+    min-width: 0;
+  }
+  .split-pair .shot img {
+    height: auto;
+    max-height: 220px;
   }
   .split-grid .shot {
     min-height: 0;
