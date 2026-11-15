@@ -477,6 +477,7 @@ const posts = (await getCollection('blog'))
                         <div class="cv-msg">{c.msg}</div>
                         <div class="cv-when">{c.when}</div>
                         <div class={c.beside ? 'cv-beside' : 'cv-stack'}>
+                        <div class="cv-text">
                         <p>{c.body}</p>
                         {c.details.length > 0 && (
                           <ul class="cv-list">
@@ -485,6 +486,7 @@ const posts = (await getCollection('blog'))
                             ))}
                           </ul>
                         )}
+                        </div>
                         {c.images.length > 0 && (
                           <div class="cv-imgs">
                             {c.images.map((src) => (
@@ -2151,6 +2153,12 @@ const posts = (await getCollection('blog'))
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
+  }
+  .cv-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-width: 0;
   }
   .cv-stack {
     display: flex;
