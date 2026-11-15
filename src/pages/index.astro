@@ -393,7 +393,7 @@ const posts = (await getCollection('blog'))
                   var grip = 32, gripTarget = 32, nextToggle = 0, lastT = 0;
                   function updateGrip(t) {
                     if (t >= nextToggle) {
-                      gripTarget = gripTarget > 18 ? 4 : 32;
+                      gripTarget = gripTarget > 18 ? -6 : 32;
                       nextToggle = t + 0.8 + Math.random() * 2.2;
                     }
                     var dt = Math.max(0, t - lastT);
