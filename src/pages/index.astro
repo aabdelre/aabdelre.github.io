@@ -34,7 +34,16 @@ const projects = [
     name: 'Menu Gen',
     description:
       'Turns a menu scan into an image-based menu, showing each dish with its ingredients. Uses Nano Banana to estimate what each dish might look like.',
-    tags: ['Nano Banana', 'Image Generation'],
+    tags: ['OCR', 'Nano Banana', 'Image Generation'],
+    demo: '#',
+    repo: '#',
+  },
+  {
+    name: 'Maze Explorer & Sketcher',
+    description:
+      'A maze-exploring robot that sketches the entire maze as it explores. It finds a light-source goal, records its position, and then navigates to the goal once exploration is done. Once it reaches the goal, it dances.',
+    tags: ['Robotics', 'Mapping', 'Path Planning'],
+    video: '/projects/maze-explorer.mp4',
     demo: '#',
     repo: '#',
   },
@@ -59,6 +68,8 @@ const experience = [
     period: 'Feb 2025 — Present',
     summary:
       'Build ML workflow orchestration for Ads ranking — cut model-iteration latency ~88% and drove avg 2.45% accuracy gains across production models.',
+    images: ['/experience/meta.jpg'],
+    beside: true,
     details: [
       'Builds products and infrastructure that connect people and businesses, including ad platforms, large-scale Ads ML systems, and evaluation tools.',
       'Developing agents and platform capabilities for model iteration, and designing self-improving workflows for models. Shipping model improvements.',
@@ -72,6 +83,7 @@ const experience = [
     period: 'May 2024 — Aug 2024',
     summary:
       'Rewrote a Python microservice (−72% code) and migrated Address Pool Manager monitoring to Prometheus/Grafana with custom gRPC metrics endpoints on Kubernetes.',
+    images: ['/experience/hpe-1.jpg', '/experience/hpe-2.jpg'],
     details: [
       'Develops networking hardware, software, and cloud services for enterprise and service-provider infrastructure.',
       'Migrated Python microservices to Go, and instrumented asynchronous workflows with Prometheus and Grafana to track metrics and build dashboards.',
@@ -93,7 +105,7 @@ const experience = [
   {
     role: 'Teaching Assistant',
     org: 'Hamilton College CS, Math & Physics',
-    period: '',
+    period: 'Aug 2022 — Dec 2024',
     summary:
       'Led labs, graded quizzes, projects, and exams, and supported students in office hours across computer science, mathematics, and physics.',
     details: [
@@ -124,6 +136,8 @@ const commits = [
     when: e.period,
     body: e.summary,
     details: e.details ?? [],
+    images: e.images ?? [],
+    beside: e.beside ?? false,
   })),
 ];
 
@@ -173,7 +187,7 @@ const beyond = [
   {
     title: 'Volleyball',
     text: "I've played volleyball leagues since senior year, and have been progressing with my team through Volo leagues. Our highest finish so far is 2nd place.",
-    images: ['/volleyball/team.jpg', '/volleyball/successful-dig.jpg', '/volleyball/failed-spiking.jpg'],
+    images: ['/volleyball/team.jpg', '/volleyball/successful-dig.jpg', '/volleyball/failed-spiking.jpg', '/volleyball/successful-block.mp4'],
   },
   {
     title: 'Hiking',
@@ -462,6 +476,8 @@ const posts = (await getCollection('blog'))
                         <div class="cv-hash">commit {c.hash}</div>
                         <div class="cv-msg">{c.msg}</div>
                         <div class="cv-when">{c.when}</div>
+                        <div class={c.beside ? 'cv-beside' : 'cv-stack'}>
+                        <div class="cv-text">
                         <p>{c.body}</p>
                         {c.details.length > 0 && (
                           <ul class="cv-list">
@@ -470,6 +486,21 @@ const posts = (await getCollection('blog'))
                             ))}
                           </ul>
                         )}
+                        </div>
+                        {c.images.length > 0 && (
+                          <div class="cv-imgs">
+                            {c.images.map((src) => (
+                              <figure class="shot">
+                                <div class="shot-bar">
+                                  <i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i>
+                                  <span>{src.split('/').pop()}</span>
+                                </div>
+                                <img src={src} alt={`${c.msg} photo`} loading="lazy" />
+                              </figure>
+                            ))}
+                          </div>
+                        )}
+                        </div>
                       </div>
                     ))
                   }
@@ -559,6 +590,11 @@ const posts = (await getCollection('blog'))
                           <span class="win-title">{p.name}</span>
                           <button class="win-close" type="button" data-up aria-label="Close window">×</button>
                         </div>
+                        {p.video ? (
+                          <video class="win-media" src={p.video} controls playsinline preload="metadata" aria-label={`${p.name} video`}></video>
+                        ) : (
+                          <div class="win-media">[ video: {p.name} ]</div>
+                        )}
                         <div class="role">{p.name}</div>
                         <div class="meta">{p.tags.join(' · ')}</div>
                         <p>{p.description}</p>
@@ -614,7 +650,7 @@ const posts = (await getCollection('blog'))
                                 )}
                               </figure>
                             </div>
-                            <div class="split-imgs">
+                            <div class={b.title === 'Volleyball' ? 'split-imgs split-grid' : 'split-imgs'}>
                               {b.images.slice(1).map((src) => (
                                 <figure class="shot">
                                   <div class="shot-bar">
@@ -1588,6 +1624,13 @@ const posts = (await getCollection('blog'))
     flex: 1;
     min-height: 0;
   }
+  .split-grid .shot {
+    min-height: 0;
+  }
+  .split-grid .shot:has(video) {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
   .shot video {
     display: block;
     width: 100%;
@@ -1635,6 +1678,12 @@ const posts = (await getCollection('blog'))
     flex-direction: column;
     gap: 0.75rem;
     min-height: 0;
+  }
+  /* Volleyball only: the video fills the top half, the two photos sit side by side below */
+  .split-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   }
   .split-imgs img {
     flex: 1;
@@ -2100,6 +2149,47 @@ const posts = (await getCollection('blog'))
     color: var(--muted);
     font-size: 0.9rem;
   }
+  .cv-imgs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .cv-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-width: 0;
+  }
+  .cv-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .cv-beside {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .cv-beside .cv-imgs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cv-beside .cv-imgs .shot img {
+    height: clamp(180px, 34vh, 300px);
+  }
+  @media (max-width: 560px) {
+    .cv-beside {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .cv-imgs .shot img {
+    width: 100%;
+    height: clamp(160px, 28vh, 240px);
+    object-fit: contain;
+    background: var(--surface);
+    border: 0;
+    border-radius: 0;
+  }
   .cv-list {
     margin: 0;
     padding-left: 1.2rem;
@@ -2233,14 +2323,14 @@ const posts = (await getCollection('blog'))
     position: relative;
   }
   .panel.win-open .desk {
-    width: 50%;
+    width: 40%;
   }
   .project-win {
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;
     bottom: 0.5rem;
-    width: min(440px, 48%);
+    width: min(600px, 54%);
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
@@ -2249,7 +2339,8 @@ const posts = (await getCollection('blog'))
     border: 1px solid var(--border);
     border-radius: 10px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     z-index: 3;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
@@ -2304,6 +2395,16 @@ const posts = (await getCollection('blog'))
   }
   .project-win > :not(.win-bar) {
     margin: 0 1.1rem;
+  }
+  .win-media {
+    aspect-ratio: 16 / 9;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
   }
   .project-win .role {
     font-weight: 600;
@@ -2740,6 +2841,8 @@ const posts = (await getCollection('blog'))
       'wheel',
       (e) => {
         if (busy) return;
+        // Scrolling inside the popup scrolls the popup, not the map
+        if ((e.target as HTMLElement).closest('.popup')) return;
         e.preventDefault();
         zoomTo(scale * (e.deltaY < 0 ? 1.12 : 1 / 1.12));
       },
