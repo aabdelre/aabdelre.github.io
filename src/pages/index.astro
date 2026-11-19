@@ -1769,18 +1769,26 @@ const posts = (await getCollection('blog'))
   .split-imgs.split-hack {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    align-content: start;
+    flex: none;
     gap: 0.75rem;
     align-items: start;
   }
   .split-imgs.split-hack .shot {
     min-width: 0;
+    min-height: 0;
+    flex: none;
+    height: auto;
   }
   .split-imgs.split-hack .shot:last-child {
     grid-column: 1 / -1;
   }
   .split-imgs.split-hack .shot img {
+    flex: none;
     width: 100%;
     height: auto;
+    min-height: 0;
     object-fit: contain;
   }
   .split-pair {
