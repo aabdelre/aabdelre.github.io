@@ -171,6 +171,27 @@ body {
 .vstate { color: var(--accent); font-size: 11px; }
 .transcript { color: var(--strong); font-size: 12px; line-height: 1.5; margin-top: 2px; }
 .voice-note { color: var(--muted); font-size: 12px; margin: 0 14px 14px; }
+
+/* Fit inside the project window: code and chat side by side, no page scroll */
+body { padding: 8px !important; font-size: 11px !important; margin: 0; }
+.prompt, .foot, .voice-note { display: none !important; }
+.app { flex-wrap: nowrap !important; min-height: 0 !important; height: calc(100vh - 16px); border-radius: 10px; }
+.code, .chat { flex: 1 1 0 !important; min-width: 0 !important; }
+.line { grid-template-columns: 26px 1fr; line-height: 1.5; }
+.line .n { padding-right: 8px; }
+.src { padding: 6px 0; }
+.note { margin: 8px 10px 10px; font-size: 11px; }
+.hint { margin: 0 10px 6px; font-size: 11px; }
+.thread { padding: 10px; gap: 8px; overflow: hidden; }
+.avatar { width: 30px; height: 30px; }
+.avatar svg { width: 22px; height: 22px; }
+.bubble { max-width: 90%; padding: 8px 10px; }
+.score { margin: 0 10px 8px; gap: 8px; font-size: 11px; }
+.modes { margin: 0 10px 6px; }
+.voice { margin: 0 10px 4px; padding: 8px 10px; }
+.input { margin: 0 10px 10px; }
+.mic { width: 32px; height: 32px; }
+.wave { height: 24px; }
 </style>
 
 
