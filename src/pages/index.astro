@@ -999,7 +999,12 @@ const posts = (await getCollection('blog'))
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
+  .map-stage:has(.popup.takeover) .map-arm,
+  .map-stage.exit .map-arm {
+    opacity: 0;
+  }
   .map-arm {
+    transition: opacity 0.3s ease;
     position: absolute;
     top: 8px;
     right: -12px;
