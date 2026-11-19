@@ -1787,7 +1787,7 @@ const posts = (await getCollection('blog'))
   .split-imgs.split-hack .shot img {
     flex: none;
     width: 100%;
-    height: auto;
+    height: clamp(160px, 30vh, 280px);
     min-height: 0;
     object-fit: contain;
   }
