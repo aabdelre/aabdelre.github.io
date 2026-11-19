@@ -1788,7 +1788,11 @@ const posts = (await getCollection('blog'))
     height: clamp(220px, 36vh, 340px);
   }
   .split-imgs.split-hack .shot:last-child {
-    height: clamp(260px, 44vh, 400px);
+    height: auto;
+  }
+  .split-imgs.split-hack .shot:last-child img {
+    flex: none;
+    height: clamp(220px, 40vh, 360px);
   }
   .split-imgs.split-hack .shot img {
     flex: 1 1 0;
