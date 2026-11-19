@@ -1785,14 +1785,15 @@ const posts = (await getCollection('blog'))
     grid-column: 1 / -1;
   }
   .split-imgs.split-hack .shot {
-    height: clamp(220px, 36vh, 340px);
+    height: clamp(180px, 26vh, 240px);
   }
   .split-imgs.split-hack .shot:last-child {
     height: auto;
   }
   .split-imgs.split-hack .shot:last-child img {
     flex: none;
-    height: clamp(220px, 40vh, 360px);
+    height: auto;
+    max-height: none;
   }
   .split-imgs.split-hack .shot img {
     flex: 1 1 0;
