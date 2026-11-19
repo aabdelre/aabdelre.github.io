@@ -27,6 +27,7 @@ const projects = [
     description:
       'A chief-of-staff tool for running a swarm of agents from the terminal. One chief agent delegates tasks, gathers frequent status updates, and keeps agents on set communication protocols.',
     tags: ['Agents', 'Terminal', 'Orchestration'],
+    image: '/projects/fleets.png',
     demo: '#',
     repo: '#',
   },
@@ -695,6 +696,8 @@ const posts = (await getCollection('blog'))
                         </div>
                         {p.video ? (
                           <video class="win-media" src={p.video} controls playsinline preload="metadata" aria-label={`${p.name} video`}></video>
+                        ) : p.image ? (
+                          <div class="win-media mk-frame"><img src={p.image} alt={`${p.name} screenshot`} loading="lazy" /></div>
                         ) : p.mocks ? null : (
                           <div class="win-media">[ video: {p.name} ]</div>
                         )}
