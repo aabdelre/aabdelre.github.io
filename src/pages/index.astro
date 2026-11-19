@@ -1769,11 +1769,11 @@ const posts = (await getCollection('blog'))
   .split-imgs.split-hack {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-auto-rows: auto;
-    align-content: start;
-    flex: none;
+    grid-template-rows: auto minmax(0, 1fr);
+    flex: 1;
+    min-height: 0;
     gap: 0.75rem;
-    align-items: start;
+    align-items: stretch;
   }
   .split-imgs.split-hack .shot {
     min-width: 0;
@@ -1789,11 +1789,13 @@ const posts = (await getCollection('blog'))
   }
   .split-imgs.split-hack .shot:last-child {
     height: auto;
+    min-height: 0;
   }
   .split-imgs.split-hack .shot:last-child img {
-    flex: none;
+    flex: 1 1 0;
     width: 100%;
-    height: clamp(150px, 20vh, 200px);
+    height: 0;
+    min-height: 0;
     object-fit: contain;
   }
   .split-imgs.split-hack .shot img {
