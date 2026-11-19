@@ -1766,19 +1766,19 @@ const posts = (await getCollection('blog'))
   }
   /* Hiking: two photos per row, so the waterfall and overlook sit side by side */
   /* Hackathons: two photos on top, the last one full width below */
-  .split-hack {
+  .split-imgs.split-hack {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
     align-items: start;
   }
-  .split-hack .shot {
+  .split-imgs.split-hack .shot {
     min-width: 0;
   }
-  .split-hack .shot:last-child {
+  .split-imgs.split-hack .shot:last-child {
     grid-column: 1 / -1;
   }
-  .split-hack .shot img {
+  .split-imgs.split-hack .shot img {
     width: 100%;
     height: auto;
     object-fit: contain;
