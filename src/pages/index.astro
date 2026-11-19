@@ -1784,10 +1784,16 @@ const posts = (await getCollection('blog'))
   .split-imgs.split-hack .shot:last-child {
     grid-column: 1 / -1;
   }
+  .split-imgs.split-hack .shot {
+    height: clamp(220px, 36vh, 340px);
+  }
+  .split-imgs.split-hack .shot:last-child {
+    height: clamp(260px, 44vh, 400px);
+  }
   .split-imgs.split-hack .shot img {
-    flex: none;
+    flex: 1 1 0;
+    height: 0;
     width: 100%;
-    height: clamp(160px, 30vh, 280px);
     min-height: 0;
     object-fit: contain;
   }
