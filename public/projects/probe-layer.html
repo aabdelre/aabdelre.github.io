@@ -1,0 +1,291 @@
+<title>Probe Layer Chat Mock</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #0f141b;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --strong: #e6edf3;
+  --muted: #8b949e;
+  --accent: #3fb950;
+  --blue: #58a6ff;
+  --gold: #e3b341;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  padding-block: 24px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.prompt { color: var(--accent); margin: 0 0 16px; }
+.prompt span { color: var(--muted); }
+.app {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  min-height: 560px;
+}
+.pane { min-width: 0; display: flex; flex-direction: column; }
+.code { flex: 1.1 1 420px; border-right: 1px solid var(--border); }
+.chat { flex: 1 1 360px; }
+.bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  background: #0f141b;
+  color: var(--muted);
+  font-size: 12px;
+}
+.bar b { color: var(--accent); font-weight: 400; }
+.bar .spacer { flex: 1; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.src { padding: 8px 0; overflow-x: auto; }
+.line {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  white-space: pre;
+  line-height: 1.6;
+  padding-right: 12px;
+}
+.line .n { text-align: right; padding-right: 12px; color: #484f58; user-select: none; }
+.line.hl { background: rgba(227, 179, 65, 0.14); box-shadow: inset 3px 0 0 var(--gold); }
+.line.hl .n { color: var(--gold); }
+.k { color: #ff7b72; }
+.s { color: #a5d6ff; }
+.c { color: #6e7681; font-style: italic; }
+.f { color: #d2a8ff; }
+.note {
+  margin: 10px 14px 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  background: rgba(227, 179, 65, 0.08);
+  color: var(--strong);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.note b { color: var(--gold); font-weight: 400; }
+.hint { color: var(--muted); font-size: 12px; margin: 0 14px 8px; }
+.thread { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.msg { display: flex; gap: 10px; align-items: flex-start; }
+.msg.me { flex-direction: row-reverse; }
+.avatar {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--surface2);
+  display: grid; place-items: center;
+}
+.avatar svg { width: 30px; height: 30px; display: block; }
+.bubble {
+  max-width: 78%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface2);
+  line-height: 1.55;
+}
+.msg.me .bubble { border-color: var(--blue); }
+.who { color: var(--accent); font-size: 11px; margin-bottom: 4px; }
+.msg.me .who { color: var(--blue); text-align: right; }
+.ref {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 1px 6px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  color: var(--gold);
+  font-size: 11px;
+}
+.score {
+  margin: 0 14px 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+.score b { color: var(--strong); font-weight: 400; }
+.input {
+  margin: 0 14px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--muted);
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.input .blink { color: var(--accent); }
+.foot { color: var(--muted); font-size: 12px; margin: 14px 0 0; }
+.modes { display: flex; gap: 6px; margin: 0 14px 8px; }
+.mode {
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.mode.on { border-color: var(--accent); color: var(--accent); }
+.voice {
+  margin: 0 14px 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface2);
+  display: flex; align-items: center; gap: 12px;
+}
+.mic {
+  flex: 0 0 auto;
+  width: 38px; height: 38px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  display: grid; place-items: center;
+}
+.mic svg { width: 20px; height: 20px; }
+.wave { flex: 0 0 auto; display: flex; align-items: center; gap: 3px; height: 30px; }
+.wave i {
+  display: block;
+  width: 3px;
+  height: 40%;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.85;
+}
+.wave i:nth-child(odd) { height: 70%; }
+.wave i:nth-child(3n) { height: 100%; background: var(--blue); }
+.vtext { min-width: 0; flex: 1; }
+.vstate { color: var(--accent); font-size: 11px; }
+.transcript { color: var(--strong); font-size: 12px; line-height: 1.5; margin-top: 2px; }
+.voice-note { color: var(--muted); font-size: 12px; margin: 0 14px 14px; }
+
+/* Fit inside the project window: code and chat side by side, no page scroll */
+body { padding: 8px !important; font-size: 11px !important; margin: 0; }
+.prompt, .foot, .voice-note { display: none !important; }
+.app { flex-wrap: nowrap !important; min-height: 0 !important; height: calc(100vh - 16px); border-radius: 10px; }
+.code, .chat { flex: 1 1 0 !important; min-width: 0 !important; }
+.line { grid-template-columns: 26px 1fr; line-height: 1.5; }
+.line .n { padding-right: 8px; }
+.src { padding: 6px 0; }
+.note { margin: 8px 10px 10px; font-size: 11px; }
+.hint { margin: 0 10px 6px; font-size: 11px; }
+.thread { padding: 10px; gap: 8px; overflow: hidden; }
+.avatar { width: 30px; height: 30px; }
+.avatar svg { width: 22px; height: 22px; }
+.bubble { max-width: 90%; padding: 8px 10px; }
+.score { margin: 0 10px 8px; gap: 8px; font-size: 11px; }
+.modes { margin: 0 10px 6px; }
+.voice { margin: 0 10px 4px; padding: 8px 10px; }
+.input { margin: 0 10px 10px; }
+.mic { width: 32px; height: 32px; }
+.wave { height: 24px; }
+</style>
+
+
+<section class="app" aria-label="Probe Layer session">
+  <div class="pane code">
+    <div class="src">
+      <div class="line"><span class="n">1</span><span><span class="k">from</span> collections <span class="k">import</span> deque</span></div>
+      <div class="line"><span class="n">2</span><span></span></div>
+      <div class="line"><span class="n">3</span><span><span class="k">def</span> <span class="f">solve</span>(grid, start, goal):</span></div>
+      <div class="line"><span class="n">4</span><span>    <span class="c"># breadth-first search over open cells</span></span></div>
+      <div class="line hl"><span class="n">5</span><span>    queue = deque([start])</span></div>
+      <div class="line hl"><span class="n">6</span><span>    seen = {start}</span></div>
+      <div class="line hl"><span class="n">7</span><span>    <span class="k">while</span> queue:</span></div>
+      <div class="line hl"><span class="n">8</span><span>        cell = queue.popleft()</span></div>
+      <div class="line hl"><span class="n">9</span><span>        <span class="k">if</span> cell == goal:</span></div>
+      <div class="line hl"><span class="n">10</span><span>            <span class="k">return</span> <span class="s">True</span></div>
+      <div class="line"><span class="n">11</span><span>        <span class="k">for</span> nxt <span class="k">in</span> neighbours(grid, cell):</span></div>
+      <div class="line"><span class="n">12</span><span>            <span class="k">if</span> nxt <span class="k">not in</span> seen:</span></div>
+      <div class="line"><span class="n">13</span><span>                seen.add(nxt); queue.append(nxt)</span></div>
+      <div class="line"><span class="n">14</span><span>    <span class="k">return</span> <span class="s">False</span></div>
+    </div>
+    <div class="note"><b>highlighted by probe</b> · lines 5 to 10. The assignment asks for the shortest path, and this returns True or False only.</div>
+    <p class="hint">Highlight any range of code to ask the probe about it.</p>
+  </div>
+
+  <div class="pane chat">
+    <div class="thread">
+      <div class="msg">
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 30 30">
+            <rect x="5" y="6" width="20" height="16" rx="3" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
+            <rect x="9" y="11" width="4" height="4" fill="#3fb950"/>
+            <rect x="17" y="11" width="4" height="4" fill="#3fb950"/>
+            <rect x="10" y="17" width="10" height="2" fill="#58a6ff"/>
+            <rect x="13" y="2" width="4" height="4" fill="#3fb950"/>
+          </svg>
+        </div>
+        <div class="bubble">
+          <div class="who">probe</div>
+          <span class="ref">lines 5 to 10</span><br>
+          Your loop returns True as soon as it pops the goal. What does the function return if the goal is never reached?
+        </div>
+      </div>
+      <div class="msg me">
+        <div class="avatar" aria-hidden="true" style="border-color:#58a6ff">
+          <svg viewBox="0 0 30 30">
+            <circle cx="15" cy="11" r="5" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+            <path d="M6 26 Q15 14 24 26" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="bubble">
+          <div class="who">student</div>
+          It returns False, the last line handles that case.
+        </div>
+      </div>
+      <div class="msg">
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 30 30">
+            <rect x="5" y="6" width="20" height="16" rx="3" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
+            <rect x="9" y="11" width="4" height="4" fill="#3fb950"/>
+            <rect x="17" y="11" width="4" height="4" fill="#3fb950"/>
+            <rect x="10" y="17" width="10" height="2" fill="#58a6ff"/>
+            <rect x="13" y="2" width="4" height="4" fill="#3fb950"/>
+          </svg>
+        </div>
+        <div class="bubble">
+          <div class="who">probe</div>
+          <span class="ref">line 10</span><br>
+          Right. Now tell me why the first True you return is guaranteed to be the shortest path.
+        </div>
+      </div>
+    </div>
+    <div class="score">
+      <span>understanding <b>3 / 5</b></span>
+      <span>requirements met <b>2 of 3</b></span>
+      <span>follow-up <b>pending</b></span>
+    </div>
+    <div class="modes" role="tablist" aria-label="Answer mode">
+      <span class="mode" role="tab" aria-selected="false">chat</span>
+      <span class="mode on" role="tab" aria-selected="true">voice</span>
+    </div>
+    <div class="input"><span>answer the probe…</span><span class="blink">_</span></div>
+    <div class="voice" aria-label="Voice answer">
+      <div class="mic" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="#3fb950" stroke-width="1.5"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="#3fb950" stroke-width="1.5"/></svg>
+      </div>
+      <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="vtext">
+        <div class="vstate">listening · 0:08</div>
+        <div class="transcript">“Because the queue is FIFO, the first time we reach the goal is the shortest…”</div>
+      </div>
+    </div>
+    <p class="voice-note">Voice: the probe speaks its question aloud and transcribes the answer. Typed answers stay available.</p>
+  </div>
+</section>
+
+<p class="foot">Mock only: the code and replies are sample content for review. A real session would come from the student's submission and the assignment description.</p>
