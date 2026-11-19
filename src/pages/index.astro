@@ -16,6 +16,7 @@ const pins = [
 const projects = [
   {
     name: 'Probe Layer',
+    page: '/projects/probe-layer.html',
     description:
       'An AI that reviews a student submission against the assignment description, then runs a live oral examination to test the student\'s understanding and score the submission fairly. Probing is a proven, very effective teaching strategy, but it does not scale to classrooms with a high student-to-instructor ratio.',
     tags: ['TypeScript', 'Web', 'Browser Extension'],
@@ -696,6 +697,8 @@ const posts = (await getCollection('blog'))
                         </div>
                         {p.video ? (
                           <video class="win-media" src={p.video} controls playsinline preload="metadata" aria-label={`${p.name} video`}></video>
+                        ) : p.page ? (
+                          <iframe class="win-media win-frame" src={p.page} title={`${p.name} mock`} loading="lazy"></iframe>
                         ) : p.image ? (
                           <div class="win-media mk-frame"><img src={p.image} alt={`${p.name} screenshot`} loading="lazy" /></div>
                         ) : p.mocks ? null : (
@@ -2531,6 +2534,13 @@ const posts = (await getCollection('blog'))
   /* Projects as a desktop: an opened project is a window on the right */
   .panel {
     position: relative;
+  }
+  .win-frame {
+    width: 100%;
+    height: 640px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--bg);
   }
   .panel.win-open .desk {
     width: 40%;
