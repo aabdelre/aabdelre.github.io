@@ -1,0 +1,117 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-13T12:00:00Z"
+  },
+  "title": "Portfolio Redesign Mocks",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1280,
+      "h": 1100,
+      "title": "A · Refined Dark",
+      "expand": "fill"
+    },
+    "Editorial.dc.html": {
+      "x": 1360,
+      "y": 0,
+      "w": 1280,
+      "h": 1100,
+      "title": "B · Editorial Light",
+      "expand": "fill"
+    },
+    "Terminal.dc.html": {
+      "x": 2720,
+      "y": 0,
+      "w": 1280,
+      "h": 1100,
+      "title": "C · Terminal",
+      "expand": "fill"
+    },
+    "MapOverview.dc.html": {
+      "x": 0,
+      "y": 1200,
+      "w": 1280,
+      "h": 900,
+      "title": "D · Map overview",
+      "expand": "fill"
+    },
+    "MapOpen.dc.html": {
+      "x": 1360,
+      "y": 1200,
+      "w": 1280,
+      "h": 1100,
+      "title": "E · Map, section open",
+      "expand": "fill"
+    },
+    "MapLab.dc.html": {
+      "x": 2720,
+      "y": 1200,
+      "w": 1280,
+      "h": 900,
+      "title": "F · Map: Lab bench",
+      "expand": "fill"
+    },
+    "MapSignal.dc.html": {
+      "x": 0,
+      "y": 2400,
+      "w": 1280,
+      "h": 900,
+      "title": "G · Map: Live signal",
+      "expand": "fill"
+    },
+    "MapField.dc.html": {
+      "x": 1360,
+      "y": 2400,
+      "w": 1280,
+      "h": 900,
+      "title": "H · Map: Field journal",
+      "expand": "fill"
+    },
+    "MapSignalRich.dc.html": {
+      "x": 2720,
+      "y": 2400,
+      "w": 1280,
+      "h": 900,
+      "title": "I · Map: Live signal, richer",
+      "expand": "fill"
+    },
+    "ResearchBoard.dc.html": {
+      "x": 0,
+      "y": 3600,
+      "w": 1280,
+      "h": 900,
+      "title": "J · Research: whiteboard",
+      "expand": "fill"
+    },
+    "ResearchNotebook.dc.html": {
+      "x": 1360,
+      "y": 3600,
+      "w": 1280,
+      "h": 900,
+      "title": "K · Research: lab notebook",
+      "expand": "fill"
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Editorial.dc.html",
+    "Terminal.dc.html",
+    "MapOverview.dc.html",
+    "MapOpen.dc.html",
+    "MapLab.dc.html",
+    "MapSignal.dc.html",
+    "MapField.dc.html",
+    "MapSignalRich.dc.html",
+    "ResearchBoard.dc.html",
+    "ResearchNotebook.dc.html"
+  ],
+  "notes": {},
+  "designSystems": []
+}

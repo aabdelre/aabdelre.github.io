@@ -1,0 +1,120 @@
+<title>Experience Section Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+:root {
+  --bg: #f6f8fa; --surface: #ffffff; --line: #d8dee4; --fg: #1f2328; --muted: #59636e; --accent: #1a7f37; --warn: #9a6700;
+  color-scheme: light;
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --surface: #161b22; --line: #30363d; --fg: #c9d1d9; --muted: #8b949e; --accent: #3fb950; --warn: #d29922;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --surface: #161b22; --line: #30363d; --fg: #c9d1d9; --muted: #8b949e; --accent: #3fb950; --warn: #d29922;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 980px; margin: 0 auto; padding-block: 40px 64px; }
+h1 { font-size: 1.9rem; margin: 0 0 6px; text-wrap: balance; }
+h2 { font-size: 1.25rem; margin: 0 0 6px; }
+p { margin: 0 0 10px; max-width: 65ch; }
+.lede { color: var(--muted); }
+.grid { display: grid; gap: 18px; margin-top: 28px; }
+.opt { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+.opt .tag { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); margin-bottom: 6px; }
+.mock { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 16px; overflow-x: auto; }
+.mock-trail { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-family: var(--mono); font-size: 0.85rem; }
+.stop { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: var(--surface); }
+.stop b { color: var(--accent); font-weight: 600; }
+.arrow { color: var(--muted); }
+.mock-log { font-family: var(--mono); font-size: 0.85rem; line-height: 1.9; }
+.mock-log span.h { color: var(--warn); margin-right: 10px; }
+.mock-log span.r { color: var(--accent); margin-right: 8px; }
+.mock-nb { display: grid; grid-template-columns: 150px 1fr; gap: 10px; font-size: 0.85rem; }
+.mock-nb .side { border-right: 1px solid var(--line); padding-right: 10px; font-family: var(--mono); color: var(--muted); }
+.mock-nb .side .on { color: var(--fg); border-left: 2px solid var(--accent); padding-left: 6px; }
+.mock-nb .cell { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; background: var(--surface); }
+ul { padding-left: 18px; margin: 0; }
+li { margin-bottom: 6px; max-width: 65ch; }
+.pick { margin-top: 28px; background: var(--surface); border: 1px dashed var(--accent); border-radius: 12px; padding: 22px; }
+.q { color: var(--muted); font-size: 0.95rem; }
+</style>
+
+<main>
+  <h1>Experience section: three directions</h1>
+  <p class="lede">Each option keeps the same content (four roles plus education) and changes how a visitor moves through it. Mocks are simplified; colors and fonts follow the site.</p>
+
+  <div class="grid">
+    <section class="opt">
+      <div class="tag">OPTION A · ROUTE</div>
+      <h2>A path across the map</h2>
+      <p>Each role is a stop on a dashed route, in the same visual language as the map. The route runs from the earliest role to the latest, and a visitor steps along it with Previous and Next, or taps a stop.</p>
+      <div class="mock">
+        <div class="mock-trail">
+          <div class="stop"><b>01</b> Hamilton, BA</div><span class="arrow">┄┄▶</span>
+          <div class="stop"><b>02</b> HPE intern</div><span class="arrow">┄┄▶</span>
+          <div class="stop"><b>03</b> Meta</div><span class="arrow">┄┄▶</span>
+          <div class="stop"><b>04</b> Stealth CTO</div>
+        </div>
+      </div>
+      <ul>
+        <li>Ties Experience to the map you already built, so the section feels like part of the same world.</li>
+        <li>Works well on phones, since each stop fits a screen.</li>
+        <li>Harder to scan for a recruiter who wants every role at once.</li>
+      </ul>
+    </section>
+
+    <section class="opt">
+      <div class="tag">OPTION B · GIT LOG</div>
+      <h2>A commit history</h2>
+      <p>Experience reads as a git log: each role is a commit with a short hash, its dates, and a one-line message. Clicking a commit expands its details, and a small branch line shows the career path.</p>
+      <div class="mock">
+        <div class="mock-log">
+          <div><span class="h">a91f2c0</span>Co-Founder &amp; CTO, Stealth Startup <span class="r">HEAD</span></div>
+          <div><span class="h">7b03e4d</span>Software Engineer, ML Infra, Meta</div>
+          <div><span class="h">3c8e1a7</span>Software Engineer Intern, HPE</div>
+        </div>
+      </div>
+      <ul>
+        <li>Fits the terminal identity of the homepage and the existing "git log" heading.</li>
+        <li>Very recognisable to engineers; the metaphor can feel gimmicky to some visitors.</li>
+        <li>Shows every role at once, so it is easy to scan.</li>
+      </ul>
+    </section>
+
+    <section class="opt">
+      <div class="tag">OPTION C · NOTEBOOK</div>
+      <h2>A lab notebook, like Research</h2>
+      <p>Experience uses the same notebook layout as Research: a list of roles on the left, and the chosen role written up as numbered cells on the right. Research and Experience then feel like two chapters of one notebook.</p>
+      <div class="mock">
+        <div class="mock-nb">
+          <div class="side">$ ls ./experience<br><span class="on">Meta</span><br>HPE<br>Stealth</div>
+          <div>
+            <div class="cell"><b>[1] the role</b><br>Software Engineer, ML Infrastructure</div>
+            <div class="cell" style="margin-top:8px"><b>[2] impact</b><br>Cut model-iteration latency about 88%.</div>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li>Consistent with the Research notebook, so the whole site uses one interaction model.</li>
+        <li>Gives room for impact bullets as numbered cells, which suits Meta-level detail.</li>
+        <li>Adds one more layout to learn, and it can feel heavier than a simple list.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="pick">
+    <h2>Recommendation</h2>
+    <p>I would start with <b>Option C</b>. Experience and Research are the two halves of your technical story, and matching them makes the site feel designed as a whole. Option A is the best second choice if you want more of a journey feel; Option B is fun, but it is a stronger personality choice and may not suit every visitor.</p>
+    <p class="q">Questions to decide before building: Should Education stay inside Experience or become its own section? Do you want a per-role photo or diagram? Should the route or notebook open in the full-screen takeover, like the other sections?</p>
+  </section>
+</main>

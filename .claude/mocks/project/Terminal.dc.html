@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>C · Terminal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+body{margin:0}
+a{color:#3fb950}a:hover{color:#56d364}
+</style>
+</helmet>
+<div style="width:100%;min-height:1100px;box-sizing:border-box;background:#0d1117;color:#c9d1d9;font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;">
+  <div style="max-width:1040px;margin:0 auto;padding:32px;">
+    <!-- window chrome -->
+    <div style="border:1px solid #30363d;border-radius:12px;background:#161b22;overflow:hidden;">
+      <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid #30363d;">
+        <span style="width:12px;height:12px;border-radius:50%;background:#ff5f56;"></span>
+        <span style="width:12px;height:12px;border-radius:50%;background:#ffbd2e;"></span>
+        <span style="width:12px;height:12px;border-radius:50%;background:#27c93f;"></span>
+        <span style="margin-left:12px;font-size:13px;color:#8b949e;">aabdelre — zsh — 120×40</span>
+      </div>
+
+      <div style="padding:36px 36px 40px;">
+        <!-- nav as commands -->
+        <div style="display:flex;gap:28px;flex-wrap:wrap;font-size:14px;margin-bottom:40px;color:#8b949e;">
+          <a href="#" style="color:#8b949e;text-decoration:none;">./work</a>
+          <a href="#" style="color:#8b949e;text-decoration:none;">./experience</a>
+          <a href="#" style="color:#8b949e;text-decoration:none;">./blog</a>
+          <a href="#" style="color:#8b949e;text-decoration:none;">./resume.pdf</a>
+        </div>
+
+        <!-- prompt lines -->
+        <div style="font-size:15px;color:#8b949e;margin-bottom:6px;">$ whoami</div>
+        <div style="font-size:44px;font-weight:700;color:#e6edf3;letter-spacing:-0.02em;margin-bottom:6px;">ahmed abdelrehim</div>
+        <div style="font-size:18px;color:#3fb950;margin-bottom:28px;">&gt; ML infrastructure engineer @ Meta · co-founder @ a stealth AI-education startup</div>
+
+        <div style="font-size:15px;color:#8b949e;margin-bottom:6px;">$ cat impact.txt</div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:32px;">
+          <div style="border:1px solid #30363d;border-radius:8px;padding:16px;">
+            <div style="font-size:28px;font-weight:700;color:#e6edf3;">-88%</div>
+            <div style="font-size:13px;color:#8b949e;">orchestrator latency, Ads ranking</div>
+          </div>
+          <div style="border:1px solid #30363d;border-radius:8px;padding:16px;">
+            <div style="font-size:28px;font-weight:700;color:#e6edf3;">-72%</div>
+            <div style="font-size:13px;color:#8b949e;">code size after Go rewrite, HPE</div>
+          </div>
+          <div style="border:1px solid #30363d;border-radius:8px;padding:16px;">
+            <div style="font-size:28px;font-weight:700;color:#e6edf3;">+2.45%</div>
+            <div style="font-size:13px;color:#8b949e;">avg accuracy gain, production models</div>
+          </div>
+        </div>
+
+        <div style="font-size:15px;color:#8b949e;margin-bottom:6px;">$ git log --oneline experience</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:15px;margin-bottom:32px;">
+          <div><span style="color:#d29922;">a91f2c0</span>  <span style="color:#e6edf3;">Co-Founder &amp; CTO, Stealth Startup</span> <span style="color:#8b949e;">(Mar 2026 — now)</span></div>
+          <div><span style="color:#d29922;">7b03e4d</span>  <span style="color:#e6edf3;">Software Engineer, ML Infra, Meta</span> <span style="color:#8b949e;">(Feb 2025 — now)</span></div>
+          <div><span style="color:#d29922;">3c8e1a7</span>  <span style="color:#e6edf3;">Software Engineer Intern, HPE – Juniper</span> <span style="color:#8b949e;">(May — Aug 2024)</span></div>
+        </div>
+
+        <div style="font-size:15px;color:#8b949e;margin-bottom:6px;">$ contact --open</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:15px;">
+          <a href="#" style="background:#238636;color:#ffffff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:500;">download resume.pdf</a>
+          <a href="#" style="border:1px solid #30363d;color:#c9d1d9;padding:10px 18px;border-radius:6px;text-decoration:none;">email</a>
+          <a href="#" style="border:1px solid #30363d;color:#c9d1d9;padding:10px 18px;border-radius:6px;text-decoration:none;">github</a>
+        </div>
+        <div style="margin-top:28px;font-size:15px;color:#8b949e;">$ <span style="display:inline-block;width:9px;height:18px;background:#c9d1d9;vertical-align:middle;"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
