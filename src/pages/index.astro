@@ -211,7 +211,7 @@ const beyond = [
   {
     title: 'Hackathons',
     text: "I love sharing knowledge and helping communities grow, so I volunteer to mentor and judge hackathons, and take part in them myself.",
-    images: ['/hackathons/hackmit.jpg', '/hackathons/calhacks.jpg', '/hackathons/hamilton-hack.jpg'],
+    images: ['/hackathons/hackmit.jpg', '/hackathons/calhacks.jpg', '/hackathons/IMG_4106.jpg', '/hackathons/hamilton-hack.jpg'],
   },
 ];
 // -----------------------------------------------------------------------------
@@ -769,7 +769,7 @@ const posts = (await getCollection('blog'))
                                 )}
                               </figure>
                             </div>
-                            <div class={b.title === 'Volleyball' ? 'split-imgs split-grid' : b.title === 'Hiking' ? 'split-imgs split-pair' : 'split-imgs'}>
+                            <div class={b.title === 'Volleyball' ? 'split-imgs split-grid' : b.title === 'Hiking' ? 'split-imgs split-pair' : b.title === 'Hackathons' ? 'split-imgs split-hackathons' : 'split-imgs'}>
                               {b.images.slice(1).map((src) => (
                                 <figure class="shot">
                                   <div class="shot-bar">
@@ -1785,6 +1785,20 @@ const posts = (await getCollection('blog'))
   .split-pair .shot img[src$="zion.jpg"] {
     margin-top: auto;
     margin-bottom: auto;
+  }
+  /* Hackathons: grid layout matching Volleyball, calhacks and IMG_4106 side by side, hamilton-hack full width below */
+  .split-hackathons {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+  .split-hackathons .shot {
+    min-height: 0;
+  }
+  .split-hackathons .shot:nth-child(3) {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
   .split-grid .shot {
     min-height: 0;
