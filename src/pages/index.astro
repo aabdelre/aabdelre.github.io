@@ -83,13 +83,13 @@ const experience = [
     org: 'Meta',
     period: 'Feb 2025 — Present',
     summary:
-      'Build ML workflow orchestration for Ads ranking — cut model-iteration latency ~88% and drove avg 2.45% accuracy gains across production models.',
+      'Build ML workflow orchestration for Ads ranking — cut model-iteration latency by 35% and drove ~0.68% average CTR gains across production models.',
     images: ['/experience/meta.jpg'],
     beside: true,
     details: [
       'Builds products and infrastructure that connect people and businesses, including ad platforms, large-scale Ads ML systems, and evaluation tools.',
       'Developing agents and platform capabilities for model iteration, and designing self-improving workflows for models. Shipping model improvements.',
-      'Cut iteration latency about 35% and lifted accuracy about 2.45% on average across 5 models. Among the org’s top 5% of contributors, and fast-tracked for promotion in 11 months.',
+      'Cut iteration latency by 35% and improved CTR by about 0.68% on average across 5 models. Among the org’s top 5% of contributors, and fast-tracked for promotion in 11 months.',
       'The org’s youngest member (of about 200 headcount), filling AI/ML knowledge gaps while delivering impact. Honing time estimation and navigating corporate politics.',
     ],
   },
@@ -309,6 +309,7 @@ const posts = (await getCollection('blog'))
                 <path class="land" d="M720 60 C820 40 940 90 950 180 C960 260 860 260 800 240 C740 220 680 120 720 60 Z" />
                 <path id="car-loop" d="M40 470 L200 470 L200 600 L40 600 Z" fill="none" stroke="#3fb950" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="6 6" />
                 <g transform="scale(2)">
+                  <ellipse cx="3" cy="4" rx="12" ry="5" fill="#000" opacity="0.35" />
                   <rect x="-12" y="-7" width="24" height="14" fill="#0d1117" stroke="#3fb950" stroke-width="1.5" />
                   <rect x="8" y="-3" width="3" height="6" fill="#3fb950" />
                   <text x="-9" y="3" font-size="7" fill="#3fb950" font-family="monospace">&gt;_</text>
@@ -348,8 +349,8 @@ const posts = (await getCollection('blog'))
                 <span class="pt" style="left:94%;top:82%;animation-delay:-0.5s;"></span>
                 <span class="pt" style="left:46%;top:44%;animation-delay:-1.8s;"></span>
                 <span class="pt" style="left:80%;top:12%;animation-delay:-2.2s;"></span>
-                <span class="tok" style="left:4%;top:24%;">−88% latency</span>
-                <span class="tok alt" style="left:86%;top:54%;">+2.45%</span>
+                <span class="tok" style="left:4%;top:24%;">−35% latency</span>
+                <span class="tok alt" style="left:86%;top:54%;">+0.68% CTR</span>
                 <span class="tok warn" style="left:14%;top:70%;">~102 hrs / yr</span>
                 <span class="tok" style="left:62%;top:6%;animation-delay:-3s;">{'{ }'}</span>
                 <span class="tok alt" style="left:44%;top:92%;animation-delay:-5s;">=&gt;</span>
@@ -358,7 +359,6 @@ const posts = (await getCollection('blog'))
                 <span class="tok alt" style="left:70%;top:76%;animation-delay:-7s;">git push</span>
                 <span class="tri" style="left:84%;top:86%;"></span>
                 <span class="tri tri-s" style="left:88%;top:88%;"></span>
-                <span class="net" style="left:52%;top:62%;"></span>
                 <span class="brk" style="left:60%;top:48%;">&lt;/&gt;</span>
                 <span class="brk" style="left:10%;top:56%;animation-delay:-4s;">{'{ }'}</span>
                 <span class="ring" style="left:50%;top:20%;"></span>
@@ -403,12 +403,21 @@ const posts = (await getCollection('blog'))
                     grip += (gripTarget - grip) * Math.min(1, dt * 5);
                     return grip;
                   }
+                  var smoothState = {};
+                  function smooth(k, target, t) {
+                    var e = smoothState[k];
+                    if (!e) { smoothState[k] = { v: target, t: t }; return target; }
+                    var dt = Math.min(0.1, Math.max(0, t - e.t));
+                    e.v += (target - e.v) * (1 - Math.exp(-dt * 6));
+                    e.t = t;
+                    return e.v;
+                  }
                   function pose(t) {
-                    var j1 = 35 * Math.sin(t * 0.6);
-                    var j2 = 30 + 22 * Math.sin(t * 0.8);
-                    var j3 = 50 + 30 * Math.sin(t * 0.9 + 1);
-                    var c1 = -15 + 25 * Math.sin(t * 1.1);
-                    var c2 = 70 * Math.sin(t * 0.7);
+                    var j1 = smooth('j1', 35 * Math.sin(t * 0.6), t);
+                    var j2 = smooth('j2', 30 + 22 * Math.sin(t * 0.8), t);
+                    var j3 = smooth('j3', 50 + 30 * Math.sin(t * 0.9 + 1), t);
+                    var c1 = smooth('c1', -15 + 25 * Math.sin(t * 1.1), t);
+                    var c2 = smooth('c2', 70 * Math.sin(t * 0.7), t);
                     var c3 = updateGrip(t);
                     var yaw = Math.cos(rad(j1));
                     var a1 = rad(j2), a2 = rad(j2 + j3), a3 = rad(j2 + j3 + c1);
@@ -458,9 +467,9 @@ const posts = (await getCollection('blog'))
               </div>
               <div class="w w-exp">
                 <b>ranking · Ads models</b>
-                <div class="rank rise"><span>orchestrator</span><span>−88% latency</span></div>
+                <div class="rank rise"><span>orchestrator</span><span>−35% latency</span></div>
                 <div class="rank"><span>feature swap</span><span>+1.45% NE</span></div>
-                <div class="rank rise delay"><span>avg accuracy</span><span>+2.45%</span></div>
+                <div class="rank rise delay"><span>avg CTR</span><span>+0.68%</span></div>
                 <div class="agent-line">agent&gt; iterating<span class="blink">_</span></div>
               </div>
               <div class="w w-proj">
@@ -1545,12 +1554,6 @@ const posts = (await getCollection('blog'))
   }
   .tri-s {
     transform: scale(0.7);
-  }
-  .net {
-    width: 120px;
-    height: 2px;
-    background: var(--border);
-    transform: rotate(-4deg);
   }
   .scan {
     left: 0;
