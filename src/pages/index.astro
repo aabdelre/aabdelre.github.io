@@ -309,6 +309,7 @@ const posts = (await getCollection('blog'))
                 <path class="land" d="M720 60 C820 40 940 90 950 180 C960 260 860 260 800 240 C740 220 680 120 720 60 Z" />
                 <path id="car-loop" d="M40 470 L200 470 L200 600 L40 600 Z" fill="none" stroke="#3fb950" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="6 6" />
                 <g transform="scale(2)">
+                  <ellipse cx="3" cy="4" rx="12" ry="5" fill="#000" opacity="0.35" />
                   <rect x="-12" y="-7" width="24" height="14" fill="#0d1117" stroke="#3fb950" stroke-width="1.5" />
                   <rect x="8" y="-3" width="3" height="6" fill="#3fb950" />
                   <text x="-9" y="3" font-size="7" fill="#3fb950" font-family="monospace">&gt;_</text>
@@ -374,6 +375,11 @@ const posts = (await getCollection('blog'))
                 <svg viewBox="0 0 360 400">
                   <rect x="292" y="386" width="76" height="14" fill="none" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="3 2" />
                   <rect x="324" y="376" width="12" height="12" fill="#0d1117" stroke="#3fb950" stroke-width="1.5" />
+                  <g transform="translate(5 6)" opacity="0.3" fill="none" stroke="#000" stroke-linecap="square" stroke-linejoin="miter">
+                    <polyline id="arm-s1" points="" stroke-width="3" />
+                    <polyline id="arm-s2" points="" stroke-width="2" />
+                    <polyline id="arm-s3" points="" stroke-width="2" />
+                  </g>
                   <polyline id="arm-l1" points="" fill="none" stroke="#3fb950" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" />
                   <polyline id="arm-l2" points="" fill="none" stroke="#3fb950" stroke-width="2" stroke-opacity="0.7" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="6 3" />
                   <polyline id="arm-l3" points="" fill="none" stroke="#8b949e" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" />
@@ -403,12 +409,21 @@ const posts = (await getCollection('blog'))
                     grip += (gripTarget - grip) * Math.min(1, dt * 5);
                     return grip;
                   }
+                  var smoothState = {};
+                  function smooth(k, target, t) {
+                    var e = smoothState[k];
+                    if (!e) { smoothState[k] = { v: target, t: t }; return target; }
+                    var dt = Math.min(0.1, Math.max(0, t - e.t));
+                    e.v += (target - e.v) * (1 - Math.exp(-dt * 6));
+                    e.t = t;
+                    return e.v;
+                  }
                   function pose(t) {
-                    var j1 = 35 * Math.sin(t * 0.6);
-                    var j2 = 30 + 22 * Math.sin(t * 0.8);
-                    var j3 = 50 + 30 * Math.sin(t * 0.9 + 1);
-                    var c1 = -15 + 25 * Math.sin(t * 1.1);
-                    var c2 = 70 * Math.sin(t * 0.7);
+                    var j1 = smooth('j1', 35 * Math.sin(t * 0.6), t);
+                    var j2 = smooth('j2', 30 + 22 * Math.sin(t * 0.8), t);
+                    var j3 = smooth('j3', 50 + 30 * Math.sin(t * 0.9 + 1), t);
+                    var c1 = smooth('c1', -15 + 25 * Math.sin(t * 1.1), t);
+                    var c2 = smooth('c2', 70 * Math.sin(t * 0.7), t);
                     var c3 = updateGrip(t);
                     var yaw = Math.cos(rad(j1));
                     var a1 = rad(j2), a2 = rad(j2 + j3), a3 = rad(j2 + j3 + c1);
@@ -416,6 +431,9 @@ const posts = (await getCollection('blog'))
                     var p2 = { x: p1.x - L2 * Math.sin(a2) * yaw, y: p1.y - L2 * Math.cos(a2) };
                     var p3 = { x: p2.x - L3 * Math.sin(a3) * yaw, y: p2.y - L3 * Math.cos(a3) };
                     l1.setAttribute('points', pt(base) + ' ' + pt(p1));
+                    document.getElementById('arm-s1').setAttribute('points', pt(base) + ' ' + pt(p1));
+                    document.getElementById('arm-s2').setAttribute('points', pt(p1) + ' ' + pt(p2));
+                    document.getElementById('arm-s3').setAttribute('points', pt(p2) + ' ' + pt(p3));
                     l2.setAttribute('points', pt(p1) + ' ' + pt(p2));
                     l3.setAttribute('points', pt(p2) + ' ' + pt(p3));
                     var dir = a3 + rad(c2 * 0.15);
