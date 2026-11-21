@@ -375,11 +375,6 @@ const posts = (await getCollection('blog'))
                 <svg viewBox="0 0 360 400">
                   <rect x="292" y="386" width="76" height="14" fill="none" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="3 2" />
                   <rect x="324" y="376" width="12" height="12" fill="#0d1117" stroke="#3fb950" stroke-width="1.5" />
-                  <g transform="translate(5 6)" opacity="0.3" fill="none" stroke="#000" stroke-linecap="square" stroke-linejoin="miter">
-                    <polyline id="arm-s1" points="" stroke-width="3" />
-                    <polyline id="arm-s2" points="" stroke-width="2" />
-                    <polyline id="arm-s3" points="" stroke-width="2" />
-                  </g>
                   <polyline id="arm-l1" points="" fill="none" stroke="#3fb950" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" />
                   <polyline id="arm-l2" points="" fill="none" stroke="#3fb950" stroke-width="2" stroke-opacity="0.7" stroke-linecap="square" stroke-linejoin="miter" stroke-dasharray="6 3" />
                   <polyline id="arm-l3" points="" fill="none" stroke="#8b949e" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" />
@@ -431,9 +426,6 @@ const posts = (await getCollection('blog'))
                     var p2 = { x: p1.x - L2 * Math.sin(a2) * yaw, y: p1.y - L2 * Math.cos(a2) };
                     var p3 = { x: p2.x - L3 * Math.sin(a3) * yaw, y: p2.y - L3 * Math.cos(a3) };
                     l1.setAttribute('points', pt(base) + ' ' + pt(p1));
-                    document.getElementById('arm-s1').setAttribute('points', pt(base) + ' ' + pt(p1));
-                    document.getElementById('arm-s2').setAttribute('points', pt(p1) + ' ' + pt(p2));
-                    document.getElementById('arm-s3').setAttribute('points', pt(p2) + ' ' + pt(p3));
                     l2.setAttribute('points', pt(p1) + ' ' + pt(p2));
                     l3.setAttribute('points', pt(p2) + ' ' + pt(p3));
                     var dir = a3 + rad(c2 * 0.15);
