@@ -3101,7 +3101,7 @@ const posts = (await getCollection('blog'))
           setTimeout(
             () => {
               stage!.classList.remove('is-zooming');
-              popup!.classList.remove('takeover', 'grow');
+              popup!.classList.remove('grow');
             },
             reduce ? 0 : 650,
           );
