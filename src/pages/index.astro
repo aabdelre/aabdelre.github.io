@@ -1185,6 +1185,13 @@ const posts = (await getCollection('blog'))
 
   /* Popup: section content shown over the map, one page at a time */
   .popup {
+    transition:
+      left 0.5s ease,
+      top 0.5s ease,
+      width 0.5s ease,
+      height 0.5s ease,
+      transform 0.5s ease,
+      border-radius 0.5s ease;
     position: absolute;
     z-index: 5;
     left: 50%;
@@ -3087,10 +3094,18 @@ const posts = (await getCollection('blog'))
       const id = pin.dataset.pin ?? '';
       setTimeout(
         () => {
-          stage!.classList.remove('is-zooming');
+          // 1. the content opens fully over the zoomed-in pin
           openPopup(id);
           history.replaceState(null, '', `#${id}`);
-          setTimeout(() => (busy = false), reduce ? 0 : 400);
+          // 2. once it has grown in, the map zooms back out and the popup settles into a normal window
+          setTimeout(
+            () => {
+              stage!.classList.remove('is-zooming');
+              popup!.classList.remove('takeover');
+            },
+            reduce ? 0 : 650,
+          );
+          setTimeout(() => (busy = false), reduce ? 0 : 1100);
         },
         reduce ? 0 : 650,
       );
