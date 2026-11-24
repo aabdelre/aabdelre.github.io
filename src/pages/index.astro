@@ -195,7 +195,7 @@ const research = [
     name: 'Emotion Detection',
     role: "Where does a viewer's emotion live: in the words, the voice, or the face?",
     summary:
-      "Semester-long project predicting a viewer's emotions continuously as a scene unfolds, not one label per clip. The architecture fuses dialogue (BERT), vocal tone (ResNet on mel-spectrograms), and facial expressions (ResNet). I gathered and prepared data from RAVDESS, CMU-MOSEI, IEMOCAP, MELD, and a dataset we collected from Hamilton students, reaching 83% accuracy across these datasets on 7 emotions. Performance was lower on MELD and CMU-MOSEI than on RAVDESS and IEMOCAP.",
+      "Can a model track a viewer's emotions continuously as a video scene unfolds, instead of assigning one label per clip? I co-designed a fusion model that combines dialogue (BERT), vocal tone (ResNet on mel-spectrograms), and facial expressions (ResNet), predicting emotion for each 2-second segment. I gathered and prepared data from RAVDESS, CMU-MOSEI, IEMOCAP, MELD, and a Hamilton student dataset. On a held-out test split, it reached 83% accuracy across 7 emotions, with MELD and CMU-MOSEI scoring lower than RAVDESS and IEMOCAP. Fusion beat the best single signal by about 9 points.",
   },
 ];
 
